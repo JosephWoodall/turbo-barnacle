@@ -48,7 +48,4 @@ class GeneratedData():
             self.data.update(self.user)
         return self.data
         #print(self.data)
-            
-if __name__ == "__main__":
-    data = GeneratedData().buildDictionary(3)
-    print(data)
+
