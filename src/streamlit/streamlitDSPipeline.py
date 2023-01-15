@@ -1,4 +1,6 @@
 import streamlit as st
+from sklearn.ensemble import RandomForestClassifier
+import pandas 
 
 class DataSciencePipeline:
     def __init__(self):
@@ -7,7 +9,7 @@ class DataSciencePipeline:
     def obtain_data(self):
         data_path = st.file_uploader("Upload your data file", type=["csv", "txt", "xlsx"])
         if data_path is not None:
-            self.data = pd.read_csv(data_path)
+            self.data = pandas.read_csv(data_path)
         else:
             st.warning("Please upload a valid file")
 

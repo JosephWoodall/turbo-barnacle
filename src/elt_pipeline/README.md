@@ -1,0 +1,23 @@
+Explanation of each file: 
+
+- pipeline/__init__.py: This file is empty and is used to indicate that the directory is a Python package.
+- pipeline/elt_pipeline.py: This file contains the main class for the ELT pipeline, which defines the methods for ingesting data, validating data, transforming data, and running the pipeline.
+- pipeline/data_validation.py: This file contains the methods for performing data validation checks, using a library like great_expectations
+- pipeline/transformations/__init__.py: This file is empty and is used to indicate that the directory is a Python package.
+- pipeline/transformations/transformation1.py: This file contains the code for the first transformation that should be applied to the data.
+- pipeline/transformations/transformation2.py: This file contains the code for the second transformation that should be applied to the data.
+- pipeline/utils/__init__.py: This file is empty and is used to indicate that the directory is a Python package.
+- pipeline/utils/data_ingestion.py: This file contains the code for ingesting the data from a REST API.
+- pipeline/utils/data_storage.py: This file contains the code for reading and writing data to and from the data lake.
+- config/pipeline_config.yml: This file contains the configuration settings for the pipeline, such as the paths to the data files and the parameters for the data validation checks.
+- config/data_validation_config.yml: This file contains the configuration settings for the data validation checks, such as the expectations and the validation operators to be used.
+- data/raw: This directory contains the raw data files, such as data.json
+- data/transformed: This directory contains the transformed data files, such as data.parquet
+- tests/test_pipeline.py: This file contains the unit tests for the pipeline code.
+- tests/test_validation.py: This file contains the unit tests for the data validation code.
+- scripts/run_pipeline.sh: This file contains the shell script for running the pipeline.
+- airflow/dags/elt_pipeline_dag.py: This file contains the code for the Airflow DAG that orchestrates the pipeline tasks.
+- airflow/plugins/operators/data_ingestion_operator.py: This file contains the code for the Airflow operator that handles the data ingestion task.
+- airflow/plugins/operators/data_validation_operator.py: This file contains the code for the Airflow operator that handles the data validation task.
+- requirements.txt: This file contains the list of the dependencies for the project.
+- Dockerfile: This file contains the instructions for building the Docker

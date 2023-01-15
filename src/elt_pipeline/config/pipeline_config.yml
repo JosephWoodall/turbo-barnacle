@@ -1,0 +1,17 @@
+# pipeline configuration file
+
+# REST API url
+REST_API_URL: "https://api.example.com/data"
+
+# raw data file path
+RAW_DATA_PATH: "data/raw/raw_data.json"
+
+# transformed data file path
+TRANSFORMED_DATA_PATH: "data/transformed/transformed_data.parquet"
+
+# validation configuration file path
+VALIDATION_CONFIG_PATH: "config/validation_config.json"
+
+# airflow configuration
+AIRFLOW_CONN_ID: "example_conn_id"
+AIRFLOW_DAG_ID: "example_dag_id"
