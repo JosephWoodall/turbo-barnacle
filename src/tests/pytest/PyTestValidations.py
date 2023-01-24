@@ -4,8 +4,10 @@ import psycopg2
 class TestDataValidation:
     def __init__(self):
         # Connect to the source and target databases
-        self.source_conn = psycopg2.connect(...)
-        self.target_conn = psycopg2.connect(...)
+        SOURCE_CONNECTION_STRING = ""
+        TARGET_CONNECTION_STRING = ""
+        self.source_conn = psycopg2.connect(SOURCE_CONNECTION_STRING)
+        self.target_conn = psycopg2.connect(TARGET_CONNECTION_STRING)
 
     def test_data_validation(self):
         # Retrieve the data from the source and target databases
