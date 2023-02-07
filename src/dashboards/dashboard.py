@@ -1,48 +1,85 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import plotly.graph_objs as go
-from dash.dependencies import Input, Output
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objs as go
 
-"""
-This script uses the Dash library to create a simple web application with a drop-down menu to select a metric (sales or profit) 
-and a bar chart to display the selected metric. The data is read from a CSV file and the update_graph function is called when the 
-user selects a different metric from the drop-down menu.
+DATA_PATH_ONE = ''
+DATA_PATH_TWO = ''
 
-This is just a simple example and you can build upon this script to add more interactive 
-elements like filters, pivot table, or other charts like line chart, scatter plot etc. and use 
-different libraries like pandas and plotly to get the desired results.
+# load the sample financial data
+df1 = pd.read_csv(DATA_PATH_ONE)
+df2 = pd.read_csv(DATA_PATH_TWO)
 
-It's important to note that creating a comprehensive and interactive business intelligence 
-dashboard that could be substitute for powerbi and tableau is a complex task and you might 
-want to consider using the above-mentioned tools or other libraries that are more suited for this purpose.
-"""
+DF_1_X = ''
+DF_1_Y = ''
 
+DF_2_X = ''
+DF_2_Y = ''
+
+TIMESERIES_TITLE = ''
+WATERFALL_TITLE = ''
+FUNNEL_TITLE = ''
+
+'''DATA ONE'''
+# create the time series chart
+fig_ts = px.line(df1, x=DF_1_X, y=DF_1_Y, color='Stock', title=TIMESERIES_TITLE)
+fig_ts.add_trace(px.line(df2, x=DF_2_X, y=DF_2_Y, color='Stock').data[0])
+
+
+# create the waterfall chart
+df1_diff = df1.diff().dropna()
+fig_waterfall = px.waterfall(df1_diff, x=DF_1_X, y=DF_1_Y, title=WATERFALL_TITLE)
+
+# create the funnel chart
+df1_funnel = df1[[DF_1_X, DF_1_Y]].groupby(DF_1_X).sum().reset_index()
+fig_funnel = px.funnel(df1_funnel, x=DF_1_X, y=DF_1_Y, title=FUNNEL_TITLE)
+
+# create the dash app
 app = dash.Dash()
-
-PATH = '' # path to the data here
-DASHBOARD_TITLE = '' # title of the dashboard here
-
-df = pd.read_csv(PATH)
-
 app.layout = html.Div([
-    html.H1(DASHBOARD_TITLE),
-    dcc.Dropdown(id="metric-selector", options=[
-        {"label": "Sales", "value": "sales"},
-        {"label": "Profit", "value": "profit"}
-    ], value="sales"),
-    dcc.Graph(id="metric-graph")
+    html.H1('Financial Data Dashboard'),
+    html.Div([
+        dcc.Dropdown(
+            id='stock-dropdown',
+            options=[
+                {'label': 'Stock 1', 'value': 'stock1'},
+                {'label': 'Stock 2', 'value': 'stock2'}
+            ],
+            value='stock1'
+        ),
+        dcc.Dropdown(
+            id='chart-dropdown',
+            options=[
+                {'label': 'Time Series', 'value': 'timeseries'},
+                {'label': 'Waterfall', 'value': 'waterfall'},
+                {'label': 'Funnel', 'value': 'funnel'},
+            ],
+            value='timeseries'
+        ),
+        dcc.Graph(id='stock-graph', figure=fig_ts)
+    ])
 ])
 
-@app.callback(Output("metric-graph", "figure"), [Input("metric-selector", "value")])
-def update_graph(metric):
-    data = []
-    if metric == "sales":
-        data.append(go.Bar(x=df["month"], y=df["sales"]))
+# update the chart based on the selected stock and chart type
+@app.callback(
+    dash.dependencies.Output('stock-graph', 'figure'),
+    [dash.dependencies.Input('stock-dropdown', 'value'),
+     dash.dependencies.Input('chart-dropdown', 'value')]
+)
+def update_graph(selected_stock, selected_chart):
+    if selected_stock == 'stock1':
+        df = df1
     else:
-        data.append(go.Bar(x=df["month"], y=df["profit"]))
-    return {"data": data}
+        df = df2
+    
+    if selected_chart == 'timeseries':
+        return fig_ts
+    elif selected_chart == 'waterfall':
+        return fig_waterfall
+    elif selected_chart == 'funnel':
+        return fig_funnel
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run_server(debug=True)
