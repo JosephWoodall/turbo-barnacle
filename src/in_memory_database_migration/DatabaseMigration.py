@@ -2,6 +2,27 @@ import cx_Oracle
 import psycopg2
 import time
 
+"""
+source_type = "oracle"
+target_type = "postgresql"
+
+source_conn_params = {
+    "user": "user",
+    "password": "password",
+    "host": "host",
+    "port": "port",
+    "service_name": "service_name"
+}
+
+target_conn_params = {
+    "user": "user",
+    "password": "password",
+    "host": "host",
+    "port": "port",
+    "database": "database"
+}
+"""
+
 class DatabaseMigration:
     
     def __init__(self, source_type, target_type, source_conn_params, target_conn_params):
