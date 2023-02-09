@@ -1,91 +1,45 @@
-import cx_Oracle
 import psycopg2
-import time
+import cx_Oracle
 
 class DatabaseMigration:
-    
     def __init__(self, source_type, target_type, source_conn_params, target_conn_params):
         self.source_type = source_type
         self.target_type = target_type
         self.source_conn_params = source_conn_params
         self.target_conn_params = target_conn_params
-        self.total_rows = 0
-        self.data = []
-        
-    def connect_to_source(self):
-        if self.source_type == "oracle":
-            conn = cx_Oracle.connect(self.source_conn_params)
-        elif self.source_type == "postgresql":
-            conn = psycopg2.connect(self.source_conn_params)
+
+    def establish_connection(self, db_type, conn_params):
+        if db_type == "oracle":
+            conn = cx_Oracle.connect(conn_params["user"], conn_params["password"], conn_params["host"])
+        elif db_type == "postgresql":
+            conn = psycopg2.connect(
+                host=conn_params["host"],
+                database=conn_params["database"],
+                user=conn_params["user"],
+                password=conn_params["password"]
+            )
         else:
-            raise Exception("Unsupported source database type")
+            raise ValueError("Invalid database type")
         return conn
 
-    def connect_to_target(self):
-        if self.target_type == "oracle":
-            conn = cx_Oracle.connect(self.target_conn_params)
-        elif self.target_type == "postgresql":
-            conn = psycopg2.connect(self.target_conn_params)
-        else:
-            raise Exception("Unsupported target database type")
-        return conn
-
-    def get_data_from_source(self):
-        source_conn = self.connect_to_source()
+    def fetch_data_from_source(self, source_conn, source_table):
         source_cursor = source_conn.cursor()
-        
-        if self.source_type == "oracle":
-            source_cursor.execute("SELECT COUNT(*) FROM source_table")
-            self.total_rows = source_cursor.fetchone()[0]
-            source_cursor.execute("SELECT * FROM source_table")
-            self.data = source_cursor.fetchall()
-            print("\n" + "="*40)
-            print("\tData retrieval complete")
-            print("="*40)
-            print(f"\tTotal rows retrieved: {self.total_rows}")
-            print("="*40 + "\n")
-        elif self.source_type == "postgresql":
-            source_cursor.execute("SELECT COUNT(*) FROM source_table")
-            self.total_rows = source_cursor.fetchone()[0]
-            source_cursor.execute("SELECT * FROM source_table")
-            self.data = source_cursor.fetchall()
-            print("\n" + "="*40)
-            print("\tData retrieval complete")
-            print("="*40)
-            print(f"\tTotal rows retrieved: {self.total_rows}")
-            print("="*40 + "\n")
-        else:
-            raise Exception("Unsupported source database type")
-        
-        source_cursor.close()
-        source_conn.close()
+        source_cursor.execute(f"SELECT * FROM {source_table}")
+        return source_cursor.fetchall()
 
-        
-    def insert_data_into_target(self):
-        target_conn = self.connect_to_target()
+    def insert_data_into_target(self, target_conn, target_table, data):
         target_cursor = target_conn.cursor()
+        for i, row in enumerate(data):
+            target_cursor.execute(f"INSERT INTO {target_table} VALUES {row}")
+            print(f"{i + 1} rows inserted")
+        target_conn.commit()
 
-        if self.target_type == "oracle":
-            start_time = time.time()
-            for row in self.data:
-                target_cursor.execute("INSERT INTO target_table VALUES (:1, :2, ...)", row)
-            target_conn.commit()
-            print("\n" + "="*40)
-            print("\tData migration complete")
-            print("="*40)
-            print(f"\tTime taken: {time.time() - start_time:.2f} seconds")
-            print("="*40 + "\n")
-        elif self.target_type == "postgresql":
-            start_time = time.time()
-            target_cursor.executemany("INSERT INTO target_table VALUES (%s, %s, ...)", self.data)
-            target_conn.commit()
-            print("\n" + "="*40)
-            print("\tData migration complete")
-            print("="*40)
-            print(f"\tTime taken: {time.time() - start_time:.2f} seconds")
-            print("="*40 + "\n")
-        else:
-            raise Exception("Unsupported target database type")
-        
-        target_cursor.close()
+    def migrate_data(self, source_table, target_table):
+        source_conn = self.establish_connection(self.source_type, self.source_conn_params)
+        target_conn = self.establish_connection(self.target_type, self.target_conn_params)
+
+        data = self.fetch_data_from_source(source_conn, source_table)
+        self.insert_data_into_target(target_conn, target_table, data)
+
+        source_conn.close()
         target_conn.close()
