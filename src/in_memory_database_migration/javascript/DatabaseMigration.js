@@ -1,38 +1,25 @@
+const { Pool } = require('pg');
+
 class DatabaseMigration {
-  constructor(source, target) {
+  constructor(source, target, batchSize = 1000) {
     this.source = source; 
     this.target = target;
+    this.batchSize = batchSize;
+    this.sourcePool = new Pool(this.source);
+    this.targetPool = new Pool(this.target);
   }
 
-  extract() {
-    switch(this.source.type){
-      case 'postgresql':
-        return this.extractFromPostgresql();
-      case 'mongodb':
-        return this.extractFromMongodb();
-      case 'oracle':
-        return this.extractFromOracle();
-      case 'sql_server':
-        return this.extractFromSqlServer();
-      default: 
-        throw new Error('Unsupported source database type: ${this.source.type}');
+  async extract() {
+
+    let data = [];
+    const client = await this.sourcePool.connect();
+    try { 
+      const result = await client.query('SELECT * FROM source_table');
+      data = result.rows; 
+    } finally {
+      client.release()
     }
-  }
-
-  extractFromPostgresql() {
-    // Implementation for extracting data from a PostgreSQL database
-  }
-
-  extractFromMongodb() {
-    // Implementation for extracting data from a MongoDB database
-  }
-
-  extractFromOracle() {
-    // Implementation for extracting data from an Oracle database
-  }
-
-  extractFromSqlServer() {
-    //Implementation for extracting data from a SQL Server database
+    return data; 
   }
 
   transform(data) {
@@ -40,38 +27,22 @@ class DatabaseMigration {
     return data;
   }
 
-  load(data) {
-    switch (this.target.type) {
-      case 'postgresql': 
-        return this.loadIntoPostgresql(data);
-      case 'mongodb': 
-        return this.loadIntoMongoDb(data);
-      case 'oracle': 
-        return this.loadIntoOracle(data);
-      case 'sql_server':
-        return this.loadIntoSqlServer(data);
-      default: 
-        throw new Error('Unsupported target database type: ${this.target.type}');
+  async load(data) {
+    let index = 0;
+    while (index < data.length) {
+      const batch = data.slice(index, index + this.batchSize);
+      const values = batch.map((row) => `(${row.id}, '${row.name}')`).join(',');
+      const client = await this.targetPool.connect();
+      try {
+        await client.query(`INSERT INTO target_table (id, name) VALUES ${values}`);
+      } finally {
+        client.release();
+      }
+      index += this.batchSize;
     }
   }
 
-  loadIntoPostgresql(data) {
-    // Implementation for loading data into a PostgreSQL database
-  }
-
-  loadIntoMongoDb(data) {
-    // Implementation for loading data into a MongoDB database
-  }
-
-  loadIntoOracle(data) {
-    // Implementation for loading data into an Oracle database
-  }
-
-  loadIntoSqlServer(data) {
-    // Implementation for loading data into a SQL Server database
-  }
-
-  perform() {
+  async perform() {
     const data = this.extract(); 
     const transformedData = this.transform(data);
     this.load(transformedData);
@@ -79,5 +50,24 @@ class DatabaseMigration {
 }
 
 // Example usage: 
-const etl = new ETL({ type: 'postgresql'}, { type: 'oracle'});
+
+const source = {
+  user: process.env.SOURCE_DB_USER,
+  host: process.env.SOURCE_DB_HOST,
+  database: process.env.SOURCE_DB_NAME,
+  password: process.env.SOURCE_DB_PASSWORD,
+  port: process.env.SOURCE_DB_PORT,
+};
+
+const target = {
+  user: process.env.TARGET_DB_USER,
+  host: process.env.TARGET_DB_HOST,
+  database: process.env.TARGET_DB_NAME,
+  password: process.env.TARGET_DB_PASSWORD,
+  port: process.env.TARGET_DB_PORT,
+};
+
+const batchSize = process.env.BATCH_SIZE || 1000;
+
+const etl = new DatabaseMigration(source, target, batchSize);
 etl.perform();
