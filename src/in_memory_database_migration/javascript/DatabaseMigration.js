@@ -1,4 +1,7 @@
 const { Pool } = require('pg');
+const mongoose = require('mongoose');
+const oracledb = require('oracledb');
+const tedious = require('tedious');
 
 class DatabaseMigration {
   constructor(source, target, batchSize = 1000) {
