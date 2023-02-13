@@ -7,103 +7,141 @@ const tedious = require('tedious');
 const async = require('async');
 
 class DataValidator {
-  constructor(sourceDbType, targetDbType, sourceDbConfig, targetDbConfig) {
-    this.sourceDbType = sourceDbType || process.env.SOURCE_DB_TYPE;
-    this.targetDbType = targetDbType || process.env.TARGET_DB_TYPE;
-    this.sourceDbConfig = sourceDbConfig;
-    this.targetDbConfig = targetDbConfig;
+  constructor(sourceAdapter, targetAdapter) {
+    this.sourceAdapter = sourceAdapter;
+    this.targetAdapter = targetAdapter;
   }
 
-  async validate() {
-    let results = [];
+  async connectSource(config) {
+    await this.sourceAdapter.connect(config);
+  }
 
-    try {
-      let sourceDbClient, targetDbClient;
-      if (this.sourceDbType === 'postgresql') {
-        sourceDbClient = new pg.Client(this.sourceDbConfig);
-        await sourceDbClient.connect();
-      } else if (this.sourceDbType === 'mongodb') {
-        mongoose.connect(this.sourceDbConfig.uri, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        });
-        sourceDbClient = mongoose.connection;
-      }
+  async connectTarget(config) {
+    await this.targetAdapter.connect(config);
+  }
 
-      if (this.targetDbType === 'postgresql') {
-        targetDbClient = new pg.Client(this.targetDbConfig);
-        await targetDbClient.connect();
-      } else if (this.targetDbType === 'mongodb') {
-        mongoose.connect(this.targetDbConfig.uri, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        });
-        targetDbClient = mongoose.connection;
-      } else if (this.targetDbType === 'oracle') {
-        targetDbClient = await oracledb.getConnection(this.targetDbConfig);
-      } else if (this.targetDbType === 'sqlserver') {
-        targetDbClient = new tedious.Connection(this.targetDbConfig);
-        await targetDbClient.connect();
-      }
+  async getSourceData() {
+    return await this.sourceAdapter.getData();
+  }
 
-      if (this.sourceDbType === 'postgresql' && this.targetDbType === 'postgresql') {
-        let sourceDbResult = await sourceDbClient.query(`SELECT COUNT(*) FROM users`);
-        let targetDbResult = await targetDbClient.query(`SELECT COUNT(*) FROM users`);
-        results.push({
-          test: 'Number of rows in users table (source vs target)',
-          result: sourceDbResult.rows[0].count === targetDbResult.rows[0].count,
-        });
+  async getTargetData() {
+    return await this.targetAdapter.getData();
+  }
 
-        sourceDbResult = await sourceDbClient.query(`SELECT COUNT(*) FROM posts`);
-        targetDbResult = await targetDbClient.query(`SELECT COUNT(*) FROM posts`);
-        results.push({
-          test: 'Number of rows in posts table (source vs target)',
-          result: sourceDbResult.rows[0].count === targetDbResult.rows[0].count,
-        });
-      } else if (this.sourceDbType === 'mongodb' && this.targetDbType === 'mongodb') {
-        let sourceDbResult = await sourceDbClient.db.collection('users').countDocuments();
-        let targetDbResult = await targetDbClient.db.collection('users').countDocuments();
-        results.push({
-          test: 'Number of documents in users collection (source vs target)',
-          result: sourceDbResult === targetDbResult,
-        });
+  
+  async validateData() {
+    const sourceData = await this.getSourceData();
+    const targetData = await this.getTargetData();
 
-        sourceDbResult = await sourceDbClient.db.collection('posts').countDocuments();
-        targetDbResult = await targetDbClient.db.collection('posts').countDocuments();
-        results.push({
-          test: 'Number of documents in posts collection (source vs target)',
-          result: sourceDbResult === targetDbResult,
-        });
-      } else {
-        // Additional code to handle cross-DB validation can be added here.
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      if (this.sourceDbType === 'postgresql') {
-        sourceDbClient.end();
-      } else if (this.sourceDbType === 'mongodb') {
-        mongoose.disconnect();
-      }
-      if (this.targetDbType === 'postgresql') {
-        targetDbClient.end();
-      } else if (this.targetDbType === 'mongodb') {
-        mongoose.disconnect();
-      } else if (this.targetDbType === 'oracle') {
-        targetDbClient.close();
-      } else if (this.targetDbType === 'sqlserver') {
-        targetDbClient.close();
-      }
+    // perform data validation tests
+    const tests = [
+      // ...
+    ];
+
+    const results = [];
+    for (const test of tests) {
+      results.push(await test(sourceData, targetData));
     }
+
     return results;
+  }
+
+  async closeSource() {
+    await this.sourceAdapter.close();
+  }
+
+  async closeTarget() {
+    await this.targetAdapter.close();
+  }
+
+  getDbAdapter(dbType) {
+    switch (dbType) {
+      case 'postgresql':
+        return new PostgresqlAdapter();
+      case 'mongodb':
+        return new MongoDbAdapter();
+      case 'oracle':
+        return new OracleAdapter();
+      case 'sqlserver':
+        return new SqlServerAdapter();
+      default:
+        throw new Error(`Unsupported database type: ${dbType}`);
+    }
   }
 }
 
+class DbAdapter {
+    async connect(config) {
+        throw new Error("connect method must be implemented by a subclass");
+    }
+    async getData() {
+        throw new Error("getDatamethod must be implemented by a subclass");
+    }
+    async close() {
+        throw new Error("close method must be implemented by a subclass");
+    }
+}
+
+class PostgresqlAdapter extends DbAdapter {
+    async connect(config) {
+        // connect to postgresql database
+    }
+    async getData() {
+        // get data from postgresql database
+    }
+    async close() {
+        // close connection to the postgresql database
+    }
+}
+
+class MongoDbAdapter extends DbAdapter {
+    async connect(config) {
+        // connect to the MongoDB database
+    }
+    async getData() {
+        // get data from the mongodb database
+    }
+    async close() {
+        // close connection to the mongodb database
+    }
+}
+
+class OracleAdapter extends DbAdapter {
+  async connect(config) {
+    // connect to Oracle database
+    // ...
+  }
+
+  async getData() {
+    // get data from Oracle database
+    // ...
+  }
+
+  async close() {
+    // close connection to Oracle database
+    // ...
+  }
+}
+
+class SqlServerAdapter extends DbAdapter {
+    async connect(config) {
+      // connect to SQL Server database
+      // ...
+    }
+  
+    async getData() {
+      // get data from SQL Server database
+      // ...
+    }
+  
+    async close() {
+      // close connection to SQL Server database
+      // ...
+    }
+  }
+
+
 // Example usage:
-
-const sourceDbType = ""
-
-const targetDbType = ""
 
 const sourceDbConfig = {
     user: process.env.SOURCE_DB_USER,
@@ -122,8 +160,18 @@ const targetDbConfig = {
     uri: process.env.TARGET_DB_URI,
 }
 
-const dataValidator = new DataValidator(sourceDbType, targetDbType, sourceDbConfig, targetDbConfig);
+const dataValidator = new DataValidator(new PostgresqlAdapter(), new MongoDbAdapter());
 
-const results = dataValidator.validate();
+await dataValidator.connectSource(sourceDbConfig)
+await dataValidator.connectTarget(targetDbConfig)
+
+const results = await dataValidator.validateData();
+
 console.log(results);
+
+await dataValidator.closeSource();
+await dataValidator.closeTarget();
+
+
+
 
