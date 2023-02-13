@@ -15,6 +15,7 @@
 - Consume
 - Share and Use
 - Overall Operating Processes
+- Tools and Techniques for Managing a Data Governance Project
 
 ### Discovery and Design 
 - The discovery and design phase of Data Governance is the first step in establishing a Data Governance program. During this phase, organizations gather information about their existing data systems, processes, and stakeholders to determine their current state and identify areas for improvement.
@@ -98,3 +99,18 @@
     - Monitor and Evaluate: During this phase, organizations monitor and evaluate the Data Governance program to ensure its ongoing effectiveness and alignment with business objectives. This phase may involve conducting regular audits, assessing data quality, and making updates to the program as needed.
 
 - The operating process of Data Governance is an ongoing cycle of discovery, design, implementation, and evaluation. By continuously monitoring and improving the program, organizations can ensure that their data assets are effectively managed and governed to support their business objectives.
+
+### Tools and Techniques for Managing a Data Governance Project
+- There are several tools and techniques you can use to systematically keep track and manage the Data Governance program:
+
+    - Project management software: Project management software, such as Asana, Trello, or Microsoft Project, can be used to track tasks, assign responsibilities, and monitor progress. These tools often include features such as calendars, Gantt charts, and dashboards that provide an overview of the project status.
+
+    - Data catalogs: A data catalog can be used to document data assets and provide a centralized repository for metadata, data quality information, and data lineage information. Tools such as Collibra, Alation, and Informatica MDM provide data cataloging capabilities.
+
+    - Dashboards and reporting: Dashboards and reporting tools, such as Tableau, Power BI, or QlikView, can be used to provide business users with a view into the progress of the Data Governance program. These tools can be used to display metrics such as data quality scores, data asset inventory, and data lineage information.
+
+    - Data Governance committees: Establishing a Data Governance committee can provide a structured approach for managing the Data Governance program. The committee can include representatives from different business units, IT, and other key stakeholders. The committee can be responsible for overseeing the program, making decisions on data governance policies, and ensuring that the program is aligned with the needs of the organization.
+
+    - Data Governance frameworks: Using a Data Governance framework, such as the Data Governance Maturity Model (DGMM) or the Data Governance Institute (DGI) framework, can provide a systematic approach for managing the Data Governance program. These frameworks provide a set of best practices, guidelines, and processes that organizations can use to assess their Data Governance maturity and identify areas for improvement.
+
+- By using a combination of these tools and techniques, you can effectively manage the Data Governance program and provide transparency and visibility into the progress of the program to business users.
