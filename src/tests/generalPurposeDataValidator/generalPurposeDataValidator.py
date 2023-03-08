@@ -80,6 +80,23 @@ class DataValidator(unittest.TestCase):
             for j in range(i + 1, len(column_names)):
                 self.assertSetEqual(column_names[i], column_names[j])       
 
+    def assert_data_length_equal(self):
+        for i in range(len(self.data_objects) -1):
+            for j in range(i + 1, len(self.data_objects)):
+                self.assertEqual(len(self.data_objects[i]), len(self.data_objects[j]))
+    
+    def assert_data_elements_equal(self):
+        for i in range(len(self.data_objects) -1):
+            for j in range(i + 1, len(self.data_objects)):
+                self.assertCountEqual(self.data_objects[i], self.data_objects[j])
+    
+    def assert_data_structure_equal(self):
+        for i in range(len(self.data_objects) -1):
+            for j in range(i + 1, len(self.data_objects)):
+                self.assertDictEqual(self.data_objects[i], self.data_objects[j])
+    
+    
+    
 '''
 Example Usage in a main.py file: 
 
