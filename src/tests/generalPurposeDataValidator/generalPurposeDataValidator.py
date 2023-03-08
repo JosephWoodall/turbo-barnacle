@@ -69,6 +69,9 @@ class DataValidator(unittest.TestCase):
         super().__init__()
         self.data_objects = data_objects
         
+    '''
+    Compares multiple data objects
+    '''
     def assert_data_equal(self):
         for i in range(len(self.data_objects) -1):
             for j in range(i + 1, len(self.data_objects)):
@@ -94,6 +97,39 @@ class DataValidator(unittest.TestCase):
         for i in range(len(self.data_objects) -1):
             for j in range(i + 1, len(self.data_objects)):
                 self.assertDictEqual(self.data_objects[i], self.data_objects[j])
+    
+    '''
+    Compares only a single data object, one at a time, for each data object
+    '''
+    
+    '''
+    To include the below tests: 
+        Testing if the data is in the expected format:
+
+        Test if the data is in the expected file format (e.g., CSV, JSON, XML).
+        Test if the data contains the expected fields or columns.
+        Test if the data uses the expected data types (e.g., strings, integers, floats).
+        Testing if the data contains valid values:
+
+        Test if the data contains only valid values (e.g., no missing or null values).
+        Test if the data contains values within expected ranges or thresholds.
+        Test if the data contains values that are consistent with domain knowledge.
+        Testing if the data is complete:
+
+        Test if the data contains all the expected records or observations.
+        Test if the data contains all the expected fields or columns.
+        Test if the data contains all the expected categories or classes.
+        Testing if the data is consistent:
+
+        Test if the data is consistent across multiple sources or versions.
+        Test if the data is consistent within itself (e.g., no contradictory or duplicated records).
+        Test if the data is consistent with external sources or benchmarks.
+        Testing if the data is usable:
+
+        Test if the data can be loaded and accessed efficiently.
+        Test if the data can be analyzed and visualized as expected.
+        Test if the data can be used for the intended purpose (e.g., training a machine learning model).
+    '''
     
     
     
@@ -129,5 +165,7 @@ validator.assert_data_equal()
 # Assert that the column names are equal
 validator.assert_column_names_equal()
 
+if __name__ == '__main__':
+    unittest.main()
 
 '''
