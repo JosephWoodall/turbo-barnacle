@@ -18,6 +18,9 @@ class DataValidator:
         is_equal = df1[col_name] == df2[col_name]
         return is_equal
 
+    '''
+    To separate the tests into their own functions.
+    '''
     def validate_datasets(self, common_col, df1, df2):
         # check if column is present in both datasets
         if common_col not in df1.columns or common_col not in df2.columns:
@@ -28,8 +31,15 @@ class DataValidator:
         if not is_equal.all():
             raise ValueError(f"Data in column '{common_col}' does not match between datasets.")
         
-        # additional validation tests can be added here
-        # ...
+        # group the dataframes by the common column
+        df1_grouped = df1.groupby(common_col).sum()
+        df2_grouped = df2.groupby(common_col).sum()
+
+        # calculate the difference between the financial columns of your choice (revenue, margin, and cost columns, for example)
+        diff_df = df1_grouped[['FINANCIAL_COLUMN_1', 'FINANCIAL_COLUMN_2', 'FINANCIAL_COLUMN_3']] - df2_grouped[['FINANCIAL_COLUMN_1', 'FINANCIAL_COLUMN_2', 'FINANCIAL_COLUMN_3']]
+
+        # display the difference between the financial columns of your choice (revenue, margin, and cost columns for each common customer for example)
+        print(diff_df)
 
         return True
 
