@@ -1,0 +1,34 @@
+{
+    "variables": {
+      "aws_region": "{{env `AWS_REGION`}}",
+      "ami_name": "mlops-{{timestamp}}"
+    },
+    "builders": [
+      {
+        "type": "amazon-ebs",
+        "region": "{{user `aws_region`}}",
+        "instance_type": "t2.micro",
+        "ssh_username": "ubuntu",
+        "ami_name": "{{user `ami_name`}}",
+        "ami_description": "MLOps AMI",
+        "ssh_pty": true,
+        "tags": {
+          "Name": "mlops-ami",
+          "Environment": "dev"
+        }
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "shell",
+        "script": "scripts/install_docker.sh",
+        "execute_command": "sudo -E bash {{.Path}}"
+      },
+      {
+        "type": "shell",
+        "script": "scripts/install_awscli.sh",
+        "execute_command": "sudo -E bash {{.Path}}"
+      }
+    ]
+  }
+  

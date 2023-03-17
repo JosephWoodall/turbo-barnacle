@@ -1,0 +1,39 @@
+pipeline {
+  agent any
+
+  environment {
+    AWS_REGION = "us-west-2"
+    APP_NAME = "mlops-app"
+    DOCKER_REPO = "your-docker-repo"
+    K8S_NAMESPACE = "mlops-namespace"
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh 'packer build packer.json'
+      }
+    }
+
+    stage('Deploy to ECR') {
+      steps {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+          sh "aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REPO"
+          sh "docker tag $APP_NAME:$BUILD_NUMBER $DOCKER_REPO/$APP_NAME:$BUILD_NUMBER"
+          sh "docker push $DOCKER_REPO/$APP_NAME:$BUILD_NUMBER"
+        }
+      }
+    }
+
+    stage('Deploy to Kubernetes') {
+      steps {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+          sh "kubectl config use-context k8s-cluster"
+          sh "kubectl create namespace $K8S_NAMESPACE || true"
+          sh "kubectl apply -f kubernetes/deployment.yaml -n $K8S_NAMESPACE"
+          sh "kubectl apply -f kubernetes/service.yaml -n $K8S_NAMESPACE"
+        }
+      }
+    }
+  }
+}
