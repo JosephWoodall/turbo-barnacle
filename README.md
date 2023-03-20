@@ -4,7 +4,7 @@ Reusable library! Hooray!
 ### Accelerator Directory Tree
 Below is a nice representation of a reusable library (similar to turbo-barnacle, but more refined) ((in fact, you could even use some of turbo-barnacle's code within the below files! wow!)) just in case you would want to help accelerate some code development for any data science/data engineering related project.  
 
-'''bash
+```bash
 data_science_accelerator/
 ├── README.md
 ├── Dockerfile
@@ -51,4 +51,4 @@ data_science_accelerator/
     ├── model_training_example.ipynb
     ├── model_deployment_example.ipynb
     └── utils_example.ipynb
-'''
+```
