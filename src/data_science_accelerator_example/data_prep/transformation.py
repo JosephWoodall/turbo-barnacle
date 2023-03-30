@@ -1,6 +1,9 @@
+import polars as pl
+
+
 class Transformation:
     def __init__(self, data):
-        self.data = data
+        self.data = pl.DataFrame(data)
 
     def scale_features(self):
         # code to scale features
@@ -11,5 +14,4 @@ class Transformation:
         pass
 
     def one_hot_encode(self, column):
-        # code to one-hot encode a categorical column
-        pass
+        self.data = self.data.one_hot(column)
