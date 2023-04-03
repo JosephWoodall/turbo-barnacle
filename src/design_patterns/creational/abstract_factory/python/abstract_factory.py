@@ -102,6 +102,9 @@ class MacCheckbox(Checkbox):
 def client_code(factory: GUIFactory):
     """
 
+    :param factory: GUIFactory:
+    :param factory: GUIFactory:
+    :param factory: GUIFactory:
     :param factory: GUIFactory: 
 
     """

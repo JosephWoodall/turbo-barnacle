@@ -18,7 +18,7 @@ MLFlow or TensorFlow Extended (TFX) which provide more advanced functionality to
 def train_and_log_model(data, model):
     """
 
-    :param data: 
+    :param data: param model:
     :param model: 
 
     """

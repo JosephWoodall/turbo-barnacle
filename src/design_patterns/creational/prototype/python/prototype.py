@@ -9,7 +9,7 @@ class Prototype:
     def register(self, name, obj):
         """
 
-        :param name: 
+        :param name: param obj:
         :param obj: 
 
         """
@@ -26,7 +26,7 @@ class Prototype:
     def clone(self, name, **attr):
         """
 
-        :param name: 
+        :param name: param **attr:
         :param **attr: 
 
         """

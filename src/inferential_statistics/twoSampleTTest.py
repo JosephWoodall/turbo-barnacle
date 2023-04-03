@@ -6,6 +6,13 @@ class TwoSampleTTest:
     """Two-sample t-test: Use this test to compare the means of two independent samples."""
 
     def __init__(self, file_path, group_column, value_column):
+        """_summary_
+
+        Args:
+            file_path (_type_): _description_
+            group_column (_type_): _description_
+            value_column (_type_): _description_
+        """
         self.data = pl.read_csv(file_path)
         self.group_column = group_column
         self.value_column = value_column
@@ -15,14 +22,14 @@ class TwoSampleTTest:
             pl.col(group_column) == 2)[value_column]
 
     def run(self):
-        """ """
+        """Fit and run the Two Sample T-Test model on the data."""
         _, p_val = ttest_ind(self.group_1.to_list(), self.group_2.to_list())
         return p_val
 
     def is_significant(self, alpha=0.05):
-        """
+        """Test the significance of the MANOVA results.
 
-        :param alpha:  (Default value = 0.05)
+        :param alpha: Significance level (Default value = 0.05)
 
         """
         p_val = self.run()

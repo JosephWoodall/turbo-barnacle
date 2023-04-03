@@ -19,6 +19,15 @@ class MonteCarloSimulator:
         :param random_state: The random seed to use for the simulation.
         :type random_state: int
         :param kwargs: Additional keyword arguments to pass to the function.
+        :param func: str:
+        :param n_simulations: int:
+        :param random_state: int:  (Default value = 42)
+        :param func: str:
+        :param n_simulations: int:
+        :param random_state: int:  (Default value = 42)
+        :param func: str:
+        :param n_simulations: int:
+        :param random_state: int:  (Default value = 42)
         :param func: str: 
         :param n_simulations: int: 
         :param random_state: int:  (Default value = 42)
@@ -53,6 +62,12 @@ class MonteCarloSimulator:
         :type simulation_results: List[float]
         :param alpha: The significance level to use for the hypothesis test.
         :type alpha: float
+        :param simulation_results: List[float]:
+        :param alpha: float:  (Default value = 0.05)
+        :param simulation_results: List[float]:
+        :param alpha: float:  (Default value = 0.05)
+        :param simulation_results: List[float]:
+        :param alpha: float:  (Default value = 0.05)
         :param simulation_results: List[float]: 
         :param alpha: float:  (Default value = 0.05)
         :returns: A dictionary containing the inferential statistics.

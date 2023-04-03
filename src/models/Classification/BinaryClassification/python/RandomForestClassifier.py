@@ -13,8 +13,8 @@ class RandomForestModel:
     def train_model(self, n_iter=10, cv=5):
         """
 
-        :param n_iter:  (Default value = 10)
-        :param cv:  (Default value = 5)
+        :param n_iter: Default value = 10)
+        :param cv: Default value = 5)
 
         """
         # Define the parameter grid for random search
@@ -54,7 +54,7 @@ class RandomForestModel:
     def evaluate_model(self, x_test, y_test):
         """
 
-        :param x_test: 
+        :param x_test: param y_test:
         :param y_test: 
 
         """

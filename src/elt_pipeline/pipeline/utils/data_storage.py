@@ -6,7 +6,7 @@ class DataStorage:
     def save_to_parquet(dataframe, file_path):
         """
 
-        :param dataframe: 
+        :param dataframe: param file_path:
         :param file_path: 
 
         """

@@ -23,7 +23,7 @@ class FeatureSelector:
     def select_kbest(self, k=10):
         """
 
-        :param k:  (Default value = 10)
+        :param k: Default value = 10)
 
         """
         selector = SelectKBest(f_classif, k=k)

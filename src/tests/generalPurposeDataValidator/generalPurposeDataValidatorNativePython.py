@@ -34,9 +34,9 @@ class DataValidator:
     def validate_column(self, col_name, data1, data2):
         """
 
-        :param col_name: 
+        :param col_name: param data1:
+        :param data2: param data1:
         :param data1: 
-        :param data2: 
 
         """
         is_equal = [row1[col_name] == row2[col_name] for row1, row2 in zip(data1, data2)]
@@ -45,9 +45,9 @@ class DataValidator:
     def validate_datasets(self, common_col, data1, data2):
         """
 
-        :param common_col: 
+        :param common_col: param data1:
+        :param data2: param data1:
         :param data1: 
-        :param data2: 
 
         """
         # check if column is present in both datasets

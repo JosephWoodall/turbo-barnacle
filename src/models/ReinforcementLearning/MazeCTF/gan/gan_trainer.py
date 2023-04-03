@@ -13,7 +13,7 @@ class GanTrainer:
     def train_step(self, real_images, noise):
         """
 
-        :param real_images: 
+        :param real_images: param noise:
         :param noise: 
 
         """

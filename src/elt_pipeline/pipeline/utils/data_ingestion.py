@@ -7,7 +7,7 @@ class DataIngestion:
     def save_to_file(data, file_path):
         """
 
-        :param data: 
+        :param data: param file_path:
         :param file_path: 
 
         """

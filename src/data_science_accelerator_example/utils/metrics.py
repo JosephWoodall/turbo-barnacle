@@ -5,7 +5,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, c
 def calculate_metrics(y_true, y_pred):
     """Calculates a dictionary of regression metrics given true and predicted values.
 
-    :param y_true: 
+    :param y_true: param y_pred:
     :param y_pred: 
 
     """
@@ -19,7 +19,7 @@ def calculate_metrics(y_true, y_pred):
 def calculate_classification_metrics(y_true, y_pred):
     """Calculates a dictionary of classification metrics given true and predicted values.
 
-    :param y_true: 
+    :param y_true: param y_pred:
     :param y_pred: 
 
     """

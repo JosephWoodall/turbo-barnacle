@@ -19,9 +19,9 @@ class WebScraper:
     def extract_data(self, tag, attribute, value):
         """
 
-        :param tag: 
+        :param tag: param attribute:
+        :param value: param attribute:
         :param attribute: 
-        :param value: 
 
         """
         # Extract data based on the specified tag, attribute, and value

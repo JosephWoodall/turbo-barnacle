@@ -7,7 +7,7 @@ class Mediator:
     def send(self, message, colleague):
         """
 
-        :param message: 
+        :param message: param colleague:
         :param colleague: 
 
         """

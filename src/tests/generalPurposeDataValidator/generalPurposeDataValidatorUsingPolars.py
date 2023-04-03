@@ -28,9 +28,9 @@ class DataValidator:
     def validate_column(self, col_name, df1, df2):
         """
 
-        :param col_name: 
+        :param col_name: param df1:
+        :param df2: param df1:
         :param df1: 
-        :param df2: 
 
         """
         is_equal = df1[col_name] == df2[col_name]
@@ -42,9 +42,9 @@ class DataValidator:
     def validate_datasets(self, common_col, df1, df2):
         """
 
-        :param common_col: 
+        :param common_col: param df1:
+        :param df2: param df1:
         :param df1: 
-        :param df2: 
 
         """
         # check if column is present in both datasets

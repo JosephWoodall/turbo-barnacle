@@ -29,7 +29,7 @@ class MultiHeadAttention:
     def split_heads(self, X, batch_size):
         """
 
-        :param X: 
+        :param X: param batch_size:
         :param batch_size: 
 
         """
@@ -40,10 +40,10 @@ class MultiHeadAttention:
     def scaled_dot_product_attention(self, Q, K, V, mask=None):
         """
 
-        :param Q: 
-        :param K: 
-        :param V: 
-        :param mask:  (Default value = None)
+        :param Q: param K:
+        :param V: param mask:  (Default value = None)
+        :param K: param mask:  (Default value = None)
+        :param mask: Default value = None)
 
         """
 
@@ -59,8 +59,8 @@ class MultiHeadAttention:
     def forward(self, X, mask=None):
         """
 
-        :param X: 
-        :param mask:  (Default value = None)
+        :param X: param mask:  (Default value = None)
+        :param mask: Default value = None)
 
         """
 
@@ -136,8 +136,8 @@ class EncoderLayer:
     def forward(self, X, mask=None):
         """
 
-        :param X: 
-        :param mask:  (Default value = None)
+        :param X: param mask:  (Default value = None)
+        :param mask: Default value = None)
 
         """
         attention = self.multihead_attention(X, mask)
@@ -181,8 +181,8 @@ class GPT:
     def forward(self, X, mask=None):
         """
 
-        :param X: 
-        :param mask:  (Default value = None)
+        :param X: param mask:  (Default value = None)
+        :param mask: Default value = None)
 
         """
         batch_size = X.shape[0]

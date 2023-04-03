@@ -12,7 +12,7 @@ class DatabaseMigration:
     def establish_connection(self, db_type, conn_params):
         """
 
-        :param db_type: 
+        :param db_type: param conn_params:
         :param conn_params: 
 
         """
@@ -32,7 +32,7 @@ class DatabaseMigration:
     def fetch_data_from_source(self, source_conn, source_table):
         """
 
-        :param source_conn: 
+        :param source_conn: param source_table:
         :param source_table: 
 
         """
@@ -43,9 +43,9 @@ class DatabaseMigration:
     def insert_data_into_target(self, target_conn, target_table, data):
         """
 
-        :param target_conn: 
+        :param target_conn: param target_table:
+        :param data: param target_table:
         :param target_table: 
-        :param data: 
 
         """
         target_cursor = target_conn.cursor()
@@ -57,7 +57,7 @@ class DatabaseMigration:
     def migrate_data(self, source_table, target_table):
         """
 
-        :param source_table: 
+        :param source_table: param target_table:
         :param target_table: 
 
         """

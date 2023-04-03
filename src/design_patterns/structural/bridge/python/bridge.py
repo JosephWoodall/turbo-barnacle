@@ -8,9 +8,9 @@ class DrawingAPI(ABC):
     def draw_circle(self, x, y, radius):
         """
 
-        :param x: 
+        :param x: param y:
+        :param radius: param y:
         :param y: 
-        :param radius: 
 
         """
         pass
@@ -22,9 +22,9 @@ class DrawingAPI1(DrawingAPI):
     def draw_circle(self, x, y, radius):
         """
 
-        :param x: 
+        :param x: param y:
+        :param radius: param y:
         :param y: 
-        :param radius: 
 
         """
         print(f"API1.circle at {x}:{y} radius {radius}")
@@ -36,9 +36,9 @@ class DrawingAPI2(DrawingAPI):
     def draw_circle(self, x, y, radius):
         """
 
-        :param x: 
+        :param x: param y:
+        :param radius: param y:
         :param y: 
-        :param radius: 
 
         """
         print(f"API2.circle at {x}:{y} radius {radius}")

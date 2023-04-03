@@ -3,6 +3,9 @@ class ExistingClass:
     def perform_computation(self, data: dict) -> float:
         """
 
+        :param data: dict:
+        :param data: dict:
+        :param data: dict:
         :param data: dict: 
 
         """

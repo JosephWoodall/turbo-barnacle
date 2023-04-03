@@ -25,7 +25,7 @@ class EDA:
     def plot_hist(self, columns=None):
         """
 
-        :param columns:  (Default value = None)
+        :param columns: Default value = None)
 
         """
         # Plot histograms of the specified columns
@@ -38,7 +38,7 @@ class EDA:
     def plot_box(self, columns=None):
         """
 
-        :param columns:  (Default value = None)
+        :param columns: Default value = None)
 
         """
         # Plot box plots of the specified columns
@@ -51,7 +51,7 @@ class EDA:
     def plot_scatter(self, x, y):
         """
 
-        :param x: 
+        :param x: param y:
         :param y: 
 
         """

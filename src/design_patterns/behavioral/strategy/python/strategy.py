@@ -3,7 +3,7 @@ class Strategy:
     def do_operation(self, num1, num2):
         """
 
-        :param num1: 
+        :param num1: param num2:
         :param num2: 
 
         """
@@ -15,7 +15,7 @@ class OperationAdd(Strategy):
     def do_operation(self, num1, num2):
         """
 
-        :param num1: 
+        :param num1: param num2:
         :param num2: 
 
         """
@@ -27,7 +27,7 @@ class OperationSubtract(Strategy):
     def do_operation(self, num1, num2):
         """
 
-        :param num1: 
+        :param num1: param num2:
         :param num2: 
 
         """
@@ -39,7 +39,7 @@ class OperationMultiply(Strategy):
     def do_operation(self, num1, num2):
         """
 
-        :param num1: 
+        :param num1: param num2:
         :param num2: 
 
         """
@@ -54,7 +54,7 @@ class Context:
     def execute_strategy(self, num1, num2):
         """
 
-        :param num1: 
+        :param num1: param num2:
         :param num2: 
 
         """

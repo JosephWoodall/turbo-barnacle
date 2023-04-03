@@ -26,7 +26,7 @@ class DataValidator:
     def validate_all(self, exclude_tables=[]):
         """
 
-        :param exclude_tables:  (Default value = [])
+        :param exclude_tables: Default value = [])
 
         """
         # Get the list of tables in the source database

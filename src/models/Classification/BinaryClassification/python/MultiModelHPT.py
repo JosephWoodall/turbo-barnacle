@@ -50,7 +50,7 @@ class ModelTrainer:
     def evaluate_models(self, x_test, y_test):
         """
 
-        :param x_test: 
+        :param x_test: param y_test:
         :param y_test: 
 
         """

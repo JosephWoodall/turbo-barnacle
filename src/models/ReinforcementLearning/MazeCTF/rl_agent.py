@@ -30,9 +30,9 @@ class RLAgent:
     def train(self, num_episodes=1000, batch_size=32, memory_size=10000):
         """
 
-        :param num_episodes:  (Default value = 1000)
-        :param batch_size:  (Default value = 32)
-        :param memory_size:  (Default value = 10000)
+        :param num_episodes: Default value = 1000)
+        :param batch_size: Default value = 32)
+        :param memory_size: Default value = 10000)
 
         """
         memory = []
@@ -57,7 +57,7 @@ class RLAgent:
     def _experience_replay(self, memory, batch_size):
         """
 
-        :param memory: 
+        :param memory: param batch_size:
         :param batch_size: 
 
         """

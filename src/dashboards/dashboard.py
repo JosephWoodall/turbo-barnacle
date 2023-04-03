@@ -71,7 +71,7 @@ app.layout = html.Div([
 def update_graph(selected_stock, selected_chart):
     """
 
-    :param selected_stock: 
+    :param selected_stock: param selected_chart:
     :param selected_chart: 
 
     """

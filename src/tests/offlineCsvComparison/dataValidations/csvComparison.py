@@ -26,6 +26,9 @@ class CsvTester:
     def test_column_values(self, column_name: str):
         """
 
+        :param column_name: str:
+        :param column_name: str:
+        :param column_name: str:
         :param column_name: str: 
 
         """

@@ -26,8 +26,8 @@ class DataLoaderClass:
     def create_dataloader(self,batch_size, shuffle=True):
         """
 
-        :param batch_size: 
-        :param shuffle:  (Default value = True)
+        :param batch_size: param shuffle:  (Default value = True)
+        :param shuffle: Default value = True)
 
         """
         self.dataloader = DataLoader(self.dataset, batch_size=batch_size, shuffle=shuffle)

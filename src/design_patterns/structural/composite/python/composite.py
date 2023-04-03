@@ -24,6 +24,9 @@ class Composite(Component):
     def add(self, component: Component) -> None:
         """
 
+        :param component: Component:
+        :param component: Component:
+        :param component: Component:
         :param component: Component: 
 
         """
@@ -32,6 +35,9 @@ class Composite(Component):
     def remove(self, component: Component) -> None:
         """
 
+        :param component: Component:
+        :param component: Component:
+        :param component: Component:
         :param component: Component: 
 
         """
