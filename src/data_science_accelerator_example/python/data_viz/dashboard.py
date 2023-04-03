@@ -5,12 +5,22 @@ from plotly.subplots import make_subplots
 
 
 class Dashboard:
-    """ """
-    def __init__(self, data):
+    """
+     The Dashboard class is used to generate a dashboard from the specified data.
+    """
+    def __init__(self, data: pl.DataFrame) -> None:
+        """
+        __init__ Initializes the Dashboard class.
+
+        Args:
+            data (pl.DataFrame): the source data used for the class.
+        """
         self.data = data
 
-    def generate_dashboard(self):
-        """ """
+    def generate_dashboard(self) -> None:
+        """
+        generate_dashboard generate a dashboard from the specified data.
+        """
         # Get some basic statistics about the data
         summary = self.data.describe()
 
