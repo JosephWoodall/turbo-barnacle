@@ -12,8 +12,8 @@ class InternetIndexer:
     resources and computing power; so this is a PoC.
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, max_records=2):
+        self.max_records = max_records
 
     def crawl_web(self, url):
         """_summary_
@@ -26,7 +26,7 @@ class InternetIndexer:
         """
         visited = set()
         queue = [url]
-        while queue:
+        while queue and len(visited) < self.max_records:
             url = queue.pop(0)
             if url not in visited:
                 try:
@@ -61,7 +61,7 @@ class InternetIndexer:
                 response = urllib.request.urlopen(url)
                 lines = response.read().decode('utf-8').split('\n')
                 for line in lines:
-                    if line:
+                    if line and len(urls) < self.max_records:
                         fields = line.split(' ')
                         urls.append(fields[2])
         return urls
@@ -78,11 +78,15 @@ class InternetIndexer:
         """
         vowels = ['a', 'e', 'i', 'o', 'u']
         consonants = list(set('abcdefghijklmnopqrstuvwxyz') - set(vowels))
+        count = 0
         for tld in itertools.product(consonants, repeat=3):
             tld_str = ''.join(tld)
             for domain in itertools.product(keywords, vowels, consonants, repeat=length - 4):
                 domain_str = ''.join(domain)
+                if count >= self.max_records:
+                    return
                 yield domain_str + tld_str
+                count += 1
 
     def generate_websites(self, method='crawl_web', seed_url=None, length=None, keywords=None):
         """_summary_
@@ -109,13 +113,14 @@ class InternetIndexer:
             raise ValueError('Invalid method name')
 
 
-indexer = InternetIndexer()
+indexer = InternetIndexer(max_records=2)
 
 # Generate list of websites using web crawling method
 websites = indexer.generate_websites(
     method='crawl_web', seed_url='https://www.google.com')
 print(len(websites))
 
+"""
 # Generate list of websites using Common Crawl dataset
 websites = indexer.generate_websites(method='common_crawl')
 print(len(websites))
@@ -124,3 +129,4 @@ print(len(websites))
 websites = indexer.generate_websites(
     method='domain_generator', length=8, keywords=['google', 'apple', 'amazon'])
 print(len(websites))
+"""
