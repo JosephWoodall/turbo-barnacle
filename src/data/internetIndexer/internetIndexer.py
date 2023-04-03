@@ -107,3 +107,20 @@ class InternetIndexer:
             return list(self.domain_generator(length, keywords))
         else:
             raise ValueError('Invalid method name')
+
+
+indexer = InternetIndexer()
+
+# Generate list of websites using web crawling method
+websites = indexer.generate_websites(
+    method='crawl_web', seed_url='https://www.google.com')
+print(len(websites))
+
+# Generate list of websites using Common Crawl dataset
+websites = indexer.generate_websites(method='common_crawl')
+print(len(websites))
+
+# Generate list of websites using domain generator
+websites = indexer.generate_websites(
+    method='domain_generator', length=8, keywords=['google', 'apple', 'amazon'])
+print(len(websites))
