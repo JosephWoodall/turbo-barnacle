@@ -4,12 +4,19 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score
 import numpy as np
 
 class RandomForestModel:
+    """ """
     def __init__(self, data, target):
         self.data = data
         self.target = target
         self.model = None
 
     def train_model(self, n_iter=10, cv=5):
+        """
+
+        :param n_iter:  (Default value = 10)
+        :param cv:  (Default value = 5)
+
+        """
         # Define the parameter grid for random search
         param_grid = {
             "n_estimators": np.arange(10, 101, 10),
@@ -26,18 +33,31 @@ class RandomForestModel:
         self.model.fit(self.data, self.target)
 
     def predict(self, data):
+        """
+
+        :param data: 
+
+        """
         # Use the trained model to make predictions
         return self.model.predict(data)
 
     def get_best_params(self):
+        """ """
         # return best parameters found by the RandomizedSearchCV
         return self.model.best_params_
 
     def get_best_estimator(self):
+        """ """
         # return the best estimator
         return self.model.best_estimator_
 
     def evaluate_model(self, x_test, y_test):
+        """
+
+        :param x_test: 
+        :param y_test: 
+
+        """
         # Make predictions on the test set
         y_pred = self.predict(x_test)
         acc = accuracy_score(y_test, y_pred)

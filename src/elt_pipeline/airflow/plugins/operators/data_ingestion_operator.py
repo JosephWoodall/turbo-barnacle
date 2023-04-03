@@ -3,6 +3,7 @@ from airflow.models import BaseOperator
 from airflow.utils.decorators import apply_defaults
 
 class DataIngestionOperator(BaseOperator):
+    """ """
     @apply_defaults
     def __init__(self, source_type, source_config, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -10,6 +11,11 @@ class DataIngestionOperator(BaseOperator):
         self.source_config = source_config
 
     def execute(self, context):
+        """
+
+        :param context: 
+
+        """
         if self.source_type == 'rest_api':
             # code to ingest data from rest api
             pass
@@ -18,5 +24,6 @@ class DataIngestionOperator(BaseOperator):
             pass
 
 class DataIngestionOperatorPlugin(AirflowPlugin):
+    """ """
     name = 'data_ingestion_operator_plugin'
     operators = [DataIngestionOperator]

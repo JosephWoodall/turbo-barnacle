@@ -4,20 +4,27 @@ from typing import List, Dict
 
 
 class MonteCarloSimulator:
+    """ """
     def __init__(self, data: pl.DataFrame):
         self.data = data
 
     def simulate(self, func: str, n_simulations: int, random_state: int = 42, **kwargs) -> List[float]:
         """Run a Monte Carlo simulation on the given function using the data provided.
 
-        Args:
-            func (str): The name of the function to simulate.
-            n_simulations (int): The number of simulations to run.
-            random_state (int): The random seed to use for the simulation.
-            kwargs: Additional keyword arguments to pass to the function.
+        :param func: The name of the function to simulate.
+        :type func: str
+        :param n_simulations: The number of simulations to run.
+        :type n_simulations: int
+        :param random_state: The random seed to use for the simulation.
+        :type random_state: int
+        :param kwargs: Additional keyword arguments to pass to the function.
+        :param func: str: 
+        :param n_simulations: int: 
+        :param random_state: int:  (Default value = 42)
+        :param **kwargs: 
+        :returns: A list of the results from each simulation.
+        :rtype: List[float]
 
-        Returns:
-            List[float]: A list of the results from each simulation.
         """
         # Set the random seed
         np.random.seed(random_state)
@@ -41,12 +48,15 @@ class MonteCarloSimulator:
     def infer(self, simulation_results: List[float], alpha: float = 0.05) -> Dict[str, float]:
         """Perform statistical inference on the given simulation results.
 
-        Args:
-            simulation_results (List[float]): The results from the Monte Carlo simulation.
-            alpha (float): The significance level to use for the hypothesis test.
+        :param simulation_results: The results from the Monte Carlo simulation.
+        :type simulation_results: List[float]
+        :param alpha: The significance level to use for the hypothesis test.
+        :type alpha: float
+        :param simulation_results: List[float]: 
+        :param alpha: float:  (Default value = 0.05)
+        :returns: A dictionary containing the inferential statistics.
+        :rtype: Dict[str, float]
 
-        Returns:
-            Dict[str, float]: A dictionary containing the inferential statistics.
         """
         # Calculate the mean and standard deviation of the simulation results
         mean = np.mean(simulation_results)

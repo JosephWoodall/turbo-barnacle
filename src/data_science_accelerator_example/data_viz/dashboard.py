@@ -5,10 +5,12 @@ from plotly.subplots import make_subplots
 
 
 class Dashboard:
+    """ """
     def __init__(self, data):
         self.data = data
 
     def generate_dashboard(self):
+        """ """
         # Get some basic statistics about the data
         summary = self.data.describe()
 

@@ -3,6 +3,7 @@ from torchvision import transforms
 from torch.utils.data import Dataset, DataLoader
 
 class MyDataset(Dataset):
+    """ """
     def __init__(self, data, target):
         self.data = data
         self.target = target

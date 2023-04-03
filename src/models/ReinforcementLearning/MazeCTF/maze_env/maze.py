@@ -1,6 +1,7 @@
 import numpy as np
 
 class Maze:
+    """ """
     def __init__(self, size=10, num_obstacles=10, reward_location=None):
         self.size = size
         self.num_obstacles = num_obstacles
@@ -9,6 +10,7 @@ class Maze:
         self.reset()
 
     def reset(self):
+        """ """
         self.player_location = (0, 0)
         self.obstacles = self.generate_obstacles()
         if self.reward_location is None:
@@ -18,6 +20,7 @@ class Maze:
         self.state = self.get_state()
 
     def generate_obstacles(self):
+        """ """
         obstacles = []
         while len(obstacles) < self.num_obstacles:
             obstacle = np.random.randint(0, self.size, size=2)
@@ -26,12 +29,14 @@ class Maze:
         return obstacles
 
     def generate_reward(self):
+        """ """
         reward = np.random.randint(0, self.size, size=2)
         while reward in self.obstacles or reward == (0, 0):
             reward = np.random.randint(0, self.size, size=2)
         return reward
 
     def get_state(self):
+        """ """
         state = np.zeros((self.size, self.size))
         state[self.player_location] = 1
         state[self.reward_location] = 2
@@ -40,12 +45,22 @@ class Maze:
         return state
 
     def move_player(self, action):
+        """
+
+        :param action: 
+
+        """
         new_location = tuple(np.array(self.player_location) + np.array(action))
         if self.valid_location(new_location):
             self.player_location = new_location
         self.state = self.get_state()
 
     def valid_location(self, location):
+        """
+
+        :param location: 
+
+        """
         if location[0] < 0 or location[0] >= self.size or location[1] < 0 or location[1] >= self.size:
             return False
         if location in self.obstacles:
@@ -53,6 +68,7 @@ class Maze:
         return True
 
     def check_reward(self):
+        """ """
         if self.player_location == self.reward_location:
             return True
         return False

@@ -1,6 +1,12 @@
 class Transformation2:
+    """ """
     @staticmethod
     def execute(dataframe):
+        """
+
+        :param dataframe: 
+
+        """
         # Perform transformation 2 using Pandas
         dataframe = dataframe.toPandas()
         dataframe["column5"] = dataframe["column5"].apply(lambda x: x.upper())

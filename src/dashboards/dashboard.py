@@ -69,6 +69,12 @@ app.layout = html.Div([
      dash.dependencies.Input('chart-dropdown', 'value')]
 )
 def update_graph(selected_stock, selected_chart):
+    """
+
+    :param selected_stock: 
+    :param selected_chart: 
+
+    """
     if selected_stock == 'stock1':
         df = df1
     else:

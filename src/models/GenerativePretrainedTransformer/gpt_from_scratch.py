@@ -14,6 +14,7 @@ import numpy as np
 
 
 class MultiHeadAttention:
+    """ """
 
     def __init__(self, d_model, num_heads):
         self.d_model = d_model
@@ -26,11 +27,25 @@ class MultiHeadAttention:
         self.WO = np.random.randn(d_model, d_model)
 
     def split_heads(self, X, batch_size):
+        """
+
+        :param X: 
+        :param batch_size: 
+
+        """
 
         X = np.reshape(X, (batch_size, -1, self.num_heads, self.depth))
         return np.transpose(X, (0, 2, 1, 3))
 
     def scaled_dot_product_attention(self, Q, K, V, mask=None):
+        """
+
+        :param Q: 
+        :param K: 
+        :param V: 
+        :param mask:  (Default value = None)
+
+        """
 
         matmul_qk = np.matmul(Q, K.transpose((0, 1, 3, 2)))
         dk = K.shape[-1]
@@ -42,6 +57,12 @@ class MultiHeadAttention:
         return output, attention_weights
 
     def forward(self, X, mask=None):
+        """
+
+        :param X: 
+        :param mask:  (Default value = None)
+
+        """
 
         batch_size = X.shape[0]
         Q = np.matmul(X, self.WQ)
@@ -64,6 +85,7 @@ class MultiHeadAttention:
 
 
 class PositionalEncoding:
+    """ """
 
     def __init__(self, d_model, max_len):
         self.d_model = d_model
@@ -76,16 +98,27 @@ class PositionalEncoding:
         self.embedding[:, 1::2] = np.cos(pos * div_term)
 
     def forward(self, X):
+        """
+
+        :param X: 
+
+        """
         X += self.embedding[:X.shape[1], :]
         return X
 
 
 class FeedForward:
+    """ """
     def __init__(self, d_model, d_ff):
         self.fc1 = np.random.randn(d_model, d_ff)
         self.fc2 = np.random.randn(d_ff, d_model)
 
     def forward(self, X):
+        """
+
+        :param X: 
+
+        """
         X = np.matmul(X, self.fc1)
         X = np.matmul(0, X)
         X = np.matmul(X, self.fc2)
@@ -93,6 +126,7 @@ class FeedForward:
 
 
 class EncoderLayer:
+    """ """
     def __init__(self, d_model, num_heads, d_ff):
         self.multihead_attention = MultiHeadAttention(d_model, num_heads)
         self.feedforward = FeedForward(d_model, d_ff)
@@ -100,6 +134,12 @@ class EncoderLayer:
         self.layer_norm2 = LayerNormalization(d_model)
 
     def forward(self, X, mask=None):
+        """
+
+        :param X: 
+        :param mask:  (Default value = None)
+
+        """
         attention = self.multihead_attention(X, mask)
         X = self.layer_norm1(X + attention)
         feedforward_output = self.feedforward(X)
@@ -108,12 +148,18 @@ class EncoderLayer:
 
 
 class LayerNormalization:
+    """ """
     def __init__(self, d_model, eps=1e-6):
         self.gamma = np.ones((d_model,))
         self.beta = np.zeros((d_model,))
         self.eps = eps
 
     def forward(self, X):
+        """
+
+        :param X: 
+
+        """
         mean = np.mean(X, axis=-1, keepdims=True)
         std = np.std(X, axis=-1, keepdims=True)
         normalized = (X - mean) / (std + self.eps)
@@ -122,6 +168,7 @@ class LayerNormalization:
 
 
 class GPT:
+    """ """
     def __init__(self, num_layers, d_model, num_heads, d_ff, max_len):
         self.num_layers = num_layers
         self.d_model = d_model
@@ -132,6 +179,12 @@ class GPT:
         self.layer_norm = LayerNormalization(d_model)
 
     def forward(self, X, mask=None):
+        """
+
+        :param X: 
+        :param mask:  (Default value = None)
+
+        """
         batch_size = X.shape[0]
         sequence_len = X.shape[1]
         X = np.matmul(X, self.embedding)

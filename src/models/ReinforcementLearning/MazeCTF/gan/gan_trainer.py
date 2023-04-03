@@ -2,6 +2,7 @@ import torch
 
 
 class GanTrainer:
+    """ """
     def __init__(self, generator, discriminator, generator_optimizer, discriminator_optimizer, criterion):
         self.generator = generator
         self.discriminator = discriminator
@@ -10,6 +11,12 @@ class GanTrainer:
         self.criterion = criterion
 
     def train_step(self, real_images, noise):
+        """
+
+        :param real_images: 
+        :param noise: 
+
+        """
         # Train the discriminator
         self.discriminator_optimizer.zero_grad()
         real_preds = self.discriminator(real_images)

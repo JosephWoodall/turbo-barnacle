@@ -3,12 +3,14 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 
 
 class SentimentAnalysis:
+    """ """
     def __init__(self, corpus):
         self.corpus = corpus
         nltk.download('vader_lexicon')
         self.analyzer = SentimentIntensityAnalyzer()
 
     def get_sentiments(self):
+        """ """
         sentiments = []
         for text in self.corpus:
             scores = self.analyzer.polarity_scores(text)

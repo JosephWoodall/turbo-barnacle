@@ -25,6 +25,7 @@ is just an example and you can modify it to use any machine learning library or 
 """
 
 class ModelTrainer:
+    """ """
     def __init__(self, data, target):
         self.data = data
         self.target = target
@@ -36,12 +37,23 @@ class ModelTrainer:
         self.best_models = {}
 
     def train_models(self, parameters):
+        """
+
+        :param parameters: 
+
+        """
         for model_name, model in self.models.items():
             gs = GridSearchCV(model, parameters[model_name], cv=5)
             gs.fit(self.data, self.target)
             self.best_models[model_name] = gs.best_estimator_
             
     def evaluate_models(self, x_test, y_test):
+        """
+
+        :param x_test: 
+        :param y_test: 
+
+        """
         for model_name, model in self.best_models.items():
             y_pred = model.predict(x_test)
             acc = accuracy_score(y_test, y_pred)
@@ -51,6 +63,11 @@ class ModelTrainer:
             print(f"Accuracy: {acc:.2f}, Precision: {prec:.2f}, Recall: {rec:.2f}")
             
     def predict(self, x_test):
+        """
+
+        :param x_test: 
+
+        """
         predictions = {}
         for model_name, model in self.best_models.items():
             predictions[model_name] = model.predict(x_test)

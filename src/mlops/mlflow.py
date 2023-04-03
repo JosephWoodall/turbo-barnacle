@@ -16,6 +16,12 @@ MLFlow or TensorFlow Extended (TFX) which provide more advanced functionality to
 """
 
 def train_and_log_model(data, model):
+    """
+
+    :param data: 
+    :param model: 
+
+    """
     # Start an MLflow run
     with mlflow.start_run():
         # Log the model and its hyperparameters

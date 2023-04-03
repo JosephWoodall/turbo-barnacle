@@ -3,7 +3,9 @@ from data_viz import plot_utils
 
 
 class TestPlotUtils(unittest.TestCase):
+    """ """
     def setUp(self):
+        """ """
         # Define some example data to test on
         self.data = [
             {'id': 1, 'name': 'Alice', 'age': 28},
@@ -14,6 +16,7 @@ class TestPlotUtils(unittest.TestCase):
         ]
 
     def test_barplot(self):
+        """ """
         # Test that the barplot function creates a plot
         plot = plot_utils.barplot(self.data, 'name', 'age')
         self.assertTrue(hasattr(plot, 'savefig'))

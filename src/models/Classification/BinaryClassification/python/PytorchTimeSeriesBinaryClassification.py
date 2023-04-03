@@ -19,6 +19,7 @@ y = data[:, -1]
 ds = TensorDataset(x, y)
 
 class TimeSeriesModel(nn.Module):
+    """ """
     def __inti__(self): 
         super(TimeSeriesModel, self).__init__()
         self.lstm = nn.LSTM(input_size = INPUT_SIZE, hidden_size = HIDDEN_SIZE, num_layers = NUM_LAYERS, batch_first = True)
@@ -26,6 +27,11 @@ class TimeSeriesModel(nn.Module):
         self.sigmoid =nn.Sigmoid()
 
     def forward(self, x): 
+        """
+
+        :param x: 
+
+        """
         x, _ = self.lstm(x)
         x = x[:, -1, :]
         x = self.fc(x)

@@ -1,9 +1,16 @@
 class Mediator:
+    """ """
     def __init__(self):
         self.colleague1 = Colleague1(self)
         self.colleague2 = Colleague2(self)
 
     def send(self, message, colleague):
+        """
+
+        :param message: 
+        :param colleague: 
+
+        """
         if colleague == self.colleague1:
             self.colleague2.notify(message)
         else:
@@ -11,24 +18,46 @@ class Mediator:
 
 
 class Colleague1:
+    """ """
     def __init__(self, mediator):
         self.mediator = mediator
 
     def send(self, message):
+        """
+
+        :param message: 
+
+        """
         self.mediator.send(message, self)
 
     def notify(self, message):
+        """
+
+        :param message: 
+
+        """
         print(f"Colleague1 received message: {message}")
 
 
 class Colleague2:
+    """ """
     def __init__(self, mediator):
         self.mediator = mediator
 
     def send(self, message):
+        """
+
+        :param message: 
+
+        """
         self.mediator.send(message, self)
 
     def notify(self, message):
+        """
+
+        :param message: 
+
+        """
         print(f"Colleague2 received message: {message}")
 
 

@@ -9,17 +9,20 @@ from transformations import Transformation1, Transformation2
 from utils import DataIngestion, DataStorage
 
 class DataPipeline:
+    """ """
     def __init__(self, raw_data_path, transformed_data_path, validation_config_path):
         self.raw_data_path = raw_data_path
         self.transformed_data_path = transformed_data_path
         self.validation_config_path = validation_config_path
 
     def ingest_data(self):
+        """ """
         response = requests.get(REST_API_URL)
         data = response.json()
         DataIngestion.save_to_file(data, self.raw_data_path)
 
     def validate_data(self):
+        """ """
         # Initialize the Expectations Suite
         self.validation = DataValidation(self.validation_config_path)
         # Load the raw data
@@ -28,6 +31,7 @@ class DataPipeline:
         self.validation.run_validations(self.raw_data)
 
     def transform_data(self):
+        """ """
         spark = SparkSession.builder.appName("DataPipeline").getOrCreate()
         df = spark.read.json(self.raw_data_path)
         # Perform transformations using PySpark and Pandas
@@ -38,6 +42,7 @@ class DataPipeline:
         spark.stop()
 
     def run(self):
+        """ """
         self.ingest_data()
         self.validate_data()
         self.transform_data()

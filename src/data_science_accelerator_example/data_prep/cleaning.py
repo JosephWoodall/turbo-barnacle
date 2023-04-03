@@ -3,16 +3,20 @@ from sklearn.ensemble import RandomForestRegressor
 
 
 class Cleaning:
+    """ """
     def __init__(self, data):
         self.data = pl.DataFrame(data)
 
     def remove_duplicates(self):
+        """ """
         self.data.drop_duplicates(inplace=True)
 
     def remove_null_values(self):
+        """ """
         self.data.dropna(inplace=True)
 
     def fill_null_values(self):
+        """ """
         # Separate the data into non-null and null values
         non_null_data = self.data.dropna()
         null_data = self.data.filter(lambda df: df.is_null().any(), None)

@@ -3,6 +3,7 @@ import torch.nn.functional as F
 import numpy as np
 
 class RLAgent:
+    """ """
     def __init__(self, env, model, optimizer, gamma=0.99, epsilon=1.0, epsilon_min=0.01, epsilon_decay=0.995):
         self.env = env
         self.model = model
@@ -14,6 +15,11 @@ class RLAgent:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     def act(self, state):
+        """
+
+        :param state: 
+
+        """
         if np.random.rand() <= self.epsilon:
             return self.env.action_space.sample()
         state = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
@@ -22,6 +28,13 @@ class RLAgent:
         return action
 
     def train(self, num_episodes=1000, batch_size=32, memory_size=10000):
+        """
+
+        :param num_episodes:  (Default value = 1000)
+        :param batch_size:  (Default value = 32)
+        :param memory_size:  (Default value = 10000)
+
+        """
         memory = []
         for episode in range(num_episodes):
             state = self.env.reset()
@@ -42,6 +55,12 @@ class RLAgent:
             print("Episode:", episode, "Total Reward:", total_reward)
 
     def _experience_replay(self, memory, batch_size):
+        """
+
+        :param memory: 
+        :param batch_size: 
+
+        """
         batch = np.random.choice(len(memory), batch_size, replace=False)
         state_batch = torch.tensor([memory[i][0] for i in batch], dtype=torch.float32, device=self.device)
         action_batch = torch.tensor([memory[i][1] for i in batch], dtype=torch.long, device=self.device)

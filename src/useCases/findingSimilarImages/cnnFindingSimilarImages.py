@@ -22,6 +22,7 @@ pre-process the images before passing them to the model.
 """
 
 class ImageSimilarity:
+    """ """
     def __init__(self, dataset1, dataset2):
         self.dataset1 = dataset1
         self.dataset2 = dataset2
@@ -33,11 +34,17 @@ class ImageSimilarity:
         ])
 
     def build_model(self):
+        """ """
         model = torchvision.models.resnet50(pretrained=True)
         model = nn.Sequential(*list(model.children())[:-1])
         return model
 
     def extract_features(self, dataset):
+        """
+
+        :param dataset: 
+
+        """
         dataloader = DataLoader(dataset, batch_size=32, shuffle=False)
         features = []
         for images, labels in dataloader:
@@ -46,6 +53,7 @@ class ImageSimilarity:
         return torch.cat(features)
 
     def find_similarity(self):
+        """ """
         dataset1_features = self.extract_features(self.dataset1)
         dataset2_features = self.extract_features(self.dataset2)
         dataset1_features = dataset1_features.view(dataset1_features.size(0), -1)

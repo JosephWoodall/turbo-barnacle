@@ -14,24 +14,32 @@ with different models and techniques
 """
 
 class FeatureSelector:
+    """ """
     def __init__(self, data, target):
         self.data = data
         self.target = target
         self.features = None
         
     def select_kbest(self, k=10):
+        """
+
+        :param k:  (Default value = 10)
+
+        """
         selector = SelectKBest(f_classif, k=k)
         selector.fit(self.data, self.target)
         self.features = selector.get_support(indices=True)
         return self.features
     
     def select_model_based(self):
+        """ """
         model = ExtraTreesClassifier()
         model.fit(self.data, self.target)
         self.features = model.feature_importances_
         return self.features
    
     def get_final_features(self):
+        """ """
         data_cols = list(self.data.columns)
         final_features = [data_cols[i] for i in self.features]
         final_features.append("target_column")

@@ -1,8 +1,10 @@
 class InferentialStatsRecommendation:
+    """ """
     def __init__(self):
         pass
 
     def inferential_test_suggestion(self):
+        """ """
         # Prompt the user for information about their data
         data_type = input(
             "What type of data are you working with? (continuous/categorical) ")

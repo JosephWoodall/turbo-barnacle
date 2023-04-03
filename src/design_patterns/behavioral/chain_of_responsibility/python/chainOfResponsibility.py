@@ -1,14 +1,26 @@
 class Handler:
+    """ """
     def __init__(self, successor=None):
         self._successor = successor
 
     def handle_request(self, request):
+        """
+
+        :param request: 
+
+        """
         if self._successor is not None:
             return self._successor.handle_request(request)
 
 
 class ConcreteHandler1(Handler):
+    """ """
     def handle_request(self, request):
+        """
+
+        :param request: 
+
+        """
         if request == 'request 1':
             print('Handled by ConcreteHandler1')
         else:
@@ -16,7 +28,13 @@ class ConcreteHandler1(Handler):
 
 
 class ConcreteHandler2(Handler):
+    """ """
     def handle_request(self, request):
+        """
+
+        :param request: 
+
+        """
         if request == 'request 2':
             print('Handled by ConcreteHandler2')
         else:
@@ -24,7 +42,13 @@ class ConcreteHandler2(Handler):
 
 
 class ConcreteHandler3(Handler):
+    """ """
     def handle_request(self, request):
+        """
+
+        :param request: 
+
+        """
         if request == 'request 3':
             print('Handled by ConcreteHandler3')
         else:

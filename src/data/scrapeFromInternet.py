@@ -2,10 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 
 class WebScraper:
+    """ """
     def __init__(self, url):
         self.url = url
 
     def get_data(self):
+        """ """
         # Send a GET request to the website
         response = requests.get(self.url)
 
@@ -15,6 +17,13 @@ class WebScraper:
         return soup
     
     def extract_data(self, tag, attribute, value):
+        """
+
+        :param tag: 
+        :param attribute: 
+        :param value: 
+
+        """
         # Extract data based on the specified tag, attribute, and value
         data = []
         soup = self.get_data()

@@ -6,7 +6,9 @@ from utils.metrics import calculate_rmse
 
 
 class TestUtils(unittest.TestCase):
+    """ """
     def test_load_config(self):
+        """ """
         # test the load_config function
         config_path = 'path/to/config'
         config = load_config(config_path)
@@ -14,12 +16,14 @@ class TestUtils(unittest.TestCase):
         self.assertIsInstance(config, dict)
 
     def test_get_logger(self):
+        """ """
         # test the get_logger function
         logger_name = 'test_logger'
         logger = get_logger(logger_name)
         self.assertIsNotNone(logger)
 
     def test_calculate_rmse(self):
+        """ """
         # test the calculate_rmse function
         y_true = np.array([1, 2, 3])
         y_pred = np.array([2, 3, 4])
