@@ -5,6 +5,7 @@ from typing import List, Dict
 
 class MonteCarloSimulator:
     """ """
+
     def __init__(self, data: pl.DataFrame):
         self.data = data
 
