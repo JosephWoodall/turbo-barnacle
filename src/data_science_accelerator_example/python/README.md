@@ -1,3 +1,28 @@
+# END TO END MACHINE LEARNING ENGINEERING WORKFLOW BOILERPLATE TEMPLATE
+
+## OVERVIEW
+
+### PROBLEM STATMENT
+[Use this space to fill in the exact problem statment you wish to solve here]
+
+### GATHER AND CLEAN DATA
+[Use this space as a data dictionary for data relevant to the problem you want to solve, and clean/preprocess the data to ensure it's ready for modeling]
+
+### EXPLORE AND VISUALIZE DATA
+[Use this space to make note of any interesting findings, patterns, or relationships from the EDA that might inform your modeling choices]
+
+### DEVELOP AND TRAIN MODELS
+[Use this space to explain the model of choice, or type of model of choice, and explain any evaluation methodologies for selecting the best model here]
+
+### DEPLOY MODELS
+[Use this space to explain where the best model will be deployed. Will it be a web service/api call? Will it be a batch prediction model living in the backend? Will it be an embedded model in an edge device? List this here]
+
+### MONITOR AND MAINTAIN MODELS
+[Use this space to explain how the deployed model's performance is being monitored over time and how it will be re-trained as necessary to ensure it continues to produce accurate/quality predictions]
+
+### SCALE UP AND OPTIMIZE
+[Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic? List this here]
+
 ```bash
 data_science_accelerator/
 ├── README.md
@@ -45,6 +70,4 @@ data_science_accelerator/
     ├── model_training_example.ipynb
     ├── model_deployment_example.ipynb
     └── utils_example.ipynb
-```
-
 ```
