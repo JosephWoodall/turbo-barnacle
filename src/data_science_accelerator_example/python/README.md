@@ -1,5 +1,7 @@
 # END TO END MACHINE LEARNING ENGINEERING WORKFLOW BOILERPLATE TEMPLATE
 
+![mle_pipeline](src/data_science_accelerator_example/python/assets/ml-engineering.jpg)
+
 ## OVERVIEW
 
 ### PROBLEM STATMENT
