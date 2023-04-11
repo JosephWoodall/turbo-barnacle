@@ -1,6 +1,6 @@
 # END TO END MACHINE LEARNING ENGINEERING WORKFLOW BOILERPLATE TEMPLATE
 
-![mle_pipeline](src/data_science_accelerator_example/python/assets/ml-engineering.jpg?raw=true "MLE PIPELINE")
+![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/data_science_accelerator_example/python/assets/ml-engineering.jpg?raw=true)
 
 ## OVERVIEW
 
