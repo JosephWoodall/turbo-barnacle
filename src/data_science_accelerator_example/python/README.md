@@ -4,6 +4,7 @@
 source: https://ml-ops.org/content/end-to-end-ml-workflow
 
 ## OVERVIEW
+One of the core tenants of data science that differentiates it from software engineering is its focus on experimentation. In software engineering, you develop, test, and push features that are primarily code-based. In data science, you conduct heaps of experiments while making changes in configuration, data, features, etc...The output isn't even necessarily "completed code," but artifacts such as model weights.
 
 ### PROBLEM STATMENT
 [Use this space to fill in the exact problem statment you wish to solve here]
