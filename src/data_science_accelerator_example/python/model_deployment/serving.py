@@ -1,24 +1,37 @@
 import joblib
 from preprocessing import ModelPreprocessing
+import pickle
+import numpy as np
+from flask import Flask, request, jsonify
 
 
-class ModelServing:
-    """ """
+class ModelServingWebService:
     def __init__(self, model_path):
-        self.model = joblib.load(model_path)
-        self.preprocessor = ModelPreprocessing()
+        self.app = Flask(__name__)
+        self.model = pickle.load(open(model_path, 'rb'))
 
-    def predict(self, input_data):
-        """
+        @self.app.route('/predict', methods=['POST'])
+        def predict():
+            # Extract data from POST request
+            data = request.json
 
-        :param input_data: 
+            # Make predictions on the data
+            input_data = np.array(data['input'])
+            output_data = self.model.predict(input_data)
 
-        """
-        # Preprocess input data
-        preprocessed_data = self.preprocessor.preprocess(input_data)
+            # Format response as JSON
+            response = {
+                'output': output_data.tolist()
+            }
 
-        # Make predictions using the trained model
-        predictions = self.model.predict(preprocessed_data)
+            return jsonify(response)
 
-        # Return predictions
-        return predictions
+    def run(self, port=8080):
+        self.app.run(port=port)
+
+
+'''
+# Example usage
+server = ModelServingWebService('path/to/serialized/model.pkl')
+server.run()
+'''
