@@ -53,6 +53,7 @@ Clearly note and describe:
 
 ### GATHER AND CLEAN DATA
 Use this space as a data dictionary for data relevant to the problem you want to solve, and clean/preprocess the data to ensure it's ready for modeling.  
+Clearly note and describe:    
 - What is/are the data source(s)  
 - What is/are the data source(s) formats? JSON, CSV, Parquet, Avro, Protobuf, Pickle?  
 - What is the data model? Relational? NoSQL? Graph? Structured or Unstructured?
@@ -62,9 +63,34 @@ Use this space as a data dictionary for data relevant to the problem you want to
 
 ### EXPLORE AND VISUALIZE DATA
 Use this space to make note of any interesting findings, patterns, or relationships from the EDA that might inform your modeling choices.  
+#### TRAINING DATA
+Clearly note and describe:  
 - Did your findings come from random sampling/non probability sampling/stratified sampling/weighted sampling/reservoir sampling/importance sampling?  
-- Are you going to be using supervised or unsupervised ML? If supervised, did your data come with hand-labels/natural labels or did you create them?
-
+- Are you going to be using supervised or unsupervised ML? If supervised, did your data come with hand-labels/natural labels or did you create them?  
+- Was there class imbalance that needed to be corrected? If so, how did you correct it? Data-level methods/Algorithm-level methods?  
+- Did you resample data-levels? If so, how did you resample? Oversample/Undersample?  
+- Did you augment the data? If so, which technique did you use? Simple Label-Preserving Transformations/Pertubation/Data Synthesis
+#### FEATURE ENGINEERING
+Clearly note and describe:  
+- Were there missing data values? If so, were they missing not at random, missing at random, or missing completely at random? How did you correct this?  Imputation/Deletion? If Imputation, which methods did you use to impute? If Deletion, why did you delete the records with missing values?  
+- Did you scale/normalize the continuous features? Did you discretize the features? Did you encode the categorical features? Did you feature cross? Did you include discrete/continuous positional embeddings?  
+- Was there Data Leakage? Was there group leakage? What was the cause? Did you split your time-correlated data by time instead? How did you detect the data leakage?  
+- Which features did you engineer? (see below for rules of thumb):  
+    - The more features you have, the more opportunities there are for data leakage.  
+    - Too many features can cause overfitting.  
+    - Too many features can increase memory required to serve a model, which, in turn, might require you to use more expensive machine/instance to serve your model.  
+    - Useless features become technical debts. Whenever your data pipeline changes, all the affected features need to be adjusted accordingly. For example, if one day your application decides to no longer take in information about users' age, all features that use users' age need to be updated.  
+- Did you include functionality for feature selection/importance? If not, you should. If so, which technique(s) did you use to select those features?  
+- Rules of thumb:  
+    - Split data by time into train/test/validation splits instead of doing it randomly.  
+    - If you oversample your data, do it after splitting.  
+    - Scale and normalize your data after splitting to avoid data leakage.  
+    - Use statistics from only the train split, instead of the entire data, to scale your features and handle missing values.  
+    - Understand how your data is generated, collected, and processed. Involve domain experts if possible.  
+    - Keep track of your data's lineage.  
+    - Understand feature importance to your model.  
+    - Use features that generalize well.  
+    - Remove no longer useful features from your models.  
 
 ### DEVELOP AND TRAIN MODELS
 [Use this space to explain the model of choice, or type of model of choice, and explain any evaluation methodologies for selecting the best model here]
