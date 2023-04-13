@@ -93,7 +93,41 @@ Clearly note and describe:
     - Remove no longer useful features from your models.  
 
 ### DEVELOP AND TRAIN MODELS
-[Use this space to explain the model of choice, or type of model of choice, and explain any evaluation methodologies for selecting the best model here]
+Use this space to explain the model of choice, or type of model of choice, and explain any evaluation methodologies for selecting the best model here. 
+- Rules of thumb:  
+    - Avoid the state-of-the-art trap.  
+    - Start with the simplest methods.  
+        - Simpler models are easier to deploy, starting simple and adding to it makes it super easy to debug, simple models serve as a nice baseline to which to compare complex models, and Ensembled models are really, really good, homie.  
+    - Avoid human bias in selecting models.  
+    - Evaluate good performance now versus good performance later.  
+    - Evaluate trade-offs.  
+    - Understand your model's assumptions.  
+        - "All models are wrong, but some are useful." -George Box, 1976.  
+- Did you use an Ensemble/single model? Bagging? Boosting? Stacking?  
+- Did you track your experiments and include the following:  
+    - Loss Curve
+    - Model Performance (like accuracy, F1, perplexity, recall, precision, etc...)  
+    - Speed of Model  
+    - System Performance Metrics (such as CPU/GPU utilization)  
+    - Parameter/Hyperparameter changes over time? Gradient norms, weight norms, etc...  
+- Did you version your experiments?  
+- Did you have to do any debugging of your model?  
+    - Debugging ML models is hard because models fail silently, it's slow to validate if you fixed the bug, and models are very cross-functionally complex.  
+    - Common reasons an ML model failed:  
+        - Theoretical Constraints  
+        - Poor Implementation of Model  
+        - Poor Choice of Hyperparameters  
+        - Data Problems  
+        - Poor Choice of Features  
+    - Debugging Techniques:  
+        - Start simple and gradually add more components.  
+        - Overfit a single batch.  
+        - Set a random seed.  
+- Did you distribute the training? If so, how? Data parrallelism? Model parallelism?
+- Did you use AutoML? If so, did you use soft (hyperparameter tuning optimization) or hard (architecture search and learned optimizer) AutoML? Why?  
+    - If you used Hard AutoML, include a function to showcase the final architecture!  
+- What were your offline evaluation metrics? Simple heuristics/zero rule baseline/human baseline/existing solutions?  
+- What were your offline evaluation methods? Pertubation tests/invariance tests/discretional expectation tests/model calibration/confidence measurement/slice-based evaluation?  
 
 ### DEPLOY MODELS
 [Use this space to explain where the best model will be deployed. Will it be a web service/api call? Will it be a batch prediction model living in the backend? Will it be an embedded model in an edge device? List this here]
