@@ -284,3 +284,13 @@ class GAN(nn.Module):
         optimizer.step()
 
         return d_loss.item() + g_loss.item()
+
+
+'''
+# or maybe just use automl in the select_model function?
+ def select_model(self, response_variable: str) -> tuple:
+    aml = H2OAutoML(max_models = 20, seed = 1)
+    aml.train(x = x, y = y, training_frame = train)
+    return aml.leader, aml.leaderboard[0]
+
+'''

@@ -30,7 +30,7 @@ Step 6: Business Analysis
     - Model performance needs to be evaluated against business goals and analyzed to generate business insights. These insights can then be used to eliminate unproductive projects or scope out new projects. This step is closely related to the first step.
 
 ### DS HIERARCHY OF NEEDS (CANNOT HAVE ONE WITHOUT THE PREVIOUS ONES)
-- Collect: Instrumentation, logging, sensors, external data, user-generated content.
+- Collect: Instrumentation, logging, sensors, external data (second or third-party data), internal data (first-party data), user-generated content.
 - Move/Store: Reliable data flow, infrastructure pipelines, ETL/ELT, structured and unstructured data storage.
 - Explore/Transform: Cleaning, anomaly detection, prep.
 - Aggregate/label: analytics, metrics, segments, aggregattes, features, training data.
