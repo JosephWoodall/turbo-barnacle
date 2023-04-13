@@ -130,7 +130,21 @@ Use this space to explain the model of choice, or type of model of choice, and e
 - What were your offline evaluation methods? Pertubation tests/invariance tests/discretional expectation tests/model calibration/confidence measurement/slice-based evaluation?  
 
 ### DEPLOY MODELS
-[Use this space to explain where the best model will be deployed. Will it be a web service/api call? Will it be a batch prediction model living in the backend? Will it be an embedded model in an edge device? List this here]
+Use this space to explain where the best model will be deployed. Will it be a web service/api call? Will it be a batch prediction model living in the backend? Will it be an embedded model in an edge device? List this here.  
+- Who are the end users? Are you deploying to business users, who only need plots? Are you deploying and keeping your models up and running for millions of users a day?  
+- Here are some myths on model deployment:  
+    - You can only deploy one or two ML models at a time (you can actually deploy...a lot...)  
+    - If we don't do anything, model performance remains the same (nope, models age like warm milk)  
+    - You wont need to update your models as much (ask yourself, "how often am I reasonably able to update my models?")  
+    - Most ML Engineers dont need to worry about Scale (um, yes they should)  
+- Will you be deploying your model for Batch Prediction, Online Prediction, and/or to Edge Devices? What about a web browser?  
+    - Batch prediction, which only uses batch features.  
+    - Online prediction, which uses only batch features (e.g. precomputed embeddings).  
+    - Online prediction, which uses both batch features and streaming features (also known as streaming prediction).  
+    - Edge prediction, which is where computation is done on the edge on individual devices, where no internet connections are required, and network latency is not a concern.  
+    - Browser prediction, which is an online prediction technique for running predictions in browser using WebAssembly.  
+- How are you decreasing the latency for online predictions? Model Compression? Low-Rank Factorization? Knowledge Distillation? Pruning? Quantization?  
+- How are you optimizing your model? Vectorization? Parallelization? Loop tiling? Operation Fusion? ML Techniques like autoTVM?
 
 ### MONITOR AND MAINTAIN MODELS
 [Use this space to explain how the deployed model's performance is being monitored over time and how it will be re-trained as necessary to ensure it continues to produce accurate/quality predictions]
