@@ -43,28 +43,28 @@ Step 6: Business Analysis:
 - AI, Deep Learning.  
 
 ### PROBLEM STATMENT
-[Use this space to fill in the exact problem statment you wish to solve here.  
+Use this space to fill in the exact problem statment you wish to solve here.  
 Clearly note and describe:  
 - what the input is  
 - what the output is  
 - what is the objective function  
 - what kind of task is it  
-]
+
 
 ### GATHER AND CLEAN DATA
-[Use this space as a data dictionary for data relevant to the problem you want to solve, and clean/preprocess the data to ensure it's ready for modeling.  
+Use this space as a data dictionary for data relevant to the problem you want to solve, and clean/preprocess the data to ensure it's ready for modeling.  
 - What is/are the data source(s)  
 - What is/are the data source(s) formats? JSON, CSV, Parquet, Avro, Protobuf, Pickle?  
 - What is the data model? Relational? NoSQL? Graph? Structured or Unstructured?
 - Desribe the ETL/ELT process, if any.  
 - What is the dataflow mode? Data passing through databases? RESTful (POST/GET)? RPC? Real-time via Kafka/Kenesis? PubSub/Message Queue? Batch or Stream?  
-]
+
 
 ### EXPLORE AND VISUALIZE DATA
-[Use this space to make note of any interesting findings, patterns, or relationships from the EDA that might inform your modeling choices.  
+Use this space to make note of any interesting findings, patterns, or relationships from the EDA that might inform your modeling choices.  
 - Did your findings come from random sampling/non probability sampling/stratified sampling/weighted sampling/reservoir sampling/importance sampling?  
 - Are you going to be using supervised or unsupervised ML? If supervised, did your data come with hand-labels/natural labels or did you create them?
-]
+
 
 ### DEVELOP AND TRAIN MODELS
 [Use this space to explain the model of choice, or type of model of choice, and explain any evaluation methodologies for selecting the best model here]
