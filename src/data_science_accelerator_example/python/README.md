@@ -45,10 +45,10 @@ Step 6: Business Analysis:
 ### PROBLEM STATMENT
 Use this space to fill in the exact problem statment you wish to solve here.  
 Clearly note and describe:  
-- what the input is  
-- what the output is  
-- what is the objective function  
-- what kind of task is it  
+- What the input is  
+- What the output is  
+- What is the objective function  
+- What kind of task is it  
 
 
 ### GATHER AND CLEAN DATA
