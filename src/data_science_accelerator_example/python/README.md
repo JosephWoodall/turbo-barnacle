@@ -147,7 +147,8 @@ Use this space to explain where the best model will be deployed. Will it be a we
 - How are you optimizing your model? Vectorization? Parallelization? Loop tiling? Operation Fusion? ML Techniques like autoTVM?
 
 ### MONITOR AND MAINTAIN MODELS
-[Use this space to explain how the deployed model's performance is being monitored over time and how it will be re-trained as necessary to ensure it continues to produce accurate/quality predictions]
+Use this space to explain how the deployed model's performance is being monitored over time and how it will be re-trained as necessary to ensure it continues to produce accurate/quality predictions. Remember, models age like warm milk.  
+
 
 ### SCALE UP AND OPTIMIZE
 [Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic? List this here]
