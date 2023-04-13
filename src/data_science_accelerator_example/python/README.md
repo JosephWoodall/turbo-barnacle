@@ -4,10 +4,41 @@
 source: https://ml-ops.org/content/end-to-end-ml-workflow
 
 ## OVERVIEW
-One of the core tenants of data science that differentiates it from software engineering is its focus on experimentation. In software engineering, you develop, test, and push features that are primarily code-based. In data science, you conduct heaps of experiments while making changes in configuration, data, features, etc...The output isn't even necessarily "completed code," but artifacts such as model weights.
+One of the core tenants of data science that differentiates it from software engineering is its focus on experimentation. In software engineering, you develop, test, and push features that are primarily code-based. In data science, you conduct heaps of experiments while making changes in configuration, data, features, etc...The output isn't even necessarily "completed code," but artifacts such as model weights. Furthermore, there are different components of an ML system. "ML algorithms" is usually what people think of when they say machine learning, but it's only a small part of the entire system.
+
+Please also keep in mind, for any ML project to succeed within a business organization, it's crucial to tie the performance of an ML system to the overall business performance. The effect of an ML project on business objectives can be hard to reason about. To gain a definite answer on the question of how ML metrics influence business metrics, experiments like A/B testing are often needed, regardless of model performance. Returns on investment in ML depend a lot on the maturity stage of adoption. The longer an organization has adopted ML, the more efficient your pipeline will run, the faster your development cycle will be, and the less engineering time you'll need, as well as the lower yourcloud bills will be, all of which lead to higher returns. According to Algorithmia, among companies that are more sophisticated in their ML adoption (having had models in production for over 5 years), almost 75% can deploy a model in under 30 days. Among those just getting started with their ML pipeline, 60% take over 30 days to deploy a model.
+
+### ML SYSTEM CHARACTERISTICS
+Most ML systems should have the following characteristics: 
+    - Reliability: the system should continue to perform the correct function at the desired level of performance even in the face of adversity (hardware or software faults, and even human error).
+    - Scalability: the system should have reasonable ways to up-scale or down-scale depending on usage.
+    - Maintainability: it's important to structure workloads and set up infrastructure in a way that different contributors can work using tools they're comfortable with, instead of one group of contributors forcing their tools on other groups. Code should be documented. Code, data, and artifacts should be versioned. Models should be sufficiently reproducible so that even when the original authors are not around, other contributors can have sufficient contexts to build on their work.
+    - Adaptability: the system should have some capacity for both discovering aspects for performance improvement and allowing updates without service interruption. Because ML systems are part code, part data, and data can change quickly, ML systems need to be able to evolve quickly. This is tightly linked to maintainability.
+
+### USUAL (SIMPLIFIED) STEPS INVOLVED IN DEVELOPING ML SYSTEMS
+Step 1: Project Scoping: 
+    - A project starts with scoping the project, laying out goals, objectives, and constraints. Stakeholders should be identified and involved. Resources should be estimated and allocated.
+Step 2: Data Engineering
+    - A vast majority of ML models today learn from data, so developing ML models starts with engineering data. 
+Step 3: ML Model Development
+    - With the initial set of training data, we'll need to extract features and develop initial models leveraging these features. This is the stage that requires the most ML knowledger and is most often covered in ML courses. 
+Step 4: Deployment
+    - After a model is developed, it needs to be made accessible to users. Developing an ML system is like writing- you'll never reach the point when your system is done. But you do reach the point when you have to put your system out there.
+Step 5: Monitoring and Continual Learning
+    - Once in production, models need to be monitored for performance decay and maintained to be adaptive to changing environments and changing requirements.
+Step 6: Business Analysis
+    - Model performance needs to be evaluated against business goals and analyzed to generate business insights. These insights can then be used to eliminate unproductive projects or scope out new projects. This step is closely related to the first step.
+
+### DS HIERARCHY OF NEEDS (CANNOT HAVE ONE WITHOUT THE PREVIOUS ONES)
+- Collect: Instrumentation, logging, sensors, external data, user-generated content.
+- Move/Store: Reliable data flow, infrastructure pipelines, ETL/ELT, structured and unstructured data storage.
+- Explore/Transform: Cleaning, anomaly detection, prep.
+- Aggregate/label: analytics, metrics, segments, aggregattes, features, training data.
+- Learn/Optimize: A/B testing, experimentation, simple ML algorithms.
+- AI, Deep Learning.
 
 ### PROBLEM STATMENT
-[Use this space to fill in the exact problem statment you wish to solve here]
+[Use this space to fill in the exact problem statment you wish to solve here. Clearly note and describe what the input is, what the output is, and the objective function.]
 
 ### GATHER AND CLEAN DATA
 [Use this space as a data dictionary for data relevant to the problem you want to solve, and clean/preprocess the data to ensure it's ready for modeling]
