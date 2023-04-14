@@ -2,6 +2,7 @@
 
 ![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/data_science_accelerator_example/python/assets/ml-engineering.jpg?raw=true)
 source: https://ml-ops.org/content/end-to-end-ml-workflow  
+
 Fantastic Resources for ML Systems:  
 - https://github.com/chiphuyen/dmls-book
 
