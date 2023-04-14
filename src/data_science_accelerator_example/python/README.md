@@ -45,6 +45,11 @@ Step 6: Business Analysis:
 - Learn/Optimize: A/B testing, experimentation, simple ML algorithms.  
 - AI, Deep Learning.  
 
+## ML SYSTEM CHECKLIST
+Developing an ML system from scratch is often a complex, daunting task because no one system is usually alike, and consist of many different components (ML algorithms, data, business logic, evaluation metrics, underlying infrastructure, etc...) and involve many different stakeholders (data scientists, ML engineers, business leaders, users, even society at large sometimes). ML systems are unique because they are data dependent, and data varies widly from one use case to the next.  
+
+As such, the below checklist will at least serve as a template to have when you start these conversations. Please fill out each part, dilligently, as it might just save you months worth of work later on.  
+
 ### PROBLEM STATMENT
 Use this space to fill in the exact problem statment you wish to solve here.  
 Clearly note and describe:  
@@ -200,6 +205,8 @@ Clearly outline and describe the usage of infrastructure components used in the 
 Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic?  
 - Will you be using Docker? If so, how will you manage those containers? Kubernetes?  
 - Will you be using a fully managed service to account for autoscaling? If so, which service?  
+
+## TEMPLATE DIRECTORY STRUCTURE
 
 ```bash
 data_science_accelerator/
