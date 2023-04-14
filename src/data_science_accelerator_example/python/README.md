@@ -179,12 +179,26 @@ Use this space to expalin how the deployed model will adapt to data distribution
 Use this space to summarize the infrastructure in use in order to account for EVERYTHING mentioned above in the previous sections. This is where you will list, in summary, each infrastructure component responsible for each component of the ML system. This will serve as a quick reference for stakeholders invested into this specific ML system. Infrastructure here refers to the set of fundamental facilities that support the development and maintenance of the ML system.  
 Clearly outline and describe the usage of infrastructure components used in the following four, generalized layers (remember, multi-cloud is ok! and also remember, if you don't use Docker then I will be sad):  
 - Storage and Compute:  
+    - How much storage do you need? Which solution?  
+    - How much compute do you need? Which solution? What is the GPU count, vCPU, memory, and GPU memory count?  
 - Resource Management:  
+    - Are you using Cron jobs?  
+    - Are you using Schedulers?  
+    - Are you using Orchestrators? (airflow, argo, prefect, kubeflow, metaflow, etc?...Metaflow is my preferred rm)  
 - ML Platform:  
+    - Model Deployment:  
+    - Model Store (including model definition, model parameters, featurize/predict functions, dependencies, data, model generation code, experiment artifacts, tags)  
+    - Feature Store (including feature management, feature computation, feature consistency)  
 - Development Environment:  
-
-### SCALE UP AND OPTIMIZE
-[Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic? List this here]
+    - What is/are your IDE(s)?  
+    - How are you implementing Versioning?  
+    - How are you implementing CI/CD?  
+    - How are you standardizing the Dev Environment?  
+    - Are you implementing container tech like Docker? Are you implementing Kubernetes to manage those instances?  
+#### SCALE UP AND OPTIMIZE
+Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic?  
+- Will you be using Docker? If so, how will you manage those containers? Kubernetes?  
+- Will you be using a fully managed service to account for autoscaling? If so, which service?  
 
 ```bash
 data_science_accelerator/
