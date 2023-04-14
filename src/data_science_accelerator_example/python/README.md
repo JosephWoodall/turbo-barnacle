@@ -2,6 +2,8 @@
 
 ![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/data_science_accelerator_example/python/assets/ml-engineering.jpg?raw=true)
 source: https://ml-ops.org/content/end-to-end-ml-workflow
+Fantastic Resources for ML Systems:  
+- https://github.com/chiphuyen/dmls-book
 
 ## OVERVIEW
 One of the core tenants of data science that differentiates it from software engineering is its focus on experimentation. In software engineering, you develop, test, and push features that are primarily code-based. In data science, you conduct heaps of experiments while making changes in configuration, data, features, etc...The output isn't even necessarily "completed code," but artifacts such as model weights. Furthermore, there are different components of an ML system. "ML algorithms" is usually what people think of when they say machine learning, but it's only a small part of the entire system.
@@ -162,6 +164,19 @@ Observability (also called instrumentation) refers to setting up the ML system i
 - What are you including in your logs?  
 - Are you using any Dashboards? What are they? Where are they?  
 - What alerts do you have in place? What is your alert policy? What are the notification channels? What is your description format of your alerts?  
+
+### CONTINUAL LEARNING AND TESTING IN PRODUCTION
+Use this space to expalin how the deployed model will adapt to data distribution shifts in terms of your infrastructure. The goal of continual learning is to safely and efficiently automate the update of a model to adapt to the data, ensuring the ML system is maintainable and adaptable to changing environments, e.g., updating models that are in production in micro-batches, for example, updating the existing model after every 512 or 1,024 examples- the exact number is task dependent.  
+- Will you use stateless retraining (training from scratch each time) or stateful training (model continues to train on new data)?  
+- Does your system account for both types of retraining? If so, what is your training frequency for this deployed model? (hint hint: as often as you can, same goes for model updates, too)   
+- How are you overcoming the challenges of continual learning? List your response to each of the below:  
+    - Fresh Data Access:  
+    - Evaluation:  
+    - Algorithm:  
+- What is your plan to test in production? Shadow deployment, A/B testing, Canary release, Interleaving experiments, Bandits?  
+
+### INFRASTRUCTURE AND TOOLING FOR MLOPS SYSTEM
+Use this space to summarize the infrastructure in use in order to account for EVERYTHING mentioned above in the previous sections. This is where you will list, in summary, each infrastructure component responsible for each component of the ML system. This will serve as a quick reference for stakeholders invested into this specific ML system.
 
 ### SCALE UP AND OPTIMIZE
 [Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic? List this here]
