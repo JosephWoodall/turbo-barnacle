@@ -176,7 +176,12 @@ Use this space to expalin how the deployed model will adapt to data distribution
 - What is your plan to test in production? Shadow deployment, A/B testing, Canary release, Interleaving experiments, Bandits?  
 
 ### INFRASTRUCTURE AND TOOLING FOR MLOPS SYSTEM
-Use this space to summarize the infrastructure in use in order to account for EVERYTHING mentioned above in the previous sections. This is where you will list, in summary, each infrastructure component responsible for each component of the ML system. This will serve as a quick reference for stakeholders invested into this specific ML system.
+Use this space to summarize the infrastructure in use in order to account for EVERYTHING mentioned above in the previous sections. This is where you will list, in summary, each infrastructure component responsible for each component of the ML system. This will serve as a quick reference for stakeholders invested into this specific ML system. Infrastructure here refers to the set of fundamental facilities that support the development and maintenance of the ML system.  
+Clearly outline and describe the usage of infrastructure components used in the following four, generalized layers (remember, multi-cloud is ok! and also remember, if you don't use Docker then I will be sad):  
+- Storage and Compute:  
+- Resource Management:  
+- ML Platform:  
+- Development Environment:  
 
 ### SCALE UP AND OPTIMIZE
 [Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic? List this here]
