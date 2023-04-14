@@ -148,7 +148,20 @@ Use this space to explain where the best model will be deployed. Will it be a we
 
 ### MONITOR AND MAINTAIN MODELS
 Use this space to explain how the deployed model's performance is being monitored over time and how it will be re-trained as necessary to ensure it continues to produce accurate/quality predictions. Remember, models age like warm milk.  
-
+#### ML SYSTEM FAILURES
+- Rules of Thumb for Failures:  
+    - Software System Failures (Dependency, Deployment, Hardware, or Downtime/Crashing Failures)
+    - ML Specific Failures (Production data differing from training data, Edge cases, Degenerate feedback loops (this is a biggie))
+    - Data Distribution Shifts (Covariate Shift, Label Shift, Concept Drift)
+#### MONITORING AND OBSERVABILITY
+Monitoring refers to the act of tracking, measuring, and logging different metrics that can help determine when something goes wrong.  
+Observability (also called instrumentation) refers to setting up the ML system in a way that gives us visibility into the system to help us investigate what went wrong, and is part of monitoring.  
+- How are you monitoring the system?  
+    - List your Operational Metrics here:  
+    - List your ML-Specific Metrics here:  (accuracy-related metrics, predictions, features, and raw inputs)
+- What are you including in your logs?  
+- Are you using any Dashboards? What are they? Where are they?  
+- What alerts do you have in place? What is your alert policy? What are the notification channels? What is your description format of your alerts?  
 
 ### SCALE UP AND OPTIMIZE
 [Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic? List this here]
