@@ -92,7 +92,53 @@ class Main(FlowSpec):
         - REPEAT PIPELINE N-TIMES STARTING AT *** STEP
 
     """
-    pass
+
+    '''DATA PIPELINE'''
+    @step
+    def source_data_retrieval(self):
+        pass
+
+    @step
+    def exploration_and_validation(self):
+        pass
+
+    @step
+    def cleaning(self):
+        pass
+
+    @step
+    def data_versioning(self):
+        pass
+
+    '''MACHINE LEARNING PIPELINE'''
+    @step
+    def model_engineering(self):
+        pass
+
+    @step
+    def model_evaluation(self):
+        pass
+
+    @step
+    def model_packaging(self):
+        pass
+
+    @step
+    def model(self):
+        pass
+
+    '''SOFTWARE CODE PIPELINE'''
+    @step
+    def build_and_integration_tests(self):
+        pass
+
+    @step
+    def deployment_dev_to_production(self):
+        pass
+
+    @step
+    def monitoring_and_logging(self):
+        pass
 
 
 if __name__ == "__main__":
