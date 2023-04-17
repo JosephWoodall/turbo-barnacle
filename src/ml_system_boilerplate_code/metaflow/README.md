@@ -205,3 +205,5 @@ Clearly outline and describe the usage of infrastructure components used in the 
 Use this space to explain how the deployed model's scalability is accounted for if/when its usage grows. Will infrastructure scale up? Will you optimize the model's deployment to handle increased traffic?  
 - Will you be using Docker? If so, how will you manage those containers? Kubernetes?  
 - Will you be using a fully managed service to account for autoscaling? If so, which service?  
+
+## HOW TO RUN
