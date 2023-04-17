@@ -20,5 +20,13 @@ from metaflow import FlowSpec, step
 
 
 class Main(FlowSpec):
+    """
+    Main runs the machine learning microservice according to the specified workflow.
 
+    This class will define the transition outlined in diagram of the README.md
+    """
     pass
+
+
+if __name__ == "__main__":
+    Main()
