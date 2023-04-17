@@ -1,8 +1,3 @@
-# turbo-barnacle
-Reusable library! Hooray!
-
-### Directory Tree
-```bash
 ├──data/
 │   ├──internetIndexer/
 │   │   └──internetIndexer.py
@@ -452,4 +447,3 @@ Reusable library! Hooray!
 └──spark/
     └──experimentation_in_spark/
         └──binary_classification.py
-```
