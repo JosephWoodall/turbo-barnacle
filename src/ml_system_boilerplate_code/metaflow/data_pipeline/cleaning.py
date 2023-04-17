@@ -1,0 +1,2 @@
+class Cleaning:
+    pass
