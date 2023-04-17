@@ -15,3 +15,10 @@ from machine_learning_pipeline.model_packaging import ModelPackaging
 from software_code_pipeline.build_and_integration_tests import BuildAndIntegrationTests
 from software_code_pipeline.deployment_dev_to_production import DeploymentDevToProd
 from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
+
+from metaflow import FlowSpec, step
+
+
+class Main(FlowSpec):
+
+    pass
