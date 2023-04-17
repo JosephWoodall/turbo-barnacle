@@ -23,7 +23,10 @@ class Main(FlowSpec):
     """
     Main runs the machine learning microservice according to the specified workflow.
 
-    This class will define the transition outlined in diagram of the README.md
+    This class will define the transition outlined in diagram of the README.md.
+
+    Legend: 
+        - reiterate targets triggered by their home step and traverse the pipeline, recursively, if their criteria is not satisfied
 
     Workflow: 
     PROGRAM START
