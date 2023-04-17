@@ -2,6 +2,7 @@
 Reusable library! Hooray!
 
 ### Directory Tree
+Please note, the below directory tree was generated using the 'tree.py' script and its contents may also be found in the 'directory_structure_tree.txt' file
 ```bash
 ├──data/
 │   ├──internetIndexer/
