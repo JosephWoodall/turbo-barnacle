@@ -1,6 +1,6 @@
 # MACHINE LEARNING SYSTEM BOILERPLATE TEMPLATE
 
-![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src//home/josephwoodall/workspace/turbo-barnacle/src/ml_system_boilerplate_code/metaflow/assets/ml-engineering.jpg?raw=true)
+![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/metaflow/assets/ml-engineering.jpg?raw=true)
 source: https://ml-ops.org/content/end-to-end-ml-workflow  
 
 Fantastic Resources for ML Systems:  
