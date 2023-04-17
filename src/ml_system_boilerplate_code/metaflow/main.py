@@ -139,8 +139,8 @@ class Main(FlowSpec):
         """
         model_engineering executes the ModelEngineering class
         """
-        send_back_to_source_data_retrieval = ''
-        if send_back_to_source_data_retrieval != 1:
+        send_back_to_source_data_retrieval_criteria = ''
+        if send_back_to_source_data_retrieval_criteria != 1:
             self.next(self.source_data_retrieval)
         else:
             self.next(self.model_evaluation)
@@ -150,8 +150,8 @@ class Main(FlowSpec):
         """
         model_evaluation executes the ModelEvaluation class
         """
-        send_back_to_model_engineering = ''
-        if send_back_to_model_engineering != 1:
+        send_back_to_model_engineering_criteria = ''
+        if send_back_to_model_engineering_criteria != 1:
             self.next(self.model_engineering)
         else:
             self.next(self.model_packaging)
@@ -191,8 +191,8 @@ class Main(FlowSpec):
         """
         monitoring_and_logging executes the MonitoringAndLogging class
         """
-        send_back_to_cleaning = ''
-        if send_back_to_cleaning == 1:
+        send_back_to_cleaning_criteria = ''
+        if send_back_to_cleaning_criteria != 1:
             self.next(self.cleaning)
 
 
