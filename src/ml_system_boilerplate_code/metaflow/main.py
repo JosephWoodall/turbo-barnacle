@@ -33,7 +33,9 @@ class Main(FlowSpec):
     This class will define the transition outlined in diagram of the README.md.
 
     Legend: 
-        - reiterate targets triggered by their home step and traverse the pipeline, recursively, if their criteria is not satisfied
+        - reiterate targets triggered by their home step and traverse the pipeline, recursively, if their criteria is not satisfied, specified as below: 
+            - 1 = send back to reiterate target
+            - 0 = do not send back to reiterate target
 
     Workflow: 
     PROGRAM START
@@ -100,20 +102,37 @@ class Main(FlowSpec):
 
     """
 
+    def __init__(self):
+        self.Cleaning = Cleaning()
+        self.DataVersioning = DataVersioning()
+        self.ExplorationAndValidation = ExplorationAndValidation()
+        self.SourceDataRetrieval = SourceDataRetrieval()
+
+        self.Model = Model()
+        self.ModelEngineering = ModelEngineering()
+        self.ModelEvaluation = ModelEvaluation()
+        self.ModelPackaging = ModelPackaging()
+
+        self.BuildAndIntegrationTests = BuildAndIntegrationTests()
+        self.DeploymentDevToProduction = DeploymentDevToProduction()
+        self.MonitoringAndLogging = MonitoringAndLogging()
+
     '''DATA PIPELINE'''
     @step
     def source_data_retrieval(self):
         """
         source_data_retrieval executes the SourceDataRetrieval class
         """
-        pass
+        self.SourceDataRetrieval.call_all_methods()
+        self.next(self.exploration_and_validation)
 
     @step
     def exploration_and_validation(self):
         """
         exploration_and_validation executes the ExplorationAndValidation class
         """
-        pass
+        self.ExplorationAndValidation.call_all_methods()
+        self.next(self.cleaning)
 
     @step
     def cleaning(self):
@@ -121,9 +140,10 @@ class Main(FlowSpec):
         cleaning executes the Cleaning class.
         """
         send_back_to_exploration_and_validation_criteria = ''
-        if send_back_to_exploration_and_validation_criteria != 1:
+        if send_back_to_exploration_and_validation_criteria != 0:
             self.next(self.exploration_and_validation)
         else:
+            self.Cleaning.call_all_methods()
             self.next(self.data_versioning)
 
     @step
@@ -131,7 +151,8 @@ class Main(FlowSpec):
         """
         data_versioning executes the DataVersioning class
         """
-        pass
+        self.DataVersioning.call_all_methods()
+        self.next(self.model_engineering)
 
     '''MACHINE LEARNING PIPELINE'''
     @step
@@ -140,9 +161,10 @@ class Main(FlowSpec):
         model_engineering executes the ModelEngineering class
         """
         send_back_to_source_data_retrieval_criteria = ''
-        if send_back_to_source_data_retrieval_criteria != 1:
+        if send_back_to_source_data_retrieval_criteria != 0:
             self.next(self.source_data_retrieval)
         else:
+            self.ModelEngineering.call_all_methods()
             self.next(self.model_evaluation)
 
     @step
@@ -151,9 +173,10 @@ class Main(FlowSpec):
         model_evaluation executes the ModelEvaluation class
         """
         send_back_to_model_engineering_criteria = ''
-        if send_back_to_model_engineering_criteria != 1:
+        if send_back_to_model_engineering_criteria != 0:
             self.next(self.model_engineering)
         else:
+            self.ModelEvaluation.call_all_methods()
             self.next(self.model_packaging)
 
     @step
@@ -161,13 +184,23 @@ class Main(FlowSpec):
         """
         model_packaging executes the ModelPackaging class
         """
+        self.ModelPackaging.call_all_methods()
         self.next(self.model)
 
     @step
     def model(self):
         """
         model executes the Model class
+
+        includes check if the data (from DataVersioning) and model (from Model) have the same pretense version number.
         """
+        data_versioning_pretense = ''
+        model_versioning_pretense = ''
+        try:
+            data_versioning_pretense != model_versioning_pretense
+        except ValueError as ve:
+            pass  # print the value error here or return it to the debug board?
+        self.Model.call_all_methods()
         self.next(self.build_and_integration_tests)
 
     '''SOFTWARE CODE PIPELINE'''
@@ -176,6 +209,7 @@ class Main(FlowSpec):
         """
         build_and_integration_tests executes the BuildAndIntegrationTests class
         """
+        self.BuildAndIntegrationTests.call_all_methods()
         self.next(self.deployment_dev_to_production)
 
     @step
@@ -183,6 +217,7 @@ class Main(FlowSpec):
         """
         deployment_dev_to_production executes the DeploymentDevToProduction class
         """
+        self.DeploymentDevToProduction.call_all_methods()
         self.next(self.monitoring_and_logging)
 
     @step
@@ -190,9 +225,14 @@ class Main(FlowSpec):
     def monitoring_and_logging(self):
         """
         monitoring_and_logging executes the MonitoringAndLogging class
+
+
         """
-        send_back_to_cleaning_criteria = ''
-        if send_back_to_cleaning_criteria != 1:
+        while True:
+            self.MonitoringAndLogging.call_all_methods()
+            send_back_to_cleaning_criteria = ''
+            if send_back_to_cleaning_criteria != 0:
+                continue
             self.next(self.cleaning)
 
 
