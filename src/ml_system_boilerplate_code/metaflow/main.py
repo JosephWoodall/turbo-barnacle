@@ -228,7 +228,7 @@ class Main(FlowSpec):
         build_and_integration_tests executes the BuildAndIntegrationTests class
         """
         self.BuildAndIntegrationTests.call_all_methods()
-        self.next(self.deployment_dev_to_production)
+        self.next(self.deployment_development_to_production)
 
     @step
     def deployment_development_to_production(self):
