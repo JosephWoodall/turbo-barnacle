@@ -1,10 +1,10 @@
 # MACHINE LEARNING SYSTEM BOILERPLATE TEMPLATE
 
-![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/metaflow/assets/ML_SYSTEM_BOILERPLATE_CODE_V1.jpg?raw=true)
-source: https://ml-ops.org/content/end-to-end-ml-workflow  
+![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/metaflow/assets/ML_SYSTEM_BOILERPLATE_CODE_DIAGRAM_V1.jpg?raw=true)
 
 Fantastic Resources for ML Systems:  
-- https://github.com/chiphuyen/dmls-book
+- https://github.com/chiphuyen/dmls-book  
+- https://ml-ops.org/content/end-to-end-ml-workflow  
 
 ## OVERVIEW
 One of the core tenants of data science that differentiates it from software engineering is its focus on experimentation. In software engineering, you develop, test, and push features that are primarily code-based. In data science, you conduct heaps of experiments while making changes in configuration, data, features, etc...The output isn't even necessarily "completed code," but artifacts such as model weights. Furthermore, there are different components of an ML system. "ML algorithms" is usually what people think of when they say machine learning, but it's only a small part of the entire system.
