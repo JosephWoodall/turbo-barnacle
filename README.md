@@ -13,6 +13,7 @@ Please note, the below directory tree was generated using the 'tree.py' script a
 │   └──dataLoader.py
 ├──ml_system_boilerplate_code/
 │   ├──metaflow/
+│   │   ├──Dockerfile
 │   │   ├──machine_learning_pipeline/
 │   │   │   ├──model_packaging.py
 │   │   │   ├──model_evaluation.py
@@ -21,6 +22,8 @@ Please note, the below directory tree was generated using the 'tree.py' script a
 │   │   │   └──model.py
 │   │   ├──assets/
 │   │   │   └──ml-engineering.jpg
+│   │   ├──tests/
+│   │   │   └──__init__.py
 │   │   ├──software_code_pipeline/
 │   │   │   ├──monitoring_and_logging.py
 │   │   │   ├──deployment_dev_to_production.py
@@ -33,6 +36,8 @@ Please note, the below directory tree was generated using the 'tree.py' script a
 │   │   │   ├──data_versioning.py
 │   │   │   └──__init__.py
 │   │   ├──README.md
+│   │   ├──utils/
+│   │   │   └──__init__.py
 │   │   └──main.py
 │   └──kubeflow/
 ├──tests/
@@ -188,59 +193,6 @@ Please note, the below directory tree was generated using the 'tree.py' script a
 │   │           └──binaryClassification.cs
 │   └──GenerativePretrainedTransformer/
 │       └──gpt_from_scratch.py
-├──data_science_accelerator_example/
-│   ├──python/
-│   │   ├──Dockerfile
-│   │   ├──machine_learning_pipeline/
-│   │   │   ├──model_training/
-│   │   │   │   ├──model_evaluation.py
-│   │   │   │   ├──data_preprocessing.py
-│   │   │   │   ├──model_export.py
-│   │   │   │   ├──model_selection.py
-│   │   │   │   └──__init__.py
-│   │   │   └──model_deployment/
-│   │   │       ├──serving.py
-│   │   │       ├──preprocessing.py
-│   │   │       ├──monitoring.py
-│   │   │       └──__init__.py
-│   │   ├──assets/
-│   │   │   └──ml-engineering.jpg
-│   │   ├──tests/
-│   │   │   ├──test_data_prep.py
-│   │   │   ├──test_utils.py
-│   │   │   ├──test_data_viz.py
-│   │   │   ├──test_model_training.py
-│   │   │   ├──test_model_deployment.py
-│   │   │   └──__init__.py
-│   │   ├──software_code_pipeline/
-│   │   ├──examples/
-│   │   │   ├──model_training_example.ipynb
-│   │   │   ├──data_viz_example.ipynb
-│   │   │   ├──model_deployment_example.ipynb
-│   │   │   ├──utils_example.ipynb
-│   │   │   └──data_prep_example.ipynb
-│   │   ├──data_pipeline/
-│   │   │   ├──data_viz/
-│   │   │   │   ├──plot_utils.py
-│   │   │   │   ├──dashboard.py
-│   │   │   │   └──__init__.py
-│   │   │   └──data_prep/
-│   │   │       ├──retrieval.py
-│   │   │       ├──pipeline.py
-│   │   │       ├──cleaning.py
-│   │   │       ├──validation.py
-│   │   │       ├──feature_engineering.py
-│   │   │       ├──storage.py
-│   │   │       ├──transformation.py
-│   │   │       └──__init__.py
-│   │   ├──README.md
-│   │   ├──utils/
-│   │   │   ├──metrics.py
-│   │   │   ├──config.py
-│   │   │   ├──logging.py
-│   │   │   └──__init__.py
-│   │   └──requirements.txt
-│   └──c#/
 ├──useCases/
 │   ├──findingSimilarImages/
 │   │   └──cnnFindingSimilarImages.py
@@ -452,5 +404,4 @@ Please note, the below directory tree was generated using the 'tree.py' script a
 └──spark/
     └──experimentation_in_spark/
         └──binary_classification.py
-
 ```
