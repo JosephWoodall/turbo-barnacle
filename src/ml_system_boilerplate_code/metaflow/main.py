@@ -1,7 +1,3 @@
-'''
-defines the pipeline components to be run in the specified order
-'''
-
 from data_pipeline.cleaning import Cleaning
 from data_pipeline.data_versioning import DataVersioning
 from data_pipeline.exploration_and_validation import ExplorationAndValidation
@@ -13,8 +9,10 @@ from machine_learning_pipeline.model_evaluation import ModelEvaluation
 from machine_learning_pipeline.model_packaging import ModelPackaging
 
 from software_code_pipeline.build_and_integration_tests import BuildAndIntegrationTests
-from software_code_pipeline.deployment_dev_to_production import DeploymentDevToProduction
+from software_code_pipeline.deployment_dev_to_production import DeploymentDevelopmentToProduction
 from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
+
+from tests.main_test import MainTest
 
 from metaflow import FlowSpec, step, project, schedule, card
 
@@ -28,7 +26,7 @@ CRON_SCHEDULE = ''
 @project(name=ML_SYSTEM_SERVICE_NAME)
 class Main(FlowSpec):
     """
-    Main runs the machine learning microservice according to the specified workflow.
+    Main runs the machine learning microservice according to the specified workflow, as such, this class defines the pipeline components to be run in the specified order.
 
     This class will define the transition outlined in diagram of the README.md.
 
@@ -39,6 +37,9 @@ class Main(FlowSpec):
 
     Workflow: 
     PROGRAM START
+    |
+    V
+        - PRE-CHECK TEST: Run tests.main_test.MainTest test class if all steps have required inputs/functionality to successfully execute.
     |
     V
     DATA PIPELINE ENTRY: 
@@ -103,6 +104,8 @@ class Main(FlowSpec):
     """
 
     def __init__(self):
+        self.MainTest = MainTest()
+
         self.Cleaning = Cleaning()
         self.DataVersioning = DataVersioning()
         self.ExplorationAndValidation = ExplorationAndValidation()
@@ -114,8 +117,23 @@ class Main(FlowSpec):
         self.ModelPackaging = ModelPackaging()
 
         self.BuildAndIntegrationTests = BuildAndIntegrationTests()
-        self.DeploymentDevToProduction = DeploymentDevToProduction()
+        self.DeploymentDevToProduction = DeploymentDevelopmentToProduction()
         self.MonitoringAndLogging = MonitoringAndLogging()
+
+    '''PRE-CHECK TEST'''
+    @step
+    def main_test(self):
+        """
+        main_test executes the pre-check tests to test if the functions below have their required inputs/functionality 
+
+        ####THIS STEP NEEDS A REWORK, JUST WROTE THIS IN FOR PLACEHOLDER PURPOSES####
+        """
+        try:
+            if self.MainTest.call_all_methods():
+                self.next(self.source_data_retrieval)
+        except ValueError as ve:
+            print("At least one step has failed its pre-check. Please check Metaflow checks for step(s) that failed to pass pre-check!")
+            exit()
 
     '''DATA PIPELINE'''
     @step
@@ -213,7 +231,7 @@ class Main(FlowSpec):
         self.next(self.deployment_dev_to_production)
 
     @step
-    def deployment_dev_to_production(self):
+    def deployment_development_to_production(self):
         """
         deployment_dev_to_production executes the DeploymentDevToProduction class
         """
@@ -224,14 +242,12 @@ class Main(FlowSpec):
     @card
     def monitoring_and_logging(self):
         """
-        monitoring_and_logging executes the MonitoringAndLogging class
-
-
+        monitoring_and_logging executes the MonitoringAndLogging class. Model decay trigger is included here.
         """
         while True:
             self.MonitoringAndLogging.call_all_methods()
-            send_back_to_cleaning_criteria = ''
-            if send_back_to_cleaning_criteria != 0:
+            send_back_to_cleaning_criteria_model_decay_trigger = ''
+            if send_back_to_cleaning_criteria_model_decay_trigger != 0:
                 continue
             self.next(self.cleaning)
 

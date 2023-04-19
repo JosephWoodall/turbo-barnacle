@@ -4,7 +4,7 @@ exposes the development environment model to the production environment
 import inspect
 
 
-class DeploymentDevToProduction:
+class DeploymentDevelopmentToProduction:
 
     def __init__(self):
         pass
@@ -17,5 +17,5 @@ class DeploymentDevToProduction:
             func()  # calls the function on self
 
 
-deployment_dev_to_production = DeploymentDevToProduction()
-deployment_dev_to_production.call_all_methods()
+deployment_development_to_production = DeploymentDevelopmentToProduction()
+deployment_development_to_production.call_all_methods()
