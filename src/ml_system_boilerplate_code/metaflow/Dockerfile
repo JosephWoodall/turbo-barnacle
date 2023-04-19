@@ -15,4 +15,4 @@ COPY . .
 ENV FLASK_APP=app.py
 
 # Run the command to start your application (e.g. a Flask app).
-CMD ["python", "app.py"]
+CMD ["python", "main.py"]
