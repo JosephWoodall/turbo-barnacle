@@ -94,3 +94,31 @@ The step_functions module sets up remote computation resources that come with or
 | <a name="output_ui_alb_arn"></a> [ui\_alb\_arn](#output\_ui\_alb\_arn) | UI ALB ARN |
 | <a name="output_ui_alb_dns_name"></a> [ui\_alb\_dns\_name](#output\_ui\_alb\_dns\_name) | UI ALB DNS name |
 <!-- END_TF_DOCS -->
+
+## HOW TO DEPLOY using AWS EKS
+
+### Preparation
+1. Install Terraform on local machine.
+2. Install Aws CLI.
+3. Install kubectl.
+
+### Provision AWS Resources
+1. Log into AWS using Aws cli.
+```bash
+aws config
+```
+2. Initialize the Terraform Workspace.
+```bash
+cd .../infrastructure && terraform init
+```
+3. Apply terraform template to provision the aws infrastructure 
+```bash
+terraform apply
+```
+
+### End User Setup Instructions
+1. Make note of the eks cluster name that is provisioned from the above step, and use the AWS cli to generate cluster configuration:
+```bash
+aws eks update-kubeconfig --name <cluster name> configure
+```
+2. Createa a file ".../.metaflowconfig/config.json" with the contents of "config.json". If this file already exists, keep a backup of it and move it aside first.
