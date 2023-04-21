@@ -213,6 +213,11 @@ Project Name:
 Date:   
 Team Members:   
 
+0. 3 Dilemmas of MLOps:    
+- Tooling: Should we buy, use existing open-source or build in-house tools for any of the MLOps components? What are the risks, trade-offs, and impacts of each of the decisions? 
+- Platforms: Should we agree on one MLOps platform or create a hybrid solution? What are the risks, trade-offs, and impacts of each of the decisions? 
+- Skills: How expensive is it to either acquire or educate our own machine learning engineering talents?  
+
 1. Value Proposition:   
 - What are we trying to do for the end-user(s)? 
 - What is the problem?  
@@ -294,6 +299,6 @@ Team Members:
 - What kind of metadata in code, data, and model management need to be collected? (e.g., the pipeline run ID, trigger, performed steps, start/end timestamps, train/test dataset split, hyperparameters, model object, various statistics/profiling, etc.)  
 - Are any ML governance processes included in the MLOps lifecycle? What metadata will be required?  
 - What is the documentation strategy: Do we treat documentation as a code? (examples: Datasheets for Datasets and Model Card for Model Reporting)   
-- What operational metrics need to be collected? E.g., time to restore, change fail percentage. 
+- What operational metrics need to be collected? E.g., time to restore, change fail percentage.  
 
 ## HOW TO RUN
