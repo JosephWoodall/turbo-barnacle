@@ -259,14 +259,19 @@ Team Members:
 - What is the workflow for the CI pipeline? What tools are used?  
 - What are the non-functional requirements for the ML model (efficiency, fairness, robustness, interpretability, etc.)? How are they tested? Are these tests integrated into the CI/CT workflow?  
 
-7. Model Deployment:    
+7. Model Registry and Model Versioning: 
+- Is this optional or mandatory? The model registry might be mandatory if you have multiple models in production and need to track them all. The reproducibility requirement might be the reason that you need the model versioning.  
+- Where should new ML models be stored and tracked?   
+- What versioning standards are used? (e.g., semantic versioning) 
+
+8. Model Deployment:    
 - What is the delivery format for the model?  
 - What is the expected time for changes? (Time from commit to production) 
 - What is the target environment to serve predictions?    
 - What is your model release policy? Is A/B testing or multi-armed bandits testing required? (e.g., for measuring the effectiveness of the new model on business metrics and deciding what model should be promoted into the production environment)  
 - What is your deployment strategy? (e.g. shadow/canary deployment required?) 
 
-8. Prediction Serving:  
+9. Prediction Serving:  
 - What is the serving mode? (batch or online) 
 - Is distributed model serving required?  
 - Is multi-model prediction serving required? 
@@ -275,7 +280,7 @@ Team Members:
 - Do you need ML inference accelerators (TPUs)?   
 - What is the expected target volume of predictions per month or hours?  
 
-9. ML Model, Data, and System Monitoring:   
+10. ML Model, Data, and System Monitoring:   
 - Is this optional or mandatory? For instance, do you need to assess the effectiveness of your model during prediction serving? Do you need to monitor your model for performance degradation and trigger an alert if your model starts performing badly? Is the model retraining based on events such as data or concept drift?  
 - What ML metrics are collected?  
 - What domain-specific metrics are collected? 
@@ -285,7 +290,7 @@ Team Members:
 - What is the alerting strategy? (thresholds) 
 - What triggers the model re-training? (ad hoc, event-based, or scheduled)    
 
-10. Metadata Store: 
+11. Metadata Store: 
 - What kind of metadata in code, data, and model management need to be collected? (e.g., the pipeline run ID, trigger, performed steps, start/end timestamps, train/test dataset split, hyperparameters, model object, various statistics/profiling, etc.)  
 - Are any ML governance processes included in the MLOps lifecycle? What metadata will be required?  
 - What is the documentation strategy: Do we treat documentation as a code? (examples: Datasheets for Datasets and Model Card for Model Reporting)   
