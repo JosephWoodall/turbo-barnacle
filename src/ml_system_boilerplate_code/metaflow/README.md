@@ -206,4 +206,89 @@ Use this space to explain how the deployed model's scalability is accounted for 
 - Will you be using Docker? If so, how will you manage those containers? Kubernetes?  
 - Will you be using a fully managed service to account for autoscaling? If so, which service?  
 
+## MLOps Stack Canvas (CRISP-ML(Q))
+For each ML Service created, please complete, in detail, answers to the following BEFORE development begins (preferably in a separate csv file stored under assets/):  
+
+Project Name:   
+Date:   
+Team Members:   
+
+1. Value Proposition:   
+- What are we trying to do for the end-user(s)? 
+- What is the problem?  
+- Why is this an important problem? 
+- Who is our persona? (ML Engineer, Data Scientist, Operation/Business User)    
+- Who owns the models in production?    
+
+2. Data Sources and Data Versioning:    
+- Is this data versioning optional or mandatory? E.g., is data versioning a requirement for a system like a regulatory requirement? 
+- What data sources are available? (e.g., owned, public, earned, paid data) 
+- What is the storage for the above data? (e.g., data lake, DWH)    
+- Is manual labeling required? Do we have human resources for it?   
+- How to version data for each trained model?   
+- What tooling is available for data pipelines/workflows?   
+
+3. Data Analysis and Experiment Management
+- What programming language to use for analysis? (R, Python, Scala, Julia. Or is SQL sufficient for analysis?)  
+- Are there any infrastructure requirements for model training? 
+- What ML-specific and business evaluation metrics need to be computed? 
+- Reproducibility: What metadata about ML experiments is collected? (data sets, hyperparameters)  
+- What ML Framework know-how is there?    
+
+4. Feature Store and Workflows: 
+- Is this optional or mandatory? Do we have a data governance process such that feature engineering has to be reproducible? 
+- How are features computed (workflows) during the training and prediction phases?    
+- What are infrastructure requirements for feature engineering?   
+- “Buy or make” for feature stores?   
+- What databases are involved in feature storage? 
+- Do we design APIs for feature engineering?  
+
+5. Foundations (Reflecting DevOps): 
+- How do we maintain the code? What source version control system is used?    
+- How do we monitor the system performance?   
+- Do we need versioning for notebooks?    
+- Is there a trunk-based development in place?    
+- Deployment and testing automation: What is the CI/CD pipeline for the codebase? - - - What tools are used for it? 
+- Do we track deployment frequency, lead time for changes, mean time to restore, and change failure rate metrics?   
+
+6. Continuous Integration, Training, and Deployment: ML Pipeline Orchestration: 
+- How often are models expected to be retrained? What is the trigger for it (scheduled, event-based, or ad hoc)?  
+- Where does this happen (locally or on a cloud)? 
+- What is the formalized workflow for an ML pipeline? (e.g., Data prep -> model training -> model eval & validation) What tech stack is used? 
+- Is distributed model training required? Do we have an infrastructure for the distributed training?  
+- What is the workflow for the CI pipeline? What tools are used?  
+- What are the non-functional requirements for the ML model (efficiency, fairness, robustness, interpretability, etc.)? How are they tested? Are these tests integrated into the CI/CT workflow?  
+
+7. Model Deployment:    
+- What is the delivery format for the model?  
+- What is the expected time for changes? (Time from commit to production) 
+- What is the target environment to serve predictions?    
+- What is your model release policy? Is A/B testing or multi-armed bandits testing required? (e.g., for measuring the effectiveness of the new model on business metrics and deciding what model should be promoted into the production environment)  
+- What is your deployment strategy? (e.g. shadow/canary deployment required?) 
+
+8. Prediction Serving:  
+- What is the serving mode? (batch or online) 
+- Is distributed model serving required?  
+- Is multi-model prediction serving required? 
+- Is pre-assertion for input data implemented?    
+- What fallback method for an inadequate model output (post-assertion) is implemented? (Do we have a heuristic benchmark?)    
+- Do you need ML inference accelerators (TPUs)?   
+- What is the expected target volume of predictions per month or hours?  
+
+9. ML Model, Data, and System Monitoring:   
+- Is this optional or mandatory? For instance, do you need to assess the effectiveness of your model during prediction serving? Do you need to monitor your model for performance degradation and trigger an alert if your model starts performing badly? Is the model retraining based on events such as data or concept drift?  
+- What ML metrics are collected?  
+- What domain-specific metrics are collected? 
+- How is the model performance decay detected? (Data Monitoring)  
+- How is the data skew detected? (Data Monitoring)    
+- What operational aspects need to be monitored? (e.g., model prediction latency, CPU/RAM usage)  
+- What is the alerting strategy? (thresholds) 
+- What triggers the model re-training? (ad hoc, event-based, or scheduled)    
+
+10. Metadata Store: 
+- What kind of metadata in code, data, and model management need to be collected? (e.g., the pipeline run ID, trigger, performed steps, start/end timestamps, train/test dataset split, hyperparameters, model object, various statistics/profiling, etc.)  
+- Are any ML governance processes included in the MLOps lifecycle? What metadata will be required?  
+- What is the documentation strategy: Do we treat documentation as a code? (examples: Datasheets for Datasets and Model Card for Model Reporting)   
+- What operational metrics need to be collected? E.g., time to restore, change fail percentage. 
+
 ## HOW TO RUN
