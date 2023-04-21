@@ -1,5 +1,5 @@
 '''
-includes train/test/validation splits
+includes train/test/validation splits; includes datastore
 '''
 import inspect
 
