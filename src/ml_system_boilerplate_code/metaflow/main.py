@@ -23,7 +23,6 @@ CRON_SCHEDULE = ''
 
 
 @schedule(CRON_SCHEDULE)
-@project(name=ML_SYSTEM_SERVICE_NAME)
 class Main(FlowSpec):
     """
     Main runs the machine learning microservice according to the specified workflow, as such, this class defines the pipeline components to be run in the specified order.
