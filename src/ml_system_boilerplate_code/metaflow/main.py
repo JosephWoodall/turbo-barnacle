@@ -236,8 +236,8 @@ class Main(FlowSpec):
         self.DeploymentDevToProduction.call_all_methods()
         self.next(self.monitoring_and_logging)
 
-    @step
     @card
+    @step
     def monitoring_and_logging(self):
         """
         monitoring_and_logging executes the MonitoringAndLogging class. Model decay trigger is included here.
