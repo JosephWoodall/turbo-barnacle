@@ -15,8 +15,6 @@ from tests.software_code_pipeline_tests.build_and_integration_test import BuildA
 from tests.software_code_pipeline_tests.deployment_dev_to_production_test import DeploymentDevelopmentToProductionTest
 from tests.software_code_pipeline_tests.monitoring_and_logging_test import MonitoringAndLoggingTest
 
-from metaflow.main import Main
-
 import inspect
 
 
