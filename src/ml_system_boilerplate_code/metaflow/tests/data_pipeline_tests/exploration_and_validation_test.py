@@ -15,7 +15,3 @@ class ExplorationAndValidationTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-exploration_and_validation_test = ExplorationAndValidationTest()
-exploration_and_validation_test.call_all_methods()

@@ -18,7 +18,3 @@ class MonitoringAndLoggingTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-monitoring_and_logging_test = MonitoringAndLoggingTest()
-monitoring_and_logging_test.call_all_methods()

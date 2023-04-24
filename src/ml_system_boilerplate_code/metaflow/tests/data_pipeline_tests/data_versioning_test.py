@@ -15,7 +15,3 @@ class DataVersioningTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-data_versioning_test = DataVersioningTest()
-data_versioning_test.call_all_methods()

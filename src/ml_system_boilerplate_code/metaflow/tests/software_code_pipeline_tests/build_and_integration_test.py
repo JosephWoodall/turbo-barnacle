@@ -15,7 +15,3 @@ class BuildAndIntegrationTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-build_and_integration_test = BuildAndIntegrationTest()
-build_and_integration_test.call_all_methods()

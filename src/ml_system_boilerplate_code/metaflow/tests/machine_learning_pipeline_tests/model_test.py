@@ -16,7 +16,3 @@ class ModelTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-model_test = ModelTest()
-model_test.call_all_methods()

@@ -16,7 +16,3 @@ class SourceDataRetrievalTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-source_data_retrieval_test = SourceDataRetrievalTest()
-source_data_retrieval_test.call_all_methods()

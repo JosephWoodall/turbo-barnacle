@@ -15,7 +15,3 @@ class ModelEngineeringTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-model_engineering_test = ModelEngineeringTest()
-model_engineering_test.call_all_methods()

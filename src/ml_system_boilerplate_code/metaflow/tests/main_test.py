@@ -1,4 +1,5 @@
-from metaflow import Metaflow, Run, Flowspec
+from metaflow import FlowSpec, Run
+
 
 from tests.data_pipeline_tests.cleaning_test import CleaningTest
 from tests.data_pipeline_tests.data_versioning_test import DataVersioningTest
@@ -30,7 +31,3 @@ class MainTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-main_test = MainTest()
-main_test.call_all_methods()

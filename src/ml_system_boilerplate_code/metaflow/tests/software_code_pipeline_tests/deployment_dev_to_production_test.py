@@ -18,7 +18,3 @@ class DeploymentDevelopmentToProductionTest:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-deployment_development_to_production_test = DeploymentDevelopmentToProductionTest()
-deployment_development_to_production_test.call_all_methods()
