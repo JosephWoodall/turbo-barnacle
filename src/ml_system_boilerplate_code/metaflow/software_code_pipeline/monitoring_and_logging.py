@@ -6,7 +6,7 @@ import inspect
 
 class MonitoringAndLogging:
     def __init__(self):
-        pass
+        print("-----MONITORING AND LOGGING INITIALIZED-----")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class
@@ -14,7 +14,3 @@ class MonitoringAndLogging:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-monitoring_and_logging = MonitoringAndLogging()
-monitoring_and_logging.call_all_methods()

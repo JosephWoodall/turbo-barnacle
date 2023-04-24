@@ -9,6 +9,7 @@ import inspect
 class ModelEngineering:
 
     def __init__(self, explanatory_var=[], response_var=[]):
+        print("-----MODEL ENGINEERING INITIALIZED-----")
         self.explanatory_var = explanatory_var
         self.response_var = response_var
 
@@ -40,7 +41,3 @@ class ModelEngineering:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-model_engineering = ModelEngineering()
-model_engineering.call_all_methods()

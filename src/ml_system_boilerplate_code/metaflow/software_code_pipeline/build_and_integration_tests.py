@@ -7,7 +7,7 @@ import inspect
 class BuildAndIntegrationTests:
 
     def __init__(self):
-        pass
+        print("-----BUILD AND INTEGRATION TESTS INITIALIZED-----")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class
@@ -15,7 +15,3 @@ class BuildAndIntegrationTests:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-build_and_integration_tests = BuildAndIntegrationTests()
-build_and_integration_tests.call_all_methods()

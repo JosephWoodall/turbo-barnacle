@@ -6,7 +6,7 @@ import inspect
 
 class ModelPackaging:
     def __init__(self):
-        pass
+        print("-----MODEL PACKAGING INITIALIZED-----")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class
@@ -14,7 +14,3 @@ class ModelPackaging:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-model_packaging = ModelPackaging()
-model_packaging.call_all_methods()

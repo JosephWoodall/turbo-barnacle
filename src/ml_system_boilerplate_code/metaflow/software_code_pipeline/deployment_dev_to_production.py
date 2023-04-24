@@ -7,7 +7,7 @@ import inspect
 class DeploymentDevelopmentToProduction:
 
     def __init__(self):
-        pass
+        print("-----DEPLOYMENT DEVELOPMENT TO PRODUCTION INITIALIZED-----")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class
@@ -15,7 +15,3 @@ class DeploymentDevelopmentToProduction:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-deployment_development_to_production = DeploymentDevelopmentToProduction()
-deployment_development_to_production.call_all_methods()

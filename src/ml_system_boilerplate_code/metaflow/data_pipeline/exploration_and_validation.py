@@ -6,7 +6,7 @@ import inspect
 
 class ExplorationAndValidation:
     def __init__(self):
-        pass
+        print("-----EXPLORATION AND VALIDATION INITIALIZED-----")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class
@@ -14,7 +14,3 @@ class ExplorationAndValidation:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-exploration_and_validation = ExplorationAndValidation()
-exploration_and_validation.call_all_methods()

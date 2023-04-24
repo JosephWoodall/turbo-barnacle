@@ -6,7 +6,7 @@ import inspect
 
 class ModelEvaluation:
     def __init__(self):
-        pass
+        print("-----MODEL EVALUATION INITIALIZED-----")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class
@@ -14,7 +14,3 @@ class ModelEvaluation:
         # iterates through the list of functions and calls each one on self
         for func in functions:
             func()  # calls the function on self
-
-
-model_evaluation = ModelEvaluation()
-model_evaluation.call_all_methods()
