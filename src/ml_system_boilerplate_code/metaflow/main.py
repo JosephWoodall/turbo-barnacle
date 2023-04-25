@@ -147,7 +147,7 @@ class Main(FlowSpec):
         """
         exploration_and_validation executes the ExplorationAndValidation class
         """
-        self.ExplorationAndValidation.call_all_methods()
+        self.ExplorationAndValidation()
         self.next(self.cleaning)
 
     @step
