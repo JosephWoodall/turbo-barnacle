@@ -42,13 +42,22 @@ class Cleaning:
                 len(tokenizer.word_index)+1, embedding_dimension)
             self.arg[col] = numpy.concatenate([padded_sequences, numpy.zeros(
                 (padded_sequences.shape[0], 1)), embedding_matrix[padded_sequences]], axis=1)
+        return self.arg
 
-    def _feature_cross(self):
+    def _feature_cross(self, feature_list: list) -> dict:
         """
         _feature_cross helps models learn relationships between inputs faster by explicitly making each combination of input values a separate feature.
 
         This function solves model complexity insufficiency to learn feature relationships.
         """
+        for i in range(len(feature_list)):
+            for j in range(i + 1, len(feature_list)):
+                feature1_name = feature_list[i]
+                feature2_name = feature_list[j]
+                feature_cross = f'{feature1_name}_{feature2_name}'
+                self.arg[feature_cross] = [
+                    a * b for a, b in zip(self.arg[feature1_name], self.arg[feature2_name])]
+        return self.arg
 
 
 if __name__ == '__main__':
