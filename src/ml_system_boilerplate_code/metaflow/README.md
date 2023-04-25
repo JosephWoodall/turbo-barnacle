@@ -302,3 +302,10 @@ Team Members:
 - What operational metrics need to be collected? E.g., time to restore, change fail percentage.  
 
 ## HOW TO RUN
+Start by running the following in bash:
+```bash
+python3 main.py run
+```
+This will produce the runs stored in html, and various other files under the Flow object you ran, under .metaflow or .src, depending on your configuration. Each Flow object may be used for production, inspection, or debugging.
+
+You may inspect these runs using the utility classes found in utils/inspection.py.
