@@ -142,7 +142,7 @@ class Main(FlowSpec):
         source_data_retrieval executes the SourceDataRetrieval class
         """
         self.data = self.SourceDataRetrieval()._fake_data_generator()
-        print(self.data)
+        self.data
         self.next(self.exploration_and_validation)
 
     @card
@@ -277,4 +277,4 @@ class Main(FlowSpec):
 
 
 if __name__ == "__main__":
-    Main()
+    main_flow = Main()
