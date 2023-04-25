@@ -161,7 +161,7 @@ class Main(FlowSpec):
         # else:
         # self.Cleaning.call_all_methods()
         # self.next(self.data_versioning)
-        self.Cleaning.call_all_methods()
+        self.Cleaning()
         self.next(self.data_versioning)
 
     @step
@@ -169,7 +169,7 @@ class Main(FlowSpec):
         """
         data_versioning executes the DataVersioning class
         """
-        self.DataVersioning.call_all_methods()
+        self.DataVersioning()
         self.next(self.model_engineering)
 
     '''MACHINE LEARNING PIPELINE'''
@@ -184,7 +184,7 @@ class Main(FlowSpec):
         # else:
         #    self.ModelEngineering.call_all_methods()
         #    self.next(self.model_evaluation)
-        self.ModelEngineering.call_all_methods()
+        self.ModelEngineering()
         self.next(self.model_evaluation)
 
     @step
@@ -198,7 +198,7 @@ class Main(FlowSpec):
         # else:
         #    self.ModelEvaluation.call_all_methods()
         #    self.next(self.model_packaging)
-        self.ModelEvaluation.call_all_methods()
+        self.ModelEvaluation()
         self.next(self.model_packaging)
 
     @step
@@ -206,7 +206,7 @@ class Main(FlowSpec):
         """
         model_packaging executes the ModelPackaging class
         """
-        self.ModelPackaging.call_all_methods()
+        self.ModelPackaging()
         self.next(self.model)
 
     @step
@@ -222,7 +222,7 @@ class Main(FlowSpec):
         #    data_versioning_pretense != model_versioning_pretense
         # except ValueError as ve:
         #    pass  # print the value error here or return it to the debug board?
-        self.Model.call_all_methods()
+        self.Model()
         self.next(self.build_and_integration_tests)
 
     '''SOFTWARE CODE PIPELINE'''
@@ -231,7 +231,7 @@ class Main(FlowSpec):
         """
         build_and_integration_tests executes the BuildAndIntegrationTests class
         """
-        self.BuildAndIntegrationTests.call_all_methods()
+        self.BuildAndIntegrationTests()
         self.next(self.deployment_development_to_production)
 
     @step
@@ -239,7 +239,7 @@ class Main(FlowSpec):
         """
         deployment_dev_to_production executes the DeploymentDevToProduction class
         """
-        self.DeploymentDevToProduction.call_all_methods()
+        self.DeploymentDevToProduction()
         self.next(self.monitoring_and_logging)
 
     @card
@@ -254,7 +254,7 @@ class Main(FlowSpec):
         #    if send_back_to_cleaning_criteria_model_decay_trigger != 0:
         #        continue
         #    self.next(self.cleaning)
-        self.MonitoringAndLogging.call_all_methods()
+        self.MonitoringAndLogging()
         self.next(self.end)
 
     @step
