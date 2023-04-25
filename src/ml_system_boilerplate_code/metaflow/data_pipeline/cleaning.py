@@ -1,4 +1,7 @@
 import inspect
+import numpy
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
 
 
 class Cleaning:
@@ -17,12 +20,28 @@ class Cleaning:
         hased_features = hash(frozenset(self.arg.items()))
         return hased_features
 
-    def _embedding(self):
+    def _embedding(self, max_sequence_length=10, embedding_dimension=64) -> dict:
         """
         _embedding learns a data representation that maps high-cardinality data into a lower dimensional space in such a way that the information relevant to the learning problem is solved.
 
         This function solves the problem of high-cardinality features where closeness relationships are important to preserve.
         """
+        num_words = (len(self.arg.keys()) * len(self.arg))
+        tokenizer = Tokenizer(num_words=num_words)
+        for i in self.arg:
+            tokenizer.fit_on_texts(self.arg[i])
+
+        # Convert the text data in each column to sequences of integers and pad the sequences
+        max_len = min(max_sequence_length, max(
+            [len(tokenizer.texts_to_sequences(self.data[col])) for col in self.data]))
+        for col in self.data:
+            sequences = tokenizer.texts_to_sequences(self.data[col])
+            padded_sequences = pad_sequences(
+                sequences, maxlen=max_len, padding='post', truncating='post')
+            embedding_matrix = numpy.random.rand(
+                len(tokenizer.word_index)+1, embedding_dimension)
+            self.data[col] = numpy.concatenate([padded_sequences, numpy.zeros(
+                (padded_sequences.shape[0], 1)), embedding_matrix[padded_sequences]], axis=1)
 
 
 if __name__ == '__main__':
