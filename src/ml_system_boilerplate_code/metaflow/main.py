@@ -260,6 +260,7 @@ class Main(FlowSpec):
     @step
     def end(self):
         print("THERE WILL NEVER BE AN END")
+        pass
 
 
 if __name__ == "__main__":
