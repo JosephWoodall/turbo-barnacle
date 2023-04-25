@@ -129,7 +129,7 @@ class Main(FlowSpec):
 
         ####THIS STEP NEEDS A REWORK, JUST WROTE THIS IN FOR PLACEHOLDER PURPOSES####
         """
-        self.MainTest.call_all_methods()
+        self.MainTest()
         self.next(self.source_data_retrieval)
 
     '''DATA PIPELINE'''
