@@ -1,18 +1,17 @@
-import inspect
+import unittest
+from data_pipeline.source_data_retrieval import SourceDataRetrieval
 
 
-class SourceDataRetrievalTest:
+class SourceDataRetrievalTest(unittest.TestCase):
     """
     The SourceDataRetrievalTest class tests the SourceDataRetrieval class for execution of functions.
 
     """
 
     def __init__(self):
+        self.SourceDataRetrieval = SourceDataRetrieval()
         print("------------------------------SOURCE_DATA_RETRIEVAL_TEST_INITIALIZED")
 
-    def call_all_methods(self):
-        # gets a list of all the functions defined in the class
-        functions = inspect.getmembers(self, predicate=inspect.ismethod)
-        # iterates through the list of functions and calls each one on self
-        for func in functions:
-            func()  # calls the function on self
+
+if __name__ == '__main__':
+    unittest.main()

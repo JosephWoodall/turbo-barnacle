@@ -142,7 +142,6 @@ class Main(FlowSpec):
         source_data_retrieval executes the SourceDataRetrieval class
         """
         self.data = self.SourceDataRetrieval()._fake_data_generator()
-        self.data
         self.next(self.exploration_and_validation)
 
     @card
