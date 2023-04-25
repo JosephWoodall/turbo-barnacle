@@ -14,7 +14,7 @@ from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
 
 from tests.main_test import MainTest
 
-from metaflow import FlowSpec, step, project, schedule, card, retry
+from metaflow import Flow, FlowSpec, step, project, schedule, card, retry
 
 
 ML_SYSTEM_SERVICE_NAME = "insert_service_name_here"
@@ -141,7 +141,8 @@ class Main(FlowSpec):
         """
         source_data_retrieval executes the SourceDataRetrieval class
         """
-        self.SourceDataRetrieval()
+        self.data = self.SourceDataRetrieval()
+        print(self.data)
         self.next(self.exploration_and_validation)
 
     @card
