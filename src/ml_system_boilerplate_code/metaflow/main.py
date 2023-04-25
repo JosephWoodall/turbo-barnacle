@@ -150,6 +150,7 @@ class Main(FlowSpec):
         """
         exploration_and_validation executes the ExplorationAndValidation class
         """
+        print('The data artifact is as below: \n {}'.format(self.data))
         self.ExplorationAndValidation()
         self.next(self.cleaning)
 
