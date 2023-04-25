@@ -33,15 +33,22 @@ class Cleaning:
 
         # Convert the text data in each column to sequences of integers and pad the sequences
         max_len = min(max_sequence_length, max(
-            [len(tokenizer.texts_to_sequences(self.data[col])) for col in self.data]))
-        for col in self.data:
-            sequences = tokenizer.texts_to_sequences(self.data[col])
+            [len(tokenizer.texts_to_sequences(self.arg[col])) for col in self.arg]))
+        for col in self.arg:
+            sequences = tokenizer.texts_to_sequences(self.arg[col])
             padded_sequences = pad_sequences(
                 sequences, maxlen=max_len, padding='post', truncating='post')
             embedding_matrix = numpy.random.rand(
                 len(tokenizer.word_index)+1, embedding_dimension)
-            self.data[col] = numpy.concatenate([padded_sequences, numpy.zeros(
+            self.arg[col] = numpy.concatenate([padded_sequences, numpy.zeros(
                 (padded_sequences.shape[0], 1)), embedding_matrix[padded_sequences]], axis=1)
+
+    def _feature_cross(self):
+        """
+        _feature_cross helps models learn relationships between inputs faster by explicitly making each combination of input values a separate feature.
+
+        This function solves model complexity insufficiency to learn feature relationships.
+        """
 
 
 if __name__ == '__main__':
