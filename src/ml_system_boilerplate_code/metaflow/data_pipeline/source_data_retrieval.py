@@ -35,4 +35,4 @@ class SourceDataRetrieval:
 
 
 if __name__ == '__main__':
-    SourceDataRetrieval()._fake_data_generator()
+    SourceDataRetrieval()
