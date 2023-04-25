@@ -1,0 +1,1 @@
+{"flow_id": "Main", "run_number": "1682452113802977", "step_name": "source_data_retrieval", "task_id": "3", "field_name": "ds-root", "type": "ds-root", "value": "/home/josephwoodall/workspace/turbo-barnacle/src/ml_system_boilerplate_code/metaflow/.metaflow", "tags": ["attempt_id:0"], "user_name": "josephwoodall", "ts_epoch": 1682452116520}
