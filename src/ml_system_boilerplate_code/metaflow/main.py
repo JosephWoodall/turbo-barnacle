@@ -100,6 +100,7 @@ class Main(FlowSpec):
         - REPEAT PIPELINE N-TIMES STARTING AT *** STEP
 
     """
+    @card
     @step
     def start(self):
         self.MainTest = MainTest
