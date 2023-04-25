@@ -138,7 +138,7 @@ class Main(FlowSpec):
         """
         source_data_retrieval executes the SourceDataRetrieval class
         """
-        self.SourceDataRetrieval.call_all_methods()
+        self.SourceDataRetrieval()
         self.next(self.exploration_and_validation)
 
     @step
