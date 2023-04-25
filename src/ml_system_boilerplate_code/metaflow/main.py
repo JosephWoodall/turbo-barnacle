@@ -14,10 +14,10 @@ from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
 
 from tests.main_test import MainTest
 
-from metaflow import FlowSpec, step, project, schedule, card
+from metaflow import FlowSpec, step, project, schedule, card, retry
 
 
-ML_SYSTEM_SERVICE_NAME = "<INSERT_SERVICE_NAME_HERE>"
+ML_SYSTEM_SERVICE_NAME = "insert_service_name_here"
 
 
 @schedule(weekly=True)
@@ -100,25 +100,28 @@ class Main(FlowSpec):
         - REPEAT PIPELINE N-TIMES STARTING AT *** STEP
 
     """
+    @step
+    def start(self):
+        self.MainTest = MainTest
 
-    def __init__(self):
-        self.MainTest = MainTest()
+        self.Cleaning = Cleaning
+        self.DataVersioning = DataVersioning
+        self.ExplorationAndValidation = ExplorationAndValidation
+        self.SourceDataRetrieval = SourceDataRetrieval
 
-        self.Cleaning = Cleaning()
-        self.DataVersioning = DataVersioning()
-        self.ExplorationAndValidation = ExplorationAndValidation()
-        self.SourceDataRetrieval = SourceDataRetrieval()
+        self.Model = Model
+        self.ModelEngineering = ModelEngineering
+        self.ModelEvaluation = ModelEvaluation
+        self.ModelPackaging = ModelPackaging
 
-        self.Model = Model()
-        self.ModelEngineering = ModelEngineering()
-        self.ModelEvaluation = ModelEvaluation()
-        self.ModelPackaging = ModelPackaging()
+        self.BuildAndIntegrationTests = BuildAndIntegrationTests
+        self.DeploymentDevToProduction = DeploymentDevelopmentToProduction
+        self.MonitoringAndLogging = MonitoringAndLogging
 
-        self.BuildAndIntegrationTests = BuildAndIntegrationTests()
-        self.DeploymentDevToProduction = DeploymentDevelopmentToProduction()
-        self.MonitoringAndLogging = MonitoringAndLogging()
+        self.next(self.main_test)
 
     '''PRE-CHECK TEST'''
+    @retry
     @step
     def main_test(self):
         """
@@ -126,12 +129,8 @@ class Main(FlowSpec):
 
         ####THIS STEP NEEDS A REWORK, JUST WROTE THIS IN FOR PLACEHOLDER PURPOSES####
         """
-        try:
-            if self.MainTest.call_all_methods():
-                self.next(self.source_data_retrieval)
-        except ValueError as ve:
-            print("At least one step has failed its pre-check. Please check Metaflow checks for step(s) that failed to pass pre-check!")
-            exit()
+        self.MainTest.call_all_methods()
+        self.next(self.source_data_retrieval)
 
     '''DATA PIPELINE'''
     @step
@@ -156,11 +155,13 @@ class Main(FlowSpec):
         cleaning executes the Cleaning class.
         """
         send_back_to_exploration_and_validation_criteria = ''
-        if send_back_to_exploration_and_validation_criteria != 0:
-            self.next(self.exploration_and_validation)
-        else:
-            self.Cleaning.call_all_methods()
-            self.next(self.data_versioning)
+        # if send_back_to_exploration_and_validation_criteria != 0:
+        # self.next(self.exploration_and_validation)
+        # else:
+        # self.Cleaning.call_all_methods()
+        # self.next(self.data_versioning)
+        self.Cleaning.call_all_methods()
+        self.next(self.data_versioning)
 
     @step
     def data_versioning(self):
@@ -176,24 +177,28 @@ class Main(FlowSpec):
         """
         model_engineering executes the ModelEngineering class
         """
-        send_back_to_source_data_retrieval_criteria = ''
-        if send_back_to_source_data_retrieval_criteria != 0:
-            self.next(self.source_data_retrieval)
-        else:
-            self.ModelEngineering.call_all_methods()
-            self.next(self.model_evaluation)
+        # send_back_to_source_data_retrieval_criteria = ''
+        # if send_back_to_source_data_retrieval_criteria != 0:
+        #    self.next(self.source_data_retrieval)
+        # else:
+        #    self.ModelEngineering.call_all_methods()
+        #    self.next(self.model_evaluation)
+        self.ModelEngineering.call_all_methods()
+        self.next(self.model_evaluation)
 
     @step
     def model_evaluation(self):
         """
         model_evaluation executes the ModelEvaluation class
         """
-        send_back_to_model_engineering_criteria = ''
-        if send_back_to_model_engineering_criteria != 0:
-            self.next(self.model_engineering)
-        else:
-            self.ModelEvaluation.call_all_methods()
-            self.next(self.model_packaging)
+        # send_back_to_model_engineering_criteria = ''
+        # if send_back_to_model_engineering_criteria != 0:
+        #    self.next(self.model_engineering)
+        # else:
+        #    self.ModelEvaluation.call_all_methods()
+        #    self.next(self.model_packaging)
+        self.ModelEvaluation.call_all_methods()
+        self.next(self.model_packaging)
 
     @step
     def model_packaging(self):
@@ -210,12 +215,12 @@ class Main(FlowSpec):
 
         includes check if the data (from DataVersioning) and model (from Model) have the same pretense version number.
         """
-        data_versioning_pretense = ''
-        model_versioning_pretense = ''
-        try:
-            data_versioning_pretense != model_versioning_pretense
-        except ValueError as ve:
-            pass  # print the value error here or return it to the debug board?
+        # data_versioning_pretense = ''
+        # model_versioning_pretense = ''
+        # try:
+        #    data_versioning_pretense != model_versioning_pretense
+        # except ValueError as ve:
+        #    pass  # print the value error here or return it to the debug board?
         self.Model.call_all_methods()
         self.next(self.build_and_integration_tests)
 
@@ -242,12 +247,18 @@ class Main(FlowSpec):
         """
         monitoring_and_logging executes the MonitoringAndLogging class. Model decay trigger is included here.
         """
-        while True:
-            self.MonitoringAndLogging.call_all_methods()
-            send_back_to_cleaning_criteria_model_decay_trigger = ''
-            if send_back_to_cleaning_criteria_model_decay_trigger != 0:
-                continue
-            self.next(self.cleaning)
+        # while True:
+        #    self.MonitoringAndLogging.call_all_methods()
+        #    send_back_to_cleaning_criteria_model_decay_trigger = ''
+        #    if send_back_to_cleaning_criteria_model_decay_trigger != 0:
+        #        continue
+        #    self.next(self.cleaning)
+        self.MonitoringAndLogging.call_all_methods()
+        self.next(self.end)
+
+    @step
+    def end(self):
+        print("THERE WILL NEVER BE AN END")
 
 
 if __name__ == "__main__":
