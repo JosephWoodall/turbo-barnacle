@@ -17,11 +17,31 @@ from tests.software_code_pipeline_tests.monitoring_and_logging_test import Monit
 
 import inspect
 
+from metaflow import FlowSpec, step, project, schedule, card
+
 
 class MainTest:
 
     def __init__(self):
-        pass
+        print("\n")
+        print("#####MAIN TESTS INITIALIZED#####")
+
+        self.CleaningTest = CleaningTest()
+        self.DataVersioningTest = DataVersioningTest()
+        self.ExplorationAndValidationTest = ExplorationAndValidationTest()
+        self.SourceDataRetrievalTest = SourceDataRetrievalTest()
+
+        self.ModelTest = ModelTest()
+        self.ModelEngineeringTest = ModelEngineeringTest()
+        self.ModelEvaluationTest = ModelEvaluationTest()
+        self.ModelPackagingTest = ModelPackagingTest()
+
+        self.BuildAndIntegrationTest = BuildAndIntegrationTest()
+        self.DeploymentDevToProductionTest = DeploymentDevelopmentToProductionTest()
+        self.MonitoringAndLoggingTest = MonitoringAndLoggingTest()
+
+        print("#####MAIN TESTS PASSED#####")
+        print("\n")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class

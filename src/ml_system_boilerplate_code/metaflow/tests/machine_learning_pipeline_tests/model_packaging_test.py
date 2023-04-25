@@ -8,7 +8,7 @@ class ModelPackagingTest:
     """
 
     def __init__(self):
-        pass
+        print("------------------------------MODEL_PACKAGING_TEST_INITIALIZED")
 
     def call_all_methods(self):
         # gets a list of all the functions defined in the class
