@@ -122,6 +122,7 @@ class Main(FlowSpec):
         self.next(self.main_test)
 
     '''PRE-CHECK TEST'''
+    @card
     @retry
     @step
     def main_test(self):
@@ -134,6 +135,7 @@ class Main(FlowSpec):
         self.next(self.source_data_retrieval)
 
     '''DATA PIPELINE'''
+    @card
     @step
     def source_data_retrieval(self):
         """
@@ -142,6 +144,7 @@ class Main(FlowSpec):
         self.SourceDataRetrieval()
         self.next(self.exploration_and_validation)
 
+    @card
     @step
     def exploration_and_validation(self):
         """
@@ -150,6 +153,7 @@ class Main(FlowSpec):
         self.ExplorationAndValidation()
         self.next(self.cleaning)
 
+    @card
     @step
     def cleaning(self):
         """
@@ -164,6 +168,7 @@ class Main(FlowSpec):
         self.Cleaning()
         self.next(self.data_versioning)
 
+    @card
     @step
     def data_versioning(self):
         """
@@ -173,6 +178,7 @@ class Main(FlowSpec):
         self.next(self.model_engineering)
 
     '''MACHINE LEARNING PIPELINE'''
+    @card
     @step
     def model_engineering(self):
         """
@@ -187,6 +193,7 @@ class Main(FlowSpec):
         self.ModelEngineering()
         self.next(self.model_evaluation)
 
+    @card
     @step
     def model_evaluation(self):
         """
@@ -201,6 +208,7 @@ class Main(FlowSpec):
         self.ModelEvaluation()
         self.next(self.model_packaging)
 
+    @card
     @step
     def model_packaging(self):
         """
@@ -209,6 +217,7 @@ class Main(FlowSpec):
         self.ModelPackaging()
         self.next(self.model)
 
+    @card
     @step
     def model(self):
         """
@@ -226,6 +235,7 @@ class Main(FlowSpec):
         self.next(self.build_and_integration_tests)
 
     '''SOFTWARE CODE PIPELINE'''
+    @card
     @step
     def build_and_integration_tests(self):
         """
@@ -234,6 +244,7 @@ class Main(FlowSpec):
         self.BuildAndIntegrationTests()
         self.next(self.deployment_development_to_production)
 
+    @card
     @step
     def deployment_development_to_production(self):
         """
@@ -257,6 +268,7 @@ class Main(FlowSpec):
         self.MonitoringAndLogging()
         self.next(self.end)
 
+    @card
     @step
     def end(self):
         print("THERE WILL NEVER BE AN END")
