@@ -4,7 +4,7 @@
 ![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/kubeflow/assets/ML_SYSTEM_BOILERPLATE_CODE_DIAGRAM_V1.jpg?raw=true)
 
 ## Architecture Diagram
-![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/kubeflow/assets/ML_SYSTEM_BOILERPLATE_CODE_ARCHITECTURE_V1?raw=true)
+![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/kubeflow/assets/ML_SYSTEM_BOILERPLATE_CODE_ARCHITECTURE_V1.jpg?raw=true)
 
 
 ### TECH STACK
