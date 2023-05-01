@@ -14,6 +14,9 @@ from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
 
 from tests.main_test import MainTest
 
+import kfp
+import kfp.components as comp
+
 
 class Main():
     pass
