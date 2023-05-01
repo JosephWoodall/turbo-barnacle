@@ -1,6 +1,10 @@
-# CLOUD AGNOSTIC MLOPS PLATFORM
-Sources:    
-- https://medium.com/@omolade/an-end-to-end-mlops-platform-implementation-using-open-source-tooling-110948bb49b4
+# MACHINE LEARNING SYSTEM BOILERPLATE TEMPLATE
+
+## Logic Diagram
+![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/kubeflow/assets/ML_SYSTEM_BOILERPLATE_CODE_DIAGRAM_V1.jpg?raw=true)
+
+## Architecture Diagram
+![mle_pipeline](https://github.com/JosephWoodall/turbo-barnacle/blob/main/src/ml_system_boilerplate_code/kubeflow/assets/ML_SYSTEM_BOILERPLATE_CODE_ARCHITECTURE_V1?raw=true)
 
 
 ### TECH STACK
