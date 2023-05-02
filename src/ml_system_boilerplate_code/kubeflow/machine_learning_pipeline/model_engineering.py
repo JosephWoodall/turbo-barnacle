@@ -1,9 +1,9 @@
 
-import h2o
-from h2o.automl import H2OAutoML
+# import h2o
+# from h2o.automl import H2OAutoML
 import numpy
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
+# from keras.preprocessing.text import Tokenizer
+# from keras.preprocessing.sequence import pad_sequences
 
 
 class ModelEngineering:
@@ -15,7 +15,7 @@ class ModelEngineering:
         print("-----MODEL ENGINEERING INITIALIZED-----")
         self.explanatory_var = explanatory_var
         self.response_var = response_var
-
+    '''
     def _hashed_features(self):
         """
         _hashed_feature is a bucket of deterministic and portable hash of string representation and accept the trade-off of collisions in the data representation.
@@ -74,6 +74,7 @@ class ModelEngineering:
         aml.train(x=self.explanatory_var,
                   y=self.response_var, training_frame="")  # training_frame needs to be the train object from the DataVersioning class
         return aml.leader
+        '''
 
     def _hyperparameter_tuning(self):
         """

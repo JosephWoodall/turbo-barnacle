@@ -14,18 +14,21 @@ class SoftwareCodePipeline():
         self.DeploymentDevelopmentToProduction = DeploymentDevelopmentToProduction
         self.MonitoringAndLogging = MonitoringAndLogging
 
-    @dsl.component()
+    @dsl.component
     def _build_and_integration_tests(self):
         self.BuildAndIntegrationTests()
 
-    @dsl.component()
+    @dsl.component
     def _deployment_development_to_production(self):
         self.DeploymentDevelopmentToProduction()
 
-    @dsl.component()
+    @dsl.component
     def _monitoring_and_logging(self):
         self.MonitoringAndLogging()
 
+    @dsl.pipeline(name="DATA_PIPELINE_ml_system_boilerplate_code_pipeline",
+                  description="templatized pipeline ftw",
+                  )
     def run_pipeline(self):
         print("RUNNING SOFTWARE CODE PIPELINE")
         pass

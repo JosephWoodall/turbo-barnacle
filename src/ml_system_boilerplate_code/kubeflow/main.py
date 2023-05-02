@@ -2,11 +2,6 @@ from data_pipeline.data_pipeline_handler import DataPipeline
 from machine_learning_pipeline.machine_learing_pipeline_handler import MachineLearningPipeline
 from software_code_pipeline.software_code_pipeline_handler import SoftwareCodePipeline
 '''
-
-
-
-
-
 from tests.main_test import MainTest
 '''
 import kfp
@@ -98,10 +93,11 @@ class MainPipeline():
         self.DataPipeline = DataPipeline
         self.MachineLearningPipeline = MachineLearningPipeline
         self.SoftwareCodePipeline = SoftwareCodePipeline
+        print("-----INSTANTIATING MAIN PIPELINE-----")
 
     @dsl.pipeline(name="ml_system_boilerplate_code_pipeline",
                   description="templatized pipeline ftw",
-                  display_name="ml_system_boilerplate_code_pipeline")
+                  )
     def run_pipeline(self):
         with dsl.Condition(self.DataPipeline() == 1):
             print("DATA PIPELINE RAN SUCCESSFULLY")

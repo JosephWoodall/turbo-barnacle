@@ -16,25 +16,25 @@ class MachineLearningPipeline():
         self.ModelPackaging = ModelPackaging
         self.Model = Model
 
-    @dsl.component()
+    @dsl.component
     def _model_engineering(self):
         return self.ModelEngineering()
 
-    @dsl.component()
+    @dsl.component
     def _model_evaluation(self):
         return self.ModelEvaluation()
 
-    @dsl.component()
+    @dsl.component
     def _model_packaging(self):
         return self.ModelPackaging()
 
-    @dsl.component()
+    @dsl.component
     def _model(self):
         return self.Model()
 
     @dsl.pipeline(name="MACHINE_LEARNING_PIPELINE_ml_system_boilerplate_code_pipeline",
                   description="templatized pipeline ftw",
-                  display_name="MACHINE_LEARNING_PIPELINE_ml_system_boilerplate_code_pipeline")
+                  )
     def run_pipeline(self):
         print("RUNNING MACHINE LEARNING PIPELINE")
         pass

@@ -16,29 +16,37 @@ class DataPipeline():
         self.Cleaning = Cleaning
         self.DataVersioning = DataVersioning
 
-    @dsl.component()
+    @dsl.component
     def _source_data_retrieval(self):
         return self.SourceDataRetrieval._fake_data_generator(2, 2)
 
-    @dsl.component()
+    @dsl.component
     def _exploration_and_validation(self):
         return self.ExplorationAndValidation()
 
-    @dsl.component()
+    @dsl.component
     def _cleaning(self):
         return self.Cleaning._cleaning_process_one(2)
 
-    @dsl.component()
+    @dsl.component
     def _data_versioning(self):
         return self.DataVersioning()
 
+    @dsl.component
+    def _data_object(self) -> dict:
+        # populated by the above components, using defined value for testing
+        data_object = {
+            "data_object": "",
+            "test_pass": 1
+        }
+        return data_object
+
     @dsl.pipeline(name="DATA_PIPELINE_ml_system_boilerplate_code_pipeline",
                   description="templatized pipeline ftw",
-                  display_name="DATA_PIPELINE_ml_system_boilerplate_code_pipeline")
+                  )
     def run_pipeline(self):
         print("RUNNING DATA PIPELINE")
-        pass
         # check pre-test checks criteria here
-        # with dsl.Condition():
-        #   return (1, data_object)
+        with dsl.Condition(self._data_object().output['test_pass'] == 1):
+            return self._data_object().output['data_object'].values()
         # check data object output is present
