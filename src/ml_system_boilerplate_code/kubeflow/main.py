@@ -97,15 +97,15 @@ class MainPipeline:
 
     @dsl.component
     def _data_pipeline(self):
-        return components.load_component_from_file()  # self.DataPipeline()
+        return self.DataPipeline()
 
     @dsl.component
     def _machine_learning_pipeline(self):
-        return components.load_component_from_file()  # self.MachineLearningPipeline()
+        return self.MachineLearningPipeline()
 
     @dsl.component
     def _software_code_pipeline(self):
-        return components.load_component_from_file()  # self.SoftwareCodePipeline()
+        return self.SoftwareCodePipeline()
 
     @dsl.pipeline
     def main_pipeline(self):

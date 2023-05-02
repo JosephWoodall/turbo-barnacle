@@ -3,7 +3,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class DataPipeline:
+class DataPipeline(dsl.ContainerOp):
 
     def __init__(self):
         from cleaning import Cleaning
@@ -60,4 +60,4 @@ if __name__ == "__main__":
     os.chdir(r'./src/ml_system_boilerplate_code/kubeflow/data_pipeline/')
     print(os.getcwd())
     compiler.Compiler().compile(DataPipeline().run_pipeline(),
-                                package_path='data_pipeline.yaml')
+                                package_path='machine_learning_pipeline.yaml')
