@@ -1,10 +1,9 @@
-'''
-includes best model selection, model performance metrics (accuracy, precision, recall, f1, etc...)
-'''
-import inspect
-
 
 class ModelEvaluation:
+    """
+     The ModelEvaluation class includes best model selection, model performance metrics (accuracy, precision, recall, f1, etc...)
+    """
+
     def __init__(self):
         print("-----MODEL EVALUATION INITIALIZED-----")
 

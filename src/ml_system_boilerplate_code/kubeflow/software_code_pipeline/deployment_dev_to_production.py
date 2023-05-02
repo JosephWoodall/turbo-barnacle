@@ -1,10 +1,8 @@
-'''
-exposes the development environment model to the production environment
-'''
-import inspect
-
 
 class DeploymentDevelopmentToProduction:
+    """
+     The DeploymentDevelopmentToProduction class exposes the development environment model to the production environment
+    """
 
     def __init__(self):
         print("-----DEPLOYMENT DEVELOPMENT TO PRODUCTION INITIALIZED-----")

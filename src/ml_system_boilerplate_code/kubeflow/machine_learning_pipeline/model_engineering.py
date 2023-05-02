@@ -1,6 +1,4 @@
-'''
-includes feature engineering, hyperparameter tuning
-'''
+
 import h2o
 from h2o.automl import H2OAutoML
 import numpy
@@ -9,6 +7,9 @@ from keras.preprocessing.sequence import pad_sequences
 
 
 class ModelEngineering:
+    """
+     The ModelEngineering classs instantiates feature engineering, hyperparameter tuning.
+    """
 
     def __init__(self, explanatory_var=[], response_var=[]):
         print("-----MODEL ENGINEERING INITIALIZED-----")
