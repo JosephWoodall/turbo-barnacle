@@ -1,4 +1,5 @@
 from data_pipeline.cleaning import Cleaning
+
 from data_pipeline.data_versioning import DataVersioning
 from data_pipeline.exploration_and_validation import ExplorationAndValidation
 from data_pipeline.source_data_retrieval import SourceDataRetrieval
@@ -15,12 +16,20 @@ from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
 from tests.main_test import MainTest
 
 import kfp
+from kfp import dsl, compiler
 import kfp.components as comp
 
 
 class Main():
-    pass
 
+    def __init__(self):
+        self.Cleaning = Cleaning
 
-if __name__ == "__main__":
-    main_flow = Main()
+    @dsl.component
+    def cleaning(self):
+        return self.Cleaning()
+
+    @dsl.pipeline
+    def pipeline(self) -> str:
+        cleaning_task = Main.cleaning()
+        return cleaning_task.output
