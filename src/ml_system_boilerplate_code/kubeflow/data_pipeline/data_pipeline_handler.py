@@ -18,7 +18,7 @@ class DataPipeline:
 
     @dsl.component
     def _source_data_retrieval(self):
-        return self.SourceDataRetrieval._fake_data_generator(2, 2)
+        return self.SourceDataRetrieval()._fake_data_generator(2, 2)
 
     @dsl.component
     def _exploration_and_validation(self):
@@ -26,7 +26,7 @@ class DataPipeline:
 
     @dsl.component
     def _cleaning(self):
-        return self.Cleaning._cleaning_process_one(2)
+        return self.Cleaning()._cleaning_process_one(2)
 
     @dsl.component
     def _data_versioning(self):
