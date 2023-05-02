@@ -1,18 +1,11 @@
-from data_pipeline.cleaning import Cleaning
-
+from data_pipeline.data_pipeline_handler import DataPipeline
+from machine_learning_pipeline.machine_learing_pipeline_handler import MachineLearningPipeline
+from software_code_pipeline.software_code_pipeline_handler import SoftwareCodePipeline
 '''
-from data_pipeline.data_versioning import DataVersioning
-from data_pipeline.exploration_and_validation import ExplorationAndValidation
-from data_pipeline.source_data_retrieval import SourceDataRetrieval
 
-from machine_learning_pipeline.model import Model
-from machine_learning_pipeline.model_engineering import ModelEngineering
-from machine_learning_pipeline.model_evaluation import ModelEvaluation
-from machine_learning_pipeline.model_packaging import ModelPackaging
 
-from software_code_pipeline.build_and_integration_tests import BuildAndIntegrationTests
-from software_code_pipeline.deployment_dev_to_production import DeploymentDevelopmentToProduction
-from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
+
+
 
 from tests.main_test import MainTest
 '''
@@ -31,6 +24,7 @@ class MainPipeline():
         - reiterate targets triggered by their home step and traverse the pipeline, recursively, if their criteria is not satisfied, specified as below: 
             - 1 = send back to reiterate target
             - 0 = do not send back to reiterate target
+    Pre-Check Tests will send back to specific component steps if/when a component does not pass its check.
 
     Workflow: 
     PROGRAM START
@@ -101,18 +95,20 @@ class MainPipeline():
     """
 
     def __init__(self):
-        self.Cleaning = Cleaning
-
-    @dsl.component(target_image='gcr.io/ml_system_boilerplate/data_pipeline/cleaning:v1')
-    def _cleaning(self):
-        return self.Cleaning._cleaning_process_one(2)
+        self.DataPipeline = DataPipeline
+        self.MachineLearningPipeline = MachineLearningPipeline
+        self.SoftwareCodePipeline = SoftwareCodePipeline
 
     @dsl.pipeline(name="ml_system_boilerplate_code_pipeline",
                   description="templatized pipeline ftw",
                   display_name="ml_system_boilerplate_code_pipeline")
     def run_pipeline(self):
-        cleaning = MainPipeline._cleaning(self)
-        return cleaning.output
+        with dsl.Condition(self.DataPipeline() == 1):
+            print("DATA PIPELINE RAN SUCCESSFULLY")
+            with dsl.Condition(self.MachineLearningPipeline() == 1):
+                print("MACHINE LEARNING PIPELINE RAN SUCCESSFULLY")
+                with dsl.Condition(self.SoftwareCodePipeline() == 1):
+                    print("SOFTWARE CODE PIPELINE RAN SUCCESSFULLY")
 
 
 if __name__ == "__main__":

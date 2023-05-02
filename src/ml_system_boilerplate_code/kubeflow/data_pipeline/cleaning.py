@@ -7,7 +7,9 @@ class Cleaning:
         print("-----CLEANING INITIALIZED-----")
         self.arg = arg
 
-    @dsl.component
-    def _cleaning_process_one(self, a: int) -> int:
-        success = a
-        return (success * 2)
+    def _cleaning_process_one(self):
+        return ("cleaning process one has run")
+
+
+if __name__ == "__main__":
+    Cleaning()
