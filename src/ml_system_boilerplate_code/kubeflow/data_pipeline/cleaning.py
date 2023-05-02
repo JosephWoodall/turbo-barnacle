@@ -7,9 +7,6 @@ class Cleaning:
         print("-----CLEANING INITIALIZED-----")
         self.arg = arg
 
-    def _cleaning_process_one(self):
-        return ("cleaning process one has run")
-
 
 if __name__ == "__main__":
     Cleaning()

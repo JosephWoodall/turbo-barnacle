@@ -5,8 +5,8 @@ from software_code_pipeline.software_code_pipeline_handler import SoftwareCodePi
 from tests.main_test import MainTest
 '''
 import kfp
-from kfp import dsl, compiler
-import kfp.components as comp
+from kfp._client import Client
+from kfp import dsl, compiler, components
 
 
 class MainPipeline:
@@ -95,17 +95,47 @@ class MainPipeline:
         self.SoftwareCodePipeline = SoftwareCodePipeline
         print("-----INSTANTIATING MAIN PIPELINE-----")
 
-    @dsl.pipeline(name="ml_system_boilerplate_code_pipeline",
-                  description="templatized pipeline ftw",
-                  )
+    @dsl.component
+    def _data_pipeline(self):
+        return components.load_component_from_file()  # self.DataPipeline()
+
+    @dsl.component
+    def _machine_learning_pipeline(self):
+        return components.load_component_from_file()  # self.MachineLearningPipeline()
+
+    @dsl.component
+    def _software_code_pipeline(self):
+        return components.load_component_from_file()  # self.SoftwareCodePipeline()
+
+    @dsl.pipeline
     def main_pipeline(self):
-        with dsl.Condition(self.DataPipeline() == 1):
+        with dsl.Condition(self._data_pipeline() == 1):
             print("DATA PIPELINE RAN SUCCESSFULLY")
-            with dsl.Condition(self.MachineLearningPipeline() == 1):
+            with dsl.Condition(self._machine_learning_pipeline() == 1):
                 print("MACHINE LEARNING PIPELINE RAN SUCCESSFULLY")
-                with dsl.Condition(self.SoftwareCodePipeline() == 1):
+                with dsl.Condition(self._software_code_pipeline() == 1):
                     print("SOFTWARE CODE PIPELINE RAN SUCCESSFULLY")
 
 
 if __name__ == "__main__":
-    compiler.Compiler().compile(MainPipeline().main_pipeline(), 'main_pipeline.yaml')
+    '''
+    Run the pipeline below, there are various ways to run including: 
+        - KFP Dashboard, by compiling the pipeline into IR YAML
+        - KFP SDK client
+        - KFP SDK CLI
+    '''
+    def run_via_kfp_dashboard():
+        return compiler.Compiler().compile(MainPipeline().main_pipeline(), package_path='main_pipeline.yaml')
+
+    def run_via_kfp_sdk_client():
+        HOST_URL = ''
+        client = Client(host=f'{HOST_URL}')
+        client.create_run_from_pipeline_func('main_pipeline.yaml')
+
+    def run_via_kfp_sdk_cli():
+        import os
+        os.system(
+            "kfp run create --experiment-name my-experiment --package-file main_pipeline.yaml")
+
+    # call the function of choice below
+    run_via_kfp_dashboard()
