@@ -3,7 +3,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class DataPipeline(dsl.ContainerOp):
+class DataPipeline(dsl.Pipeline):
 
     def __init__(self):
         from cleaning import Cleaning
@@ -48,7 +48,7 @@ class DataPipeline(dsl.ContainerOp):
     @dsl.pipeline
     def run_pipeline(self):
         print("--RUNNING DATA PIPELINE--")
-        return DataPipeline()._data_object().outputs
+        return DataPipeline._data_object().outputs
         # check pre-test checks criteria here
         # with dsl.Condition(self._data_object().output['test_pass'] == 1):
         #    return self._data_object().output['data_object'].values()
@@ -58,6 +58,5 @@ class DataPipeline(dsl.ContainerOp):
 if __name__ == "__main__":
     import os
     os.chdir(r'./src/ml_system_boilerplate_code/kubeflow/data_pipeline/')
-    print(os.getcwd())
-    compiler.Compiler().compile(DataPipeline().run_pipeline(),
-                                package_path='machine_learning_pipeline.yaml')
+    compiler.Compiler().compile(DataPipeline.run_pipeline,
+                                package_path='data_pipeline.yaml')

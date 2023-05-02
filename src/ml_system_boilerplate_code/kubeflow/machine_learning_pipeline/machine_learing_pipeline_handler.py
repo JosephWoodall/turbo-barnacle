@@ -3,7 +3,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class MachineLearningPipeline:
+class MachineLearningPipeline(dsl.Pipeline):
 
     def __init__(self):
         from model import Model
@@ -45,7 +45,7 @@ class MachineLearningPipeline:
     @dsl.pipeline
     def run_pipeline(self):
         print("--RUNNING MACHINE LEARNING PIPELINE--")
-        return MachineLearningPipeline()._model_object().outputs
+        return MachineLearningPipeline._model_object().outputs
 
         # check pre-test checks criteria here
         # with dsl.Condition():
@@ -56,6 +56,5 @@ class MachineLearningPipeline:
 if __name__ == "__main__":
     import os
     os.chdir(r'./src/ml_system_boilerplate_code/kubeflow/machine_learning_pipeline/')
-    print(os.getcwd())
-    compiler.Compiler().compile(MachineLearningPipeline().run_pipeline(),
+    compiler.Compiler().compile(MachineLearningPipeline.run_pipeline,
                                 package_path='machine_learning_pipeline.yaml')

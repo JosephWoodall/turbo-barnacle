@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.20, pipelines.kubeflow.org/pipeline_compilation_time: '2023-05-02T16:52:22.570632',
+    pipelines.kubeflow.org/pipeline_spec: '{"inputs": [{"name": "func", "type": "typing.Callable"}],
+      "name": "Pipeline"}'}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.20}
+spec:
+  entrypoint: pipeline
+  templates:
+  - name: pipeline
+    dag:
+      tasks: []
+  arguments:
+    parameters:
+    - {name: func}
+  serviceAccountName: pipeline-runner

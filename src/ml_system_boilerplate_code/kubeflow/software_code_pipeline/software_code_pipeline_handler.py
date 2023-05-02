@@ -3,7 +3,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class SoftwareCodePipeline:
+class SoftwareCodePipeline(dsl.Pipeline):
 
     def __init__(self):
         from build_and_integration_tests import BuildAndIntegrationTests
@@ -39,7 +39,7 @@ class SoftwareCodePipeline:
     @dsl.pipeline
     def run_pipeline(self):
         print("RUNNING SOFTWARE CODE PIPELINE")
-        return SoftwareCodePipeline()._build_deployment_monitoring_object().outputs
+        return SoftwareCodePipeline._build_deployment_monitoring_object().outputs
 
         # check pre-test checks criteria here
         # with dsl.Condition():
@@ -50,6 +50,5 @@ class SoftwareCodePipeline:
 if __name__ == "__main__":
     import os
     os.chdir(r'./src/ml_system_boilerplate_code/kubeflow/software_code_pipeline/')
-    print(os.getcwd())
-    compiler.Compiler().compile(SoftwareCodePipeline().run_pipeline(),
+    compiler.Compiler().compile(SoftwareCodePipeline.run_pipeline,
                                 package_path='software_code_pipeline.yaml')
