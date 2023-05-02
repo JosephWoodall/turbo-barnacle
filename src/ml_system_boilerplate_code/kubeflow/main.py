@@ -9,7 +9,7 @@ from kfp._client import Client
 from kfp import dsl, compiler, components
 
 
-class MainPipeline:
+class MainPipeline(dsl.Pipeline):
     """
     MainPipeline runs the machine learning microservice according to the specified workflow, as such, this class defines the pipeline components to be run in the specified order.
 
@@ -118,6 +118,8 @@ class MainPipeline:
 
 
 if __name__ == "__main__":
+    import os
+    os.chdir(r'./src/ml_system_boilerplate_code/kubeflow/')
     '''
     Run the pipeline below, there are various ways to run including: 
         - KFP Dashboard, by compiling the pipeline into IR YAML
@@ -125,7 +127,7 @@ if __name__ == "__main__":
         - KFP SDK CLI
     '''
     def run_via_kfp_dashboard():
-        return compiler.Compiler().compile(MainPipeline().main_pipeline(), package_path='main_pipeline.yaml')
+        return compiler.Compiler().compile(MainPipeline.main_pipeline, package_path='main_pipeline.yaml')
 
     def run_via_kfp_sdk_client():
         HOST_URL = ''
