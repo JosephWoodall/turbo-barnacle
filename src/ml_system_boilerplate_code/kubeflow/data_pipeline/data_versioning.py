@@ -1,10 +1,8 @@
-'''
-includes train/test/validation splits; includes datastore
-'''
-import inspect
-
-
 class DataVersioning:
+    """
+     The DataVersioning class instantiates train/test/validation splits and includes a datastore
+    """
+
     def __init__(self):
         print("-----DATA VERSIONING INITIALIZED-----")
 

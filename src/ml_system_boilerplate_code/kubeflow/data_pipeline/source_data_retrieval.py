@@ -1,11 +1,11 @@
-'''
-retrieves the source data for the pipeline and returns the data in one conoslidated location
-'''
-import inspect
 from faker import Faker
 
 
 class SourceDataRetrieval:
+    """
+     The SourceDataRetrieval class retrieves the source data for the pipeline and returns the data in one conoslidated location.
+    """
+
     def __init__(self):
         print("-----SOURCE DATA RETRIEVAL INITIALIZED-----")
 

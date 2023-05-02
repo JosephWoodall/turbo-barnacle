@@ -1,5 +1,6 @@
 from data_pipeline.cleaning import Cleaning
 
+'''
 from data_pipeline.data_versioning import DataVersioning
 from data_pipeline.exploration_and_validation import ExplorationAndValidation
 from data_pipeline.source_data_retrieval import SourceDataRetrieval
@@ -14,7 +15,7 @@ from software_code_pipeline.deployment_dev_to_production import DeploymentDevelo
 from software_code_pipeline.monitoring_and_logging import MonitoringAndLogging
 
 from tests.main_test import MainTest
-
+'''
 import kfp
 from kfp import dsl, compiler
 import kfp.components as comp
@@ -33,3 +34,7 @@ class Main():
     def pipeline(self) -> str:
         cleaning_task = Main.cleaning()
         return cleaning_task.output
+
+
+if __name__ == "__main__":
+    Main()

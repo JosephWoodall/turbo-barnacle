@@ -1,10 +1,8 @@
-'''
-includes profiling
-'''
-import inspect
-
-
 class ExplorationAndValidation:
+    """
+    The ExploarationAndValidation class instantiates data profiling and EDA.
+    """
+
     def __init__(self):
         print("-----EXPLORATION AND VALIDATION INITIALIZED-----")
 
