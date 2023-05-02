@@ -8,7 +8,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class DataPipeline():
+class DataPipeline:
 
     def __init__(self):
         self.SourceDataRetrieval = SourceDataRetrieval

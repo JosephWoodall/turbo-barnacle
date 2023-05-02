@@ -8,7 +8,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class MachineLearningPipeline():
+class MachineLearningPipeline:
 
     def __init__(self):
         self.ModelEngineering = ModelEngineering

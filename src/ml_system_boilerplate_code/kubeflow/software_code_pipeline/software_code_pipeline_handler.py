@@ -7,7 +7,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class SoftwareCodePipeline():
+class SoftwareCodePipeline:
 
     def __init__(self):
         self.BuildAndIntegrationTests = BuildAndIntegrationTests

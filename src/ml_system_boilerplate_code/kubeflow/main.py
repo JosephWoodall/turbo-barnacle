@@ -9,7 +9,7 @@ from kfp import dsl, compiler
 import kfp.components as comp
 
 
-class MainPipeline():
+class MainPipeline:
     """
     MainPipeline runs the machine learning microservice according to the specified workflow, as such, this class defines the pipeline components to be run in the specified order.
 
@@ -98,7 +98,7 @@ class MainPipeline():
     @dsl.pipeline(name="ml_system_boilerplate_code_pipeline",
                   description="templatized pipeline ftw",
                   )
-    def run_pipeline(self):
+    def main_pipeline(self):
         with dsl.Condition(self.DataPipeline() == 1):
             print("DATA PIPELINE RAN SUCCESSFULLY")
             with dsl.Condition(self.MachineLearningPipeline() == 1):
@@ -108,4 +108,4 @@ class MainPipeline():
 
 
 if __name__ == "__main__":
-    main = MainPipeline()
+    compiler.Compiler().compile(MainPipeline().main_pipeline(), 'main_pipeline.yaml')
