@@ -126,8 +126,14 @@ if __name__ == "__main__":
         - KFP SDK client
         - KFP SDK CLI
     '''
-    def run_via_kfp_dashboard():
-        return compiler.Compiler().compile(MainPipeline.main_pipeline, package_path='main_pipeline.yaml')
+    def run_via_kfp_dashboard(local: bool):
+        if local == True:
+            os.system(
+                "kubectl port-forward --namespace kubeflow svc/ml-pipeline-ui 3000:80")
+            client = kfp.Client(host='http://localhost:3000')
+            print(client.list_experiments())
+        else:
+            return compiler.Compiler().compile(MainPipeline.main_pipeline, package_path='main_pipeline.yaml')
 
     def run_via_kfp_sdk_client():
         HOST_URL = ''
@@ -140,4 +146,4 @@ if __name__ == "__main__":
             "kfp run create --experiment-name my-experiment --package-file main_pipeline.yaml")
 
     # call the function of choice below
-    run_via_kfp_dashboard()
+    run_via_kfp_dashboard(local=True)
