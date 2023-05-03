@@ -129,9 +129,9 @@ if __name__ == "__main__":
     def run_via_kfp_dashboard(local: bool):
         if local == True:
             os.system(
-                "kubectl port-forward --namespace kubeflow svc/ml-pipeline-ui 3000:80")
-            client = kfp.Client(host='http://localhost:3000')
-            print(client.list_experiments())
+                "export NAMESPACE=istio-system")
+            os.system(
+                "kubectl port-forward -n ${NAMESPACE} svc/istio-ingressgateway 8080:80")
         else:
             return compiler.Compiler().compile(MainPipeline.main_pipeline, package_path='main_pipeline.yaml')
 
@@ -146,4 +146,6 @@ if __name__ == "__main__":
             "kfp run create --experiment-name my-experiment --package-file main_pipeline.yaml")
 
     # call the function of choice below
-    run_via_kfp_dashboard(local=True)
+    # run_via_kfp_dashboard(local=True)
+    # run_via_kfp_sdk_client()
+    # run_via_kfp_sdk_cli()
