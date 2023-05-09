@@ -18,19 +18,19 @@ class DataPipeline(dsl.Pipeline):
         self.data_object = None
 
     @dsl.component
-    def __source_data_retrieval(self):
+    def _source_data_retrieval(self):
         return self.SourceDataRetrieval()._fake_data_generator(2, 2)
 
     @dsl.component
-    def __exploration_and_validation(self):
+    def _exploration_and_validation(self):
         return self.ExplorationAndValidation()
 
     @dsl.component
-    def __cleaning(self):
+    def _cleaning(self):
         return self.Cleaning()
 
     @dsl.component
-    def __data_versioning(self):
+    def _data_versioning(self):
         return self.DataVersioning()
 
     @dsl.component

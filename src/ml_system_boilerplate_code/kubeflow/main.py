@@ -120,6 +120,8 @@ class MainPipeline(dsl.Pipeline):
 if __name__ == "__main__":
     import os
     os.chdir(r'./src/ml_system_boilerplate_code/kubeflow/')
+    compiler.Compiler().compile(MainPipeline.main_pipeline,
+                                package_path='main_pipeline.yaml')
     '''
     Run the pipeline below, there are various ways to run including: 
         - KFP Dashboard, by compiling the pipeline into IR YAML
@@ -127,18 +129,16 @@ if __name__ == "__main__":
         - KFP SDK CLI
     '''
     def run_via_kfp_dashboard(local: bool):
-        if local == True:
-            os.system(
-                "export NAMESPACE=istio-system")
-            os.system(
-                "kubectl port-forward -n ${NAMESPACE} svc/istio-ingressgateway 8080:80")
-        else:
-            return compiler.Compiler().compile(MainPipeline.main_pipeline, package_path='main_pipeline.yaml')
+        os.system(
+            "export NAMESPACE=istio-system")
+        os.system(
+            "kubectl port-forward -n ${NAMESPACE} svc/istio-ingressgateway 8080:80")
 
     def run_via_kfp_sdk_client():
-        HOST_URL = ''
+        HOST_URL = 'localhost:8080'
         client = Client(host=f'{HOST_URL}')
         client.create_run_from_pipeline_func('main_pipeline.yaml')
+        client.run_pipeline("main_pipeline.yaml")
 
     def run_via_kfp_sdk_cli():
         import os
@@ -147,5 +147,5 @@ if __name__ == "__main__":
 
     # call the function of choice below
     # run_via_kfp_dashboard(local=True)
-    # run_via_kfp_sdk_client()
+    run_via_kfp_sdk_client()
     # run_via_kfp_sdk_cli()
