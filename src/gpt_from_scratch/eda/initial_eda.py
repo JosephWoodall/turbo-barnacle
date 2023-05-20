@@ -210,3 +210,5 @@ wei = wei.masked_fill(tril==0, float("-inf"))
 wei = F.softmax(wei, dim=1)
 xbow3=wei @ x 
 print(torch.allclose(xbow, xbow3))
+
+print("What this basically will do is take weight aggregations of past elements by uisng matrix multiplication via lower triangular matrices, where the lower half of the triangle informs us how much it fuses to the next element in the matrix. This will help in developing the self-attention block.")
