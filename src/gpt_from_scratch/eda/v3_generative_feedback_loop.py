@@ -3,14 +3,14 @@ import torch.nn as nn
 from torch.nn import functional as F
 
 # hyperparameters
-batch_size = 32  # how many independent sequences will we process in parallel
-block_size = 150  # what is the maximum context length for predictions
-max_iters = 20  # how many training iterations
-eval_interval = 2  # how often to evaluate our model on the validation set
+batch_size = 64  # how many independent sequences will we process in parallel
+block_size = 256  # what is the maximum context length for predictions
+max_iters = 10  # how many training iterations
+eval_interval = 10  # how often to evaluate our model on the validation set
 learning_rate = 1e-4  # how fast should our model learn?
 device = 'cuda' if torch.cuda.is_available() else 'cpu'  # is gpu available?
-eval_iters = 50  # how many iterations to use when evaluating on the validation set
-n_embd = 384
+eval_iters = 20  # how many iterations to use when evaluating on the validation set
+n_embd = 64
 n_head = 6
 n_layer = 6
 dropout = 0.2
@@ -218,8 +218,7 @@ for iter in range(max_iters):
             f"Step {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
         
         # generate text using the trained model
-        generated_text = m.generate(val_data[:1], max_new_tokens=100[0].tolist())
-        generated_text = decode(generated_text.squeeze().tolist())
+        generated_text = decode(m.generate(val_data[:1], max_new_tokens=100[0].tolist()))
         print("Generated text: ", generated_text)
 
     # sample a batch of data
@@ -234,5 +233,5 @@ for iter in range(max_iters):
 # --- generation ---
 context = torch.zeros((1, 1), dtype=torch.long,
                       device=device)  # (B=1, T=1) tensor
-print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
+print(decode(m.generate(context, max_new_tokens=100)[0].tolist()))
 # open('decoder_transformer_output.txt', 'w').write(decode(m.generate(context(max_new_tokens=10000)[0].tolist())))
