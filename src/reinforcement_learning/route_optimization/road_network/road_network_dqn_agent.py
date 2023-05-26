@@ -4,6 +4,8 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 
+from src.reinforcement_learning.route_optimization.road_network.road_network_environment import RoadNetworkEnvironment
+
 class DQNAgent(nn.Module):
     def __init__(self, num_cities, learning_rate=0.001, discount_factor=0.9, epsilon=0.1):
         super(DQNAgent, self).__init__()
