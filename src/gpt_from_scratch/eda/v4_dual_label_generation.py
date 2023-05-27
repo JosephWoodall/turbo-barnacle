@@ -177,7 +177,7 @@ num_heads = 32
 dropout = 0.0
 batch_size = 12
 learning_rate = 1e-4
-num_epochs = 40
+num_epochs = 200
 
 # Create an instance of the GPT model
 model = GPT(len(input_vocab), len(output_vocab), num_layers, hidden_size, num_heads, dropout)
