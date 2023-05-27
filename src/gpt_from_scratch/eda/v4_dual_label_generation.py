@@ -33,6 +33,11 @@ The below code implements a Generative Pre-trained Transformer (GPT) model for g
 An inference section is provided to demonstrate the generation of text based on a prompt using the trained model. The prompt is tokenized, passed through the model, and the predicted value is obtained and printed.
 """
 
+
+"""
+Class Definition
+"""
+
 class WordTokenizer:
     """
     WordTokenizer class is responsible for tokenizing input text into individual words.
@@ -146,6 +151,101 @@ class FakeDataGenerator:
 
 fake_generator = FakeDataGenerator()
 
+
+"""
+Functional Code Below
+"""
+
+"""
+
+Very generally, below are default hyperparameters for model training: 
+
+--------------------
+Small Model: (runs on macbook, google colab)
+    
+    Batch Size: 8-32
+    Learning Rate: 0.001-0.01
+    Model Size/Architecture: Fewer layers, smaller hidden units, smaller embedding dimensions (e.g., 128-256 dimensions)
+    Sequence Length: 32-128 tokens
+    Gradient Accumulation: 1-2 steps
+    Regularization: Dropout rate of 0.1-0.3, weight decay of 0.0001-0.001
+    Optimizer: Adam or RMSprop
+    
+    small_batch_size = 8
+    small_learning_rate = 0.001
+    small_num_layers = 2
+    small_hidden_size = 128
+    small_num_heads = 4
+    small_dropout = 0.1
+--------------------
+
+--------------------
+Medium Model: (macbook, google colab)
+
+    Batch Size: 32-64
+    Learning Rate: 0.001-0.01
+    Model Size/Architecture: Moderate number of layers, hidden units, and embedding dimensions (e.g., 256-512 dimensions)
+    Sequence Length: 64-256 tokens
+    Gradient Accumulation: 2-4 steps
+    Regularization: Dropout rate of 0.1-0.5, weight decay of 0.0001-0.01
+    Optimizer: Adam or RMSprop
+    
+    medium_batch_size = 32
+    medium_learning_rate = 0.001
+    medium_num_layers = 4
+    medium_hidden_size = 256
+    medium_num_heads = 8
+    medium_dropout = 0.3
+--------------------
+
+--------------------
+Large Model: (google colab)
+    Batch Size: 64-128
+    Learning Rate: 0.001-0.01
+    Model Size/Architecture: More layers, larger hidden units, and embedding dimensions (e.g., 512-1024 dimensions)
+    Sequence Length: 128-512 tokens
+    Gradient Accumulation: 4-8 steps
+    Regularization: Dropout rate of 0.1-0.5, weight decay of 0.0001-0.01
+    Optimizer: Adam or RMSprop
+
+    large_batch_size = 64
+    large_learning_rate = 0.001
+    large_num_layers = 6
+    large_hidden_size = 512
+    large_num_heads = 16
+    large_dropout = 0.5
+--------------------
+
+--------------------
+Extra Large Model: (google colab)
+
+    Batch Size: 128-256
+    Learning Rate: 0.001-0.01
+    Model Size/Architecture: Very deep architectures, large hidden units, and embedding dimensions (e.g., 1024-2048 dimensions)
+    Sequence Length: 256-1024 tokens
+    Gradient Accumulation: 8 or more steps
+    Regularization: Dropout rate of 0.1-0.5, weight decay of 0.0001-0.01
+    Optimizer: Adam or RMSprop
+
+    extra_large_batch_size = 128
+    extra_large_learning_rate = 0.001
+    extra_large_num_layers = 8
+    extra_large_hidden_size = 1024
+    extra_large_num_heads = 32
+    extra_large_dropout = 0.5
+--------------------
+
+"""
+
+# Define the hyperparameters, you can copy and paste them using the recommended ones from above
+batch_size = 12 
+learning_rate = 1e-4
+num_layers = 4
+hidden_size = 128
+num_heads = 32
+dropout = 0.0
+num_epochs = 200
+
 sample_dictionary = {
     'What is the revenue for Company A on 2023-01-02': 'Table',
     'What is the main point of this article?': 'Document',
@@ -193,14 +293,6 @@ output_vocab = dict(output_vocab)
 if len(input_vocab) == 0 or len(output_vocab) == 0:
     print("Input or output vocabulary is empty. Please provide a dictionary with non-empty keys.")
 
-# Define the hyperparameters
-num_layers = 4
-hidden_size = 128
-num_heads = 32
-dropout = 0.0
-batch_size = 12
-learning_rate = 1e-4
-num_epochs = 200
 
 # Create an instance of the GPT model
 model = GPT(len(input_vocab), len(output_vocab), num_layers, hidden_size, num_heads, dropout)
@@ -248,6 +340,7 @@ for epoch in range(num_epochs):
     average_loss = total_loss / len(dataloader)
     print(f"Epoch {epoch+1}/{num_epochs} :-----: Average Loss: {average_loss}")
 
+    # Evaluation process starts here
     random_template = random.choice(_templates)
     company = fake_generator.generate_company()
     year = fake_generator.generate_year()
