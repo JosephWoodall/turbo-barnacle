@@ -4,8 +4,8 @@ from torch.nn import TransformerEncoder, TransformerEncoderLayer
 from torch.utils.data import Dataset, DataLoader
 from torch.optim import AdamW
 from collections import defaultdict
-
 import re
+import random
 
 class WordTokenizer:
     def __init__(self):
@@ -88,14 +88,92 @@ sample_dictionary = {
     'Can you summarize this article for me?': 'Document',
 }
 
+prompt_templates = [
+    "What is the revenue for {company} in {year}?",
+    "What is the main point of {document}?",
+    "What is the reporting date for all customers under the {group} group?",
+    "Can you summarize {document} for me?",
+]
 
-# Prepare the dataset and vocabulary
-key_value_pairs = [(key, value) for key, value in sample_dictionary.items()]
+_templates = [
+    "What is the revenue for {company} in {year}?",
+    "What is the main point of {document}?",
+    "What is the reporting date for all customers under {group}?",
+    "Can you summarize {document} for me?",
+    
+]
+
+class KeyValueDataset(Dataset):
+    def __init__(self, key_value_pairs, tokenizer):
+        self.key_value_pairs = key_value_pairs
+        self.tokenizer = tokenizer
+    
+    def __len__(self):
+        return len(self.key_value_pairs)
+    
+    def __getitem__(self, index):
+        key, value = self.key_value_pairs[index]
+        input_tokens = self.tokenizer.tokenize(key)
+        output_tokens = self.tokenizer.tokenize(value)
+        return input_tokens, output_tokens
+
+def collate_fn(batch):
+    input_seqs, output_seqs = zip(*batch)
+    input_lengths = [len(seq) for seq in input_seqs]
+    output_lengths = [len(seq) for seq in output_seqs]
+    max_input_length = max(input_lengths)
+    max_output_length = max(output_lengths)
+
+    padded_input_seqs = []
+    padded_output_seqs = []
+
+    for input_seq, output_seq in zip(input_seqs, output_seqs):
+        input_padding = [0] * (max_input_length - len(input_seq))
+        padded_input_seqs.append(input_seq + input_padding)
+
+        output_padding = [0] * (max_output_length - len(output_seq))
+        padded_output_seqs.append(output_seq + output_padding)
+
+    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in tokens] for tokens in padded_input_seqs]).transpose(0, 1)  # Transpose for transformer input
+    output_tensor = torch.tensor([[output_vocab.get(token, 0) for token in tokens] for tokens in padded_output_seqs]).transpose(0, 1)  # Transpose for transformer input
+
+    return input_tensor, output_tensor
+
+
+class GPT(nn.Module):
+    def __init__(self, input_vocab_size, output_size, num_layers, hidden_size, num_heads, dropout):
+        super(GPT, self).__init__()
+        self.input_vocab_size = input_vocab_size
+        self.output_size = output_size
+        self.hidden_size = hidden_size
+        self.num_layers = num_layers
+        
+        if input_vocab_size > 0:
+            self.embedding = nn.Embedding(input_vocab_size, hidden_size, padding_idx=0)
+        else:
+            self.embedding = None
+
+        
+        self.encoder_layer = TransformerEncoderLayer(hidden_size, num_heads, dim_feedforward=hidden_size, dropout=dropout)
+        self.encoder = TransformerEncoder(self.encoder_layer, num_layers=num_layers)
+        self.linear = nn.Linear(hidden_size, output_size)
+
+        
+    def forward(self, x):
+        if self.embedding is not None:
+            x = self.embedding(x)
+        x = x.transpose(0, 1)  # Transpose for transformer input
+        x = x.contiguous()  # Convert to contiguous tensor
+        encoder_output = self.encoder(x)
+        output = self.linear(encoder_output[-1])
+        return output
+
 
 # Create a word tokenizer
 tokenizer = WordTokenizer()
 
-# Tokenize the input and output sequences
+# Prepare the dataset and vocabulary
+key_value_pairs = [(key, value) for key, value in sample_dictionary.items()]
 tokenized_dataset = KeyValueDataset(key_value_pairs, tokenizer)
 
 # Populate the input and output vocabularies
@@ -165,6 +243,28 @@ for epoch in range(num_epochs):
     average_loss = total_loss / len(dataloader)
     print(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {average_loss}")
 
+    # Generate a prompt using the trained model
+    random_template = random.choice(_templates)
+    prompt = random_template.format(
+        company="Company A",
+        year="2023",
+        document="the article",
+        group="e-commerce"
+    )
+    input_tokens = tokenizer.tokenize(prompt)
+    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
+    with torch.no_grad():
+        output_tensor = model(input_tensor.transpose(0, 1))
+    predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
+
+    # Convert the predicted indices back to their original representations
+    predicted_value = list(output_vocab.keys())[predicted_indices]
+
+    # Print the generated prompt and the corresponding generated value
+    print(f"Generated prompt: '{prompt}'")
+    print(f"Generated value: '{predicted_value}'")
+    print()
+
 # Generate a key-value pair using the trained model
 prompt = "What is the revenue for Company A in 2023?"
 input_tokens = tokenizer.tokenize(prompt)
@@ -177,4 +277,5 @@ predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
 predicted_value = list(output_vocab.keys())[predicted_indices]
 
 # Print the generated key-value pair
-print(f"Generated key-value pair: '{prompt}': '{predicted_value}'")
+print(f"Generated key: '{prompt}'")
+print(f"Generated value: '{predicted_value}'")
