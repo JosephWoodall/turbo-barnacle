@@ -7,8 +7,31 @@ from collections import defaultdict
 import re
 import random
 from faker import Faker
-
 import json
+
+
+"""
+The below code implements a Generative Pre-trained Transformer (GPT) model for generating text based on a given prompt. Here is a summary of the code:
+- The code imports necessary libraries and modules, including torch, torch.nn, TransformerEncoder, DataLoader, AdamW, defaultdict, re, random, faker, and json.
+- Two classes are defined: "WordTokenizer" and "KeyValueDataset." The "WordTokenizer" class tokenizes input text into individual words using a regular expression. The "KeyValueDataset" class represents a PyTorch dataset that tokenizes input and output text using the provided tokenizer.
+- A helper function "collate_fn" is defined to preprocess and collate the batch data for the DataLoader.
+- The main GPT model is implemented in the "GPT" class. It consists of an embedding layer, transformer encoder layers, and a linear layer for prediction. The model takes input vocabulary size, output size, number of layers, hidden size, number of attention heads, and dropout as inputs.
+- An instance of the Faker library is created to generate fake data for demonstration purposes.
+- A sample dictionary is defined to store input-output pairs for training.
+- A list of templates is provided for generating prompts.
+- A word tokenizer is created using the "WordTokenizer" class.
+- The dataset and vocabulary are prepared based on the sample dictionary and tokenizer.
+- Hyperparameters such as the number of layers, hidden size, number of heads, dropout, batch size, learning rate, and number of epochs are defined.
+- An instance of the GPT model is created with the specified hyperparameters.
+- A DataLoader is created to handle the training data, using the defined collate function.
+- The optimizer (AdamW) and loss function (CrossEntropyLoss) are defined.
+- The training loop begins, where the model is trained for the specified number of epochs. The average loss is printed for each epoch.
+- During each epoch, a random template is selected, and fake data is generated based on the template using the Faker library. The prompt is tokenized and fed into the trained model, and the predicted value is obtained. The generated prompt and corresponding value are printed.
+- The generated data is stored in a list.
+- Finally, the generated data is saved to a JSON file.
+
+An inference section is provided to demonstrate the generation of text based on a prompt using the trained model. The prompt is tokenized, passed through the model, and the predicted value is obtained and printed.
+"""
 
 class WordTokenizer:
     """
@@ -223,7 +246,7 @@ for epoch in range(num_epochs):
 
     # Print the average loss for the epoch
     average_loss = total_loss / len(dataloader)
-    print(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {average_loss}")
+    print(f"Epoch {epoch+1}/{num_epochs} :-----: Average Loss: {average_loss}")
 
     random_template = random.choice(_templates)
     company = fake_generator.generate_company()
@@ -278,6 +301,9 @@ predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
 # Convert the predicted indices back to their original representations
 predicted_value = list(output_vocab.keys())[predicted_indices]
 
+print("-----------------------------------------------")
+print("Inference")
+print("-----------------------------------------------")
 # Print the generated prompt and the corresponding generated value
 print(f"Generated prompt: '{prompt}'")
 print(f"Generated value: '{predicted_value}'")
