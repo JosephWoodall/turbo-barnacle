@@ -8,6 +8,9 @@ import re
 import random
 
 class WordTokenizer:
+    """
+    WordTokenizer class is responsible for tokenizing input text into individual words.
+    """
     def __init__(self):
         self.word_regex = re.compile(r'\w+')
 
@@ -16,6 +19,10 @@ class WordTokenizer:
         return tokens
 
 class KeyValueDataset(Dataset):
+    """
+    KeyValueDataset class represents a PyTorch dataset. It takes a list of key-value pairs and a tokenizer as inputs.
+    It tokenizes the input and output text using the tokenizer.
+    """
     def __init__(self, key_value_pairs, tokenizer):
         self.key_value_pairs = key_value_pairs
         self.tokenizer = tokenizer
@@ -30,6 +37,9 @@ class KeyValueDataset(Dataset):
         return input_tokens, output_tokens
 
 def collate_fn(batch):
+    """
+    collate_fn is a helper function used by the DataLoader to collate and preprocess the batch data.
+    """
     input_seqs, output_seqs = zip(*batch)
     input_lengths = [len(seq) for seq in input_seqs]
     output_lengths = [len(seq) for seq in output_seqs]
@@ -53,6 +63,12 @@ def collate_fn(batch):
 
 
 class GPT(nn.Module):
+    """
+    GPT (Generative Pre-trained Transformer) model class represents the main model architecture.
+    It takes input vocabulary size, output size, number of layers, hidden size, number of attention heads, and dropout as inputs.
+    The model consists of an embedding layer, transformer encoder layers, and a linear layer for prediction.
+
+    """
     def __init__(self, input_vocab_size, output_size, num_layers, hidden_size, num_heads, dropout):
         super(GPT, self).__init__()
         self.input_vocab_size = input_vocab_size
@@ -101,73 +117,6 @@ _templates = [
     "What's the reporting date for all customers under the {group} group?",
     "Could you summarize {document} for me?",
 ]
-
-
-class KeyValueDataset(Dataset):
-    def __init__(self, key_value_pairs, tokenizer):
-        self.key_value_pairs = key_value_pairs
-        self.tokenizer = tokenizer
-    
-    def __len__(self):
-        return len(self.key_value_pairs)
-    
-    def __getitem__(self, index):
-        key, value = self.key_value_pairs[index]
-        input_tokens = self.tokenizer.tokenize(key)
-        output_tokens = self.tokenizer.tokenize(value)
-        return input_tokens, output_tokens
-
-def collate_fn(batch):
-    input_seqs, output_seqs = zip(*batch)
-    input_lengths = [len(seq) for seq in input_seqs]
-    output_lengths = [len(seq) for seq in output_seqs]
-    max_input_length = max(input_lengths)
-    max_output_length = max(output_lengths)
-
-    padded_input_seqs = []
-    padded_output_seqs = []
-
-    for input_seq, output_seq in zip(input_seqs, output_seqs):
-        input_padding = [0] * (max_input_length - len(input_seq))
-        padded_input_seqs.append(input_seq + input_padding)
-
-        output_padding = [0] * (max_output_length - len(output_seq))
-        padded_output_seqs.append(output_seq + output_padding)
-
-    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in tokens] for tokens in padded_input_seqs]).transpose(0, 1)  # Transpose for transformer input
-    output_tensor = torch.tensor([[output_vocab.get(token, 0) for token in tokens] for tokens in padded_output_seqs]).transpose(0, 1)  # Transpose for transformer input
-
-    return input_tensor, output_tensor
-
-
-class GPT(nn.Module):
-    def __init__(self, input_vocab_size, output_size, num_layers, hidden_size, num_heads, dropout):
-        super(GPT, self).__init__()
-        self.input_vocab_size = input_vocab_size
-        self.output_size = output_size
-        self.hidden_size = hidden_size
-        self.num_layers = num_layers
-        
-        if input_vocab_size > 0:
-            self.embedding = nn.Embedding(input_vocab_size, hidden_size, padding_idx=0)
-        else:
-            self.embedding = None
-
-        
-        self.encoder_layer = TransformerEncoderLayer(hidden_size, num_heads, dim_feedforward=hidden_size, dropout=dropout)
-        self.encoder = TransformerEncoder(self.encoder_layer, num_layers=num_layers)
-        self.linear = nn.Linear(hidden_size, output_size)
-
-        
-    def forward(self, x):
-        if self.embedding is not None:
-            x = self.embedding(x)
-        x = x.transpose(0, 1)  # Transpose for transformer input
-        x = x.contiguous()  # Convert to contiguous tensor
-        encoder_output = self.encoder(x)
-        output = self.linear(encoder_output[-1])
-        return output
-
 
 # Create a word tokenizer
 tokenizer = WordTokenizer()
