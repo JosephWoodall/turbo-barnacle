@@ -86,22 +86,22 @@ sample_dictionary = {
     'What is the main point of this article?': 'Document',
     'What is the reporting date for all customers under the e-commerce group?': 'Table',
     'Can you summarize this article for me?': 'Document',
+    'What is the revenue for Company B on 2023-01-02': 'Table',
 }
-
-prompt_templates = [
-    "What is the revenue for {company} in {year}?",
-    "What is the main point of {document}?",
-    "What is the reporting date for all customers under the {group} group?",
-    "Can you summarize {document} for me?",
-]
 
 _templates = [
     "What is the revenue for {company} in {year}?",
     "What is the main point of {document}?",
-    "What is the reporting date for all customers under {group}?",
+    "What is the reporting date for all customers under the {group} group?",
     "Can you summarize {document} for me?",
-    
+    "What is the revenue growth rate for {company}?",
+    "How many articles are there about {topic}?",
+    "What's the revenue for {company} in {year}?",
+    "What's the main point of {document}?",
+    "What's the reporting date for all customers under the {group} group?",
+    "Could you summarize {document} for me?",
 ]
+
 
 class KeyValueDataset(Dataset):
     def __init__(self, key_value_pairs, tokenizer):
@@ -202,7 +202,7 @@ num_heads = 32
 dropout = 0.0
 batch_size = 12
 learning_rate = 1e-4
-num_epochs = 20
+num_epochs = 40
 
 # Create an instance of the GPT model
 model = GPT(len(input_vocab), len(output_vocab), num_layers, hidden_size, num_heads, dropout)
@@ -249,7 +249,8 @@ for epoch in range(num_epochs):
         company="Company A",
         year="2023",
         document="the article",
-        group="e-commerce"
+        group="e-commerce",
+        topic="finance",
     )
     input_tokens = tokenizer.tokenize(prompt)
     input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
@@ -276,6 +277,6 @@ predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
 # Convert the predicted indices back to their original representations
 predicted_value = list(output_vocab.keys())[predicted_indices]
 
-# Print the generated key-value pair
-print(f"Generated key: '{prompt}'")
+# Print the generated prompt and the corresponding generated value
+print(f"Generated prompt: '{prompt}'")
 print(f"Generated value: '{predicted_value}'")
