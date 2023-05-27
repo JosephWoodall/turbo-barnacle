@@ -8,6 +8,8 @@ import re
 import random
 from faker import Faker
 
+import json
+
 class WordTokenizer:
     """
     WordTokenizer class is responsible for tokenizing input text into individual words.
@@ -96,6 +98,7 @@ class GPT(nn.Module):
         encoder_output = self.encoder(x)
         output = self.linear(encoder_output[-1])
         return output
+    
 
 fake = Faker()
 
@@ -179,12 +182,19 @@ num_epochs = 40
 # Create an instance of the GPT model
 model = GPT(len(input_vocab), len(output_vocab), num_layers, hidden_size, num_heads, dropout)
 
+total_params = sum(p.numel() for p in model.parameters())
+print("-----------------------------------------------")
+print(f"Total number of parameters: {total_params}")
+print("-----------------------------------------------")
+
 # Create a DataLoader for training
 dataloader = DataLoader(tokenized_dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
 
 # Define the optimizer and loss function
 optimizer = AdamW(model.parameters(), lr=learning_rate)
 criterion = nn.CrossEntropyLoss()
+
+generated_data = []
 
 # Training loop
 for epoch in range(num_epochs):
@@ -242,6 +252,16 @@ for epoch in range(num_epochs):
     print(f"Generated prompt: '{prompt}'")
     print(f"Generated value: '{predicted_value}'")
     print()
+    
+    generated_data.append({
+        "question":prompt,
+        "label":predicted_value
+    })
+    
+# Save generated data to a JSON file
+output_file = "src/gpt_from_scratch/eda/generated_data.json"
+with open(output_file, "w") as f:
+    json.dump(generated_data, f, indent=4)
 
 # Generate a key-value pair using the trained model
 prompt = "What is the revenue for Company A in 2023?"
