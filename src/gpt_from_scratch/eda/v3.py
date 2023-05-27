@@ -6,6 +6,7 @@ from torch.optim import AdamW
 from collections import defaultdict
 import re
 import random
+from faker import Faker
 
 class WordTokenizer:
     """
@@ -96,6 +97,28 @@ class GPT(nn.Module):
         output = self.linear(encoder_output[-1])
         return output
 
+fake = Faker()
+
+class FakeDataGenerator:
+    def __init__(self):
+        self.fake = Faker()
+    
+    def generate_company(self):
+        return self.fake.company()
+    
+    def generate_year(self):
+        return str(self.fake.random_int(2020, 2025))
+    
+    def generate_document(self):
+        return self.fake.text(max_nb_chars=50)
+    
+    def generate_group(self):
+        return self.fake.word()
+    
+    def generate_topic(self):
+        return self.fake.word()
+
+fake_generator = FakeDataGenerator()
 
 sample_dictionary = {
     'What is the revenue for Company A on 2023-01-02': 'Table',
@@ -112,9 +135,9 @@ _templates = [
     "Can you summarize {document} for me?",
     "What is the revenue growth rate for {company}?",
     "How many articles are there about {topic}?",
-    "What's the revenue for {company} in {year}?",
-    "What's the main point of {document}?",
-    "What's the reporting date for all customers under the {group} group?",
+    "Whats the revenue for {company} in {year}?",
+    "Whats the main point of {document}?",
+    "Whats the reporting date for all customers under the {group} group?",
     "Could you summarize {document} for me?",
 ]
 
@@ -192,14 +215,19 @@ for epoch in range(num_epochs):
     average_loss = total_loss / len(dataloader)
     print(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {average_loss}")
 
-    # Generate a prompt using the trained model
     random_template = random.choice(_templates)
+    company = fake_generator.generate_company()
+    year = fake_generator.generate_year()
+    document = fake_generator.generate_document()
+    group = fake_generator.generate_group()
+    topic = fake_generator.generate_topic()
+
     prompt = random_template.format(
-        company="Company A",
-        year="2023",
-        document="the article",
-        group="e-commerce",
-        topic="finance",
+        company=company,
+        year=year,
+        document=document,
+        group=group,
+        topic=topic,
     )
     input_tokens = tokenizer.tokenize(prompt)
     input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
