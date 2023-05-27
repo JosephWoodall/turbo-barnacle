@@ -248,6 +248,7 @@ hidden_size = 128
 num_heads = 32
 dropout = 0.0
 num_epochs = 200
+num_inferences = 5
 
 # If you want more variety in the output data, then add more to sample_dctionary and _templates.
 # Feel free to add slang, contractions and other variations to the templates.
@@ -390,7 +391,7 @@ _templates = [
     "Tell me the content of {document}",
 ]
 
-
+torch.manual_seed(12345)
 # Create a word tokenizer
 tokenizer = WordTokenizer()
 
@@ -517,20 +518,44 @@ with open(output_file, "w") as f:
 """
 Inference for later on!
 """
-# Generate a key-value pair using the trained model
-prompt = "What is the revenue for Company A in 2023?"
-input_tokens = tokenizer.tokenize(prompt)
-input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
-with torch.no_grad():
-    output_tensor = model(input_tensor.transpose(0, 1))
-predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
+torch.manual_seed(1337) # setting a different manual seed for inference
+last_prompt = ""  # Variable to store the last used prompt
 
-# Convert the predicted indices back to their original representations
-predicted_value = list(output_vocab.keys())[predicted_indices]
+for _ in range(num_inferences):  # generate inferences using model with no_grad()
+    while True:
+        # Generate a random prompt
+        prompt_template = random.choice(_templates)
+        prompt = prompt_template.format(
+            company=fake_generator.generate_company(),
+            year=fake_generator.generate_year(),
+            document=fake_generator.generate_document(),
+            group=fake_generator.generate_group(),
+            topic=fake_generator.generate_topic(),
+            date=fake_generator.generate_date(),
+        )
+        # Check if the prompt is different from the last used prompt
+        if prompt != last_prompt:
+            last_prompt = prompt  # Update the last used prompt
+            break  # Break out of the loop
+    # Tokenize the prompt 
+    input_tokens = tokenizer.tokenize(prompt)
+    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
+    
+    # Pass the input tensor through the model
+    model.eval()
+    with torch.no_grad():
+        output_tensor = model(input_tensor.transpose(0, 1))
+        
+    # Get the predicted indices
+    predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
 
-print("-----------------------------------------------")
-print("Inference")
-print("-----------------------------------------------")
-# Print the generated prompt and the corresponding generated value
-print(f"Generated prompt: '{prompt}'")
-print(f"Generated value: '{predicted_value}'")
+    # Convert the predicted indices back to their original representations
+    predicted_value = list(output_vocab.keys())[predicted_indices]
+
+    print("-----------------------------------------------")
+    print("Inference")
+    print("-----------------------------------------------")
+    # Print the generated prompt and the corresponding generated value
+    print(f"Generated prompt: '{prompt}'")
+    print(f"Generated value: '{predicted_value}'")
+    print("\n")
