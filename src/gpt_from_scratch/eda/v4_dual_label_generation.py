@@ -262,7 +262,11 @@ for epoch in range(num_epochs):
 output_file = "src/gpt_from_scratch/eda/generated_data.json"
 with open(output_file, "w") as f:
     json.dump(generated_data, f, indent=4)
+    
 
+"""
+Inference for later on!
+"""
 # Generate a key-value pair using the trained model
 prompt = "What is the revenue for Company A in 2023?"
 input_tokens = tokenizer.tokenize(prompt)
