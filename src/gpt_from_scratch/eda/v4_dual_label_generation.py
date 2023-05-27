@@ -7,6 +7,7 @@ from collections import defaultdict
 import re
 import random
 from faker import Faker
+import yaml
 import json
 
 
@@ -38,10 +39,12 @@ An inference section is provided to demonstrate the generation of text based on 
 Class Definition
 """
 
+
 class WordTokenizer:
     """
     WordTokenizer class is responsible for tokenizing input text into individual words.
     """
+
     def __init__(self):
         self.word_regex = re.compile(r'\w+')
 
@@ -49,23 +52,26 @@ class WordTokenizer:
         tokens = self.word_regex.findall(text)
         return tokens
 
+
 class KeyValueDataset(Dataset):
     """
     KeyValueDataset class represents a PyTorch dataset. It takes a list of key-value pairs and a tokenizer as inputs.
     It tokenizes the input and output text using the tokenizer.
     """
+
     def __init__(self, key_value_pairs, tokenizer):
         self.key_value_pairs = key_value_pairs
         self.tokenizer = tokenizer
-    
+
     def __len__(self):
         return len(self.key_value_pairs)
-    
+
     def __getitem__(self, index):
         key, value = self.key_value_pairs[index]
         input_tokens = self.tokenizer.tokenize(key)
         output_tokens = self.tokenizer.tokenize(value)
         return input_tokens, output_tokens
+
 
 def collate_fn(batch):
     """
@@ -87,8 +93,10 @@ def collate_fn(batch):
         output_padding = [0] * (max_output_length - len(output_seq))
         padded_output_seqs.append(output_seq + output_padding)
 
-    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in tokens] for tokens in padded_input_seqs]).transpose(0, 1)  # Transpose for transformer input
-    output_tensor = torch.tensor([[output_vocab.get(token, 0) for token in tokens] for tokens in padded_output_seqs]).transpose(0, 1)  # Transpose for transformer input
+    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in tokens]
+                                for tokens in padded_input_seqs]).transpose(0, 1)  # Transpose for transformer input
+    output_tensor = torch.tensor([[output_vocab.get(token, 0) for token in tokens]
+                                 for tokens in padded_output_seqs]).transpose(0, 1)  # Transpose for transformer input
 
     return input_tensor, output_tensor
 
@@ -100,24 +108,26 @@ class GPT(nn.Module):
     The model consists of an embedding layer, transformer encoder layers, and a linear layer for prediction.
 
     """
+
     def __init__(self, input_vocab_size, output_size, num_layers, hidden_size, num_heads, dropout):
         super(GPT, self).__init__()
         self.input_vocab_size = input_vocab_size
         self.output_size = output_size
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-        
+
         if input_vocab_size > 0:
-            self.embedding = nn.Embedding(input_vocab_size, hidden_size, padding_idx=0)
+            self.embedding = nn.Embedding(
+                input_vocab_size, hidden_size, padding_idx=0)
         else:
             self.embedding = None
 
-        
-        self.encoder_layer = TransformerEncoderLayer(hidden_size, num_heads, dim_feedforward=hidden_size, dropout=dropout)
-        self.encoder = TransformerEncoder(self.encoder_layer, num_layers=num_layers)
+        self.encoder_layer = TransformerEncoderLayer(
+            hidden_size, num_heads, dim_feedforward=hidden_size, dropout=dropout)
+        self.encoder = TransformerEncoder(
+            self.encoder_layer, num_layers=num_layers)
         self.linear = nn.Linear(hidden_size, output_size)
 
-        
     def forward(self, x):
         if self.embedding is not None:
             x = self.embedding(x)
@@ -126,31 +136,33 @@ class GPT(nn.Module):
         encoder_output = self.encoder(x)
         output = self.linear(encoder_output[-1])
         return output
-    
+
 
 fake = Faker()
+
 
 class FakeDataGenerator:
     def __init__(self):
         self.fake = Faker()
-    
+
     def generate_company(self):
         return self.fake.company()
-    
+
     def generate_year(self):
         return str(self.fake.random_int(2020, 2025))
-    
+
     def generate_document(self):
         return self.fake.text(max_nb_chars=50)
-    
+
     def generate_group(self):
         return self.fake.word()
-    
+
     def generate_topic(self):
         return self.fake.word()
-    
+
     def generate_date(self):
         return self.fake.date(pattern="%Y-%m-%d")
+
 
 fake_generator = FakeDataGenerator()
 
@@ -241,7 +253,7 @@ Extra Large Model: (google colab)
 """
 
 # Define the hyperparameters, you can copy and paste them using the recommended ones from above
-batch_size = 12 
+batch_size = 12
 learning_rate = 1e-4
 num_layers = 4
 hidden_size = 128
@@ -391,6 +403,7 @@ _templates = [
     "Tell me the content of {document}",
 ]
 
+
 torch.manual_seed(12345)
 # Create a word tokenizer
 tokenizer = WordTokenizer()
@@ -400,8 +413,10 @@ key_value_pairs = [(key, value) for key, value in sample_dictionary.items()]
 tokenized_dataset = KeyValueDataset(key_value_pairs, tokenizer)
 
 # Populate the input and output vocabularies
-input_vocab = defaultdict(lambda: len(input_vocab))  # Assign unique indices to each token
-output_vocab = defaultdict(lambda: len(output_vocab))  # Assign unique indices to each token
+# Assign unique indices to each token
+input_vocab = defaultdict(lambda: len(input_vocab))
+# Assign unique indices to each token
+output_vocab = defaultdict(lambda: len(output_vocab))
 
 for input_tokens, output_tokens in tokenized_dataset:
     if input_tokens:
@@ -420,7 +435,9 @@ if len(input_vocab) == 0 or len(output_vocab) == 0:
 
 
 # Create an instance of the GPT model
-model = GPT(len(input_vocab), len(output_vocab), num_layers, hidden_size, num_heads, dropout)
+model = GPT(len(input_vocab), len(output_vocab),
+            num_layers, hidden_size, num_heads, dropout)
+
 
 total_params = sum(p.numel() for p in model.parameters())
 print("-----------------------------------------------")
@@ -428,7 +445,8 @@ print(f"Total number of parameters: {total_params}")
 print("-----------------------------------------------")
 
 # Create a DataLoader for training
-dataloader = DataLoader(tokenized_dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
+dataloader = DataLoader(
+    tokenized_dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
 
 # Define the optimizer and loss function
 optimizer = AdamW(model.parameters(), lr=learning_rate)
@@ -442,8 +460,10 @@ total_average_loss = 0
 for epoch in range(num_epochs):
     total_loss = 0
     for input_tokens, output_tokens in dataloader:
-        input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in tokens] for tokens in input_tokens]).transpose(0, 1)  # Transpose for transformer input
-        output_tensor = torch.tensor([[output_vocab.get(token, 0) for token in tokens] for tokens in output_tokens]).transpose(0, 1)  # Transpose for transformer input
+        input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in tokens]
+                                    for tokens in input_tokens]).transpose(0, 1)  # Transpose for transformer input
+        output_tensor = torch.tensor([[output_vocab.get(token, 0) for token in tokens]
+                                     for tokens in output_tokens]).transpose(0, 1)  # Transpose for transformer input
 
         optimizer.zero_grad()
 
@@ -465,7 +485,7 @@ for epoch in range(num_epochs):
 
     # Print the average loss for the epoch
     average_loss = total_loss / len(dataloader)
-    total_average_loss += total_loss # accumulate loss across eopchs
+    total_average_loss += total_loss  # accumulate loss across eopchs
     print(f"Epoch {epoch+1}/{num_epochs} :-----: Average Loss: {average_loss}")
 
     # Evaluation process starts here
@@ -486,7 +506,8 @@ for epoch in range(num_epochs):
         date=date
     )
     input_tokens = tokenizer.tokenize(prompt)
-    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
+    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(
+        0, 1)  # Transpose for transformer input
     with torch.no_grad():
         output_tensor = model(input_tensor.transpose(0, 1))
     predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
@@ -498,27 +519,35 @@ for epoch in range(num_epochs):
     print(f"Generated prompt: '{prompt}'")
     print(f"Generated value: '{predicted_value}'")
     print()
-    
+
     generated_data.append({
-        "question":prompt,
-        "label":predicted_value
+        "question": prompt,
+        "label": predicted_value
     })
-    
+
 average_loss = total_average_loss / num_epochs
 print("-----------------------------------------------")
 print(f"Average loss across all epochs: {average_loss}")
 print("-----------------------------------------------")
 print("\n")
+# Save the trained model
+torch.save(model.state_dict(), "src/gpt_from_scratch/eda/trained_gpt_model.pt")
+
+# Save generated data to YAML file
+filename = "src/gpt_from_scratch/eda/generated_data.yaml"
+with open(filename, "w") as file:
+    yaml.dump(generated_data, file)
+
 # Save generated data to a JSON file
 output_file = "src/gpt_from_scratch/eda/generated_data.json"
 with open(output_file, "w") as f:
     json.dump(generated_data, f, indent=4)
-    
+
 
 """
 Inference for later on!
 """
-torch.manual_seed(1337) # setting a different manual seed for inference
+torch.manual_seed(1337)  # setting a different manual seed for inference
 last_prompt = ""  # Variable to store the last used prompt
 
 for _ in range(num_inferences):  # generate inferences using model with no_grad()
@@ -537,15 +566,16 @@ for _ in range(num_inferences):  # generate inferences using model with no_grad(
         if prompt != last_prompt:
             last_prompt = prompt  # Update the last used prompt
             break  # Break out of the loop
-    # Tokenize the prompt 
+    # Tokenize the prompt
     input_tokens = tokenizer.tokenize(prompt)
-    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
-    
+    input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(
+        0, 1)  # Transpose for transformer input
+
     # Pass the input tensor through the model
     model.eval()
     with torch.no_grad():
         output_tensor = model(input_tensor.transpose(0, 1))
-        
+
     # Get the predicted indices
     predicted_indices = output_tensor.argmax(dim=-1).tolist()[0]
 
