@@ -148,6 +148,9 @@ class FakeDataGenerator:
     
     def generate_topic(self):
         return self.fake.word()
+    
+    def generate_date(self):
+        return self.fake.date(pattern="%Y-%m-%d")
 
 fake_generator = FakeDataGenerator()
 
@@ -246,14 +249,30 @@ num_heads = 32
 dropout = 0.0
 num_epochs = 200
 
+# If you want more variety in the output data, then add more to sample_dctionary and _templates.
+# Feel free to add slang, contractions and other variations to the templates.
+
+# For sample_dictionary, please only use "Table" and "Document" for your values in the K:V pairs
 sample_dictionary = {
-    'What is the revenue for Company A on 2023-01-02': 'Table',
-    'What is the main point of this article?': 'Document',
-    'What is the reporting date for all customers under the e-commerce group?': 'Table',
-    'Can you summarize this article for me?': 'Document',
-    'What is the revenue for Company B on 2023-01-02': 'Table',
+    "Whut is the revenu for Company A on 2023-01-02": "Table",
+    "Whut is the main point of this articl": "Document",
+    "Whut is the reportin date for all customers under the e-commerce group": "Table",
+    "Can you summarize this articl for me": "Document",
+    "Whut is the revenu for Company B on 2023-01-02": "Table",
+    "Whut is the revenu for Company C on 2023-01-02": "Table",
+    "Whut is the revenu for Company D on 2023-01-02": "Table",
+    "Whut is the revenu for Company E on 2023-01-02": "Table",
+    "What is the revenue for Company A in 2023?": "Table",
+    "What is the main point of this article?": "Document",
+    "What is the reporting date for all customers under the e-commerce group?": "Table",
+    "Can you summarize this article for me?": "Document",
+    "What is the revenue for Company B in 2023?": "Table",
+    "What is the revenue for Company C in 2023?": "Table",
+    "What is the revenue for Company D in 2023?": "Table",
+    "What is the revenue for Company E in 2023?": "Table",
 }
 
+# For _templates, please only use the following variables: {company}, {year}, {document}, {group}, {topic}, {date}
 _templates = [
     "What is the revenue for {company} in {year}?",
     "What is the main point of {document}?",
@@ -261,11 +280,116 @@ _templates = [
     "Can you summarize {document} for me?",
     "What is the revenue growth rate for {company}?",
     "How many articles are there about {topic}?",
+    "What's the revenue for {company} in {year}?",
+    "What's the main point of {document}?",
+    "What's the reporting date for all customers under the {group} group?",
+    "Could you summarize {document} for me?",
+    "What is the revenue for {company} on {date}?",
+    "What is the main topic of {document}?",
+    "What is the reporting deadline for all customers under the {group} group?",
+    "Could you summarize the key points of {document}?",
+    "What is the revenue for {company} on {date}?",
+    "What is the average revenue for {company} in {year}?",
+    "What is the key message of {document}?",
+    "What is the latest reporting date for all customers under the {group} group?",
+    "What is the revenue growth percentage for {company}?",
+    "How many articles are available on {topic}?",
+    "What's the revenue of {company} in {year}?",
+    "What's the primary point of {document}?",
+    "What's the reporting deadline for all customers under the {group} group?",
+    "Can you provide a summary of {document}?",
+    "What is the revenue for {company} on {date}?",
+    "What is the main subject discussed in {document}?",
+    "What is the reporting due date for all customers under the {group} group?",
+    "Could you summarize the main points of {document}?",
+    "What is the revenue for {company} on {date}?",
+    "What is the revenue growth rate for {company} in {year}?",
+    "What is the main idea of {document}?",
+    "What is the latest reporting deadline for all customers under the {group} group?",
+    "What is the revenue increase for {company}?",
+    "How many articles are related to {topic}?",
+    "What's the revenue earned by {company} in {year}?",
+    "What's the key takeaway from {document}?",
+    "What's the last reporting date for all customers under the {group} group?",
+    "Can you summarize the content of {document}?",
     "Whats the revenue for {company} in {year}?",
     "Whats the main point of {document}?",
-    "Whats the reporting date for all customers under the {group} group?",
-    "Could you summarize {document} for me?",
+    "Whats the reporting date for all customers in the {group} group",
+    "Tell me what {document} is about",
+    "Whats the revenue growth rate for {company}",
+    "How many articles about {topic}",
+    "Whats the revenue for {company} in {year}",
+    "Whats the main point of {document}",
+    "Whats the reporting date for all customers in the {group} group",
+    "Tell me what {document} is about",
+    "Whats the revenue for {company} on {date}",
+    "Whats the main topic of {document}",
+    "Whats the reporting deadline for all customers in the {group} group",
+    "Tell me the key points of {document}",
+    "Whats the revenue for {company} on {date}",
+    "Whats the average revenue for {company} in {year}",
+    "Whats the key message of {document}",
+    "Whats the latest reporting date for all customers in the {group} group",
+    "Whats the revenue growth percentage for {company}",
+    "How many articles related to {topic}",
+    "Whats the revenue of {company} in {year}",
+    "Whats the primary point of {document}",
+    "Whats the reporting deadline for all customers in the {group} group",
+    "Tell me a summary of {document}",
+    "Whats the revenue for {company} on {date}",
+    "Whats the main subject discussed in {document}",
+    "Whats the reporting due date for all customers in the {group} group",
+    "Tell me the main points of {document}",
+    "Whats the revenue for {company} on {date}",
+    "Whats the revenue growth rate for {company} in {year}",
+    "Whats the main idea of {document}",
+    "Whats the latest reporting deadline for all customers in the {group} group",
+    "Whats the revenue increase for {company}",
+    "How many articles related to {topic}",
+    "Whats the revenue earned by {company} in {year}",
+    "Whats the key takeaway from {document}",
+    "Whats the last reporting date for all customers in the {group} group",
+    "Tell me the content of {document}",
+    "Whuts the revenu for {company} in {year}?",
+    "Whuts the main point of {document}?",
+    "Whuts the reportin date for all customers in the {group} group",
+    "Tell me what {document} is about",
+    "Whuts the revenu growth rate for {company}",
+    "How many articles about {topic}",
+    "Whuts the revenu for {company} in {year}",
+    "Whuts the main point of {document}",
+    "Whuts the reportin date for all customers in the {group} group",
+    "Tell me what {document} is about",
+    "Whuts the revenu for {company} on {date}",
+    "Whuts the main topic of {document}",
+    "Whuts the reportin deadline for all customers in the {group} group",
+    "Tell me the key points of {document}",
+    "Whuts the revenu for {company} on {date}",
+    "Whuts the average revenu for {company} in {year}",
+    "Whuts the key message of {document}",
+    "Whuts the latest reportin date for all customers in the {group} group",
+    "Whuts the revenu growth percentage for {company}",
+    "How many articles related to {topic}",
+    "Whuts the revenu of {company} in {year}",
+    "Whuts the primary point of {document}",
+    "Whuts the reportin deadline for all customers in the {group} group",
+    "Tell me a summary of {document}",
+    "Whuts the revenu for {company} on {date}",
+    "Whuts the main subject discussed in {document}",
+    "Whuts the reportin due date for all customers in the {group} group",
+    "Tell me the main points of {document}",
+    "Whuts the revenu for {company} on {date}",
+    "Whuts the revenu growth rate for {company} in {year}",
+    "Whuts the main idea of {document}",
+    "Whuts the latest reportin deadline for all customers in the {group} group",
+    "Whuts the revenu increase for {company}",
+    "How many articles related to {topic}",
+    "Whuts the revenu earned by {company} in {year}",
+    "Whuts the key takeaway from {document}",
+    "Whuts the last reportin date for all customers in the {group} group",
+    "Tell me the content of {document}",
 ]
+
 
 # Create a word tokenizer
 tokenizer = WordTokenizer()
@@ -311,6 +435,8 @@ criterion = nn.CrossEntropyLoss()
 
 generated_data = []
 
+total_average_loss = 0
+
 # Training loop
 for epoch in range(num_epochs):
     total_loss = 0
@@ -338,12 +464,14 @@ for epoch in range(num_epochs):
 
     # Print the average loss for the epoch
     average_loss = total_loss / len(dataloader)
+    total_average_loss += total_loss # accumulate loss across eopchs
     print(f"Epoch {epoch+1}/{num_epochs} :-----: Average Loss: {average_loss}")
 
     # Evaluation process starts here
     random_template = random.choice(_templates)
     company = fake_generator.generate_company()
     year = fake_generator.generate_year()
+    date = fake_generator.generate_date()
     document = fake_generator.generate_document()
     group = fake_generator.generate_group()
     topic = fake_generator.generate_topic()
@@ -354,6 +482,7 @@ for epoch in range(num_epochs):
         document=document,
         group=group,
         topic=topic,
+        date=date
     )
     input_tokens = tokenizer.tokenize(prompt)
     input_tensor = torch.tensor([[input_vocab.get(token, 0) for token in input_tokens]]).transpose(0, 1)  # Transpose for transformer input
@@ -374,6 +503,11 @@ for epoch in range(num_epochs):
         "label":predicted_value
     })
     
+average_loss = total_average_loss / num_epochs
+print("-----------------------------------------------")
+print(f"Average loss across all epochs: {average_loss}")
+print("-----------------------------------------------")
+print("\n")
 # Save generated data to a JSON file
 output_file = "src/gpt_from_scratch/eda/generated_data.json"
 with open(output_file, "w") as f:
