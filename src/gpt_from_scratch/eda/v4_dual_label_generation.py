@@ -605,3 +605,21 @@ for _ in range(num_inferences):  # generate inferences using model with no_grad(
     print(f"Generated prompt: '{prompt}'")
     print(f"Generated value: '{predicted_value}'")
     print("\n")
+
+"""
+Future State: 
+There are several steps I can take to make the model more powerful, scalable, and more robust. 
+    - Increase the model size by increasing the number of layers, hidden size, and attention heads to capture more intricate patterns in the data. 
+        But, larger models require more computational resources for training and inference.
+    - Use a larger dataset to train the model. I'll be able to train the existing model on a larger and more diverse dataset that can help 
+    the model learn a wider range of patterns and improve its generalization. There are some publicly available datasets that I can use to train the model.
+    - Regularization techniques such as dropout and weight decay can help prevent overfitting and improve the model's generalization ability. 
+        I could experiment with various dropout rates and weight decay values that can enhance the model's robustness.
+    - Data augmentation techniques such as back translation and word replacement can help increase the size of the dataset and improve the model's generalization ability,
+    or I could leverage random masking, shuffling, or adding noise to the input data to improve the model's robustness.
+    - Model ensembling can help improve the model's performance by combining the predictions of multiple models and aggregating their predictions. This can help the results by 
+        reducing the impact of an individual model's errors and capturing a broader range of patterns in the data. 
+    - Model parallelism and distributed training for faster training and inferencing. 
+    - Hyperparameter tuning, which can significantly impact the model's performance. There are various techniques such as grid search/random search/bayesian optimization. 
+    - Continuous training, in which the model is periodically retrained with new data; this can help the model adapt to evolving patterns and improve its performance over time.
+"""
