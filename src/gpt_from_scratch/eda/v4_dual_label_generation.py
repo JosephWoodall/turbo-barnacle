@@ -268,7 +268,7 @@ num_layers = 4
 hidden_size = 128
 num_heads = 32
 dropout = 0.0
-num_epochs = 200
+num_epochs = 500
 num_inferences = 5
 
 # If you want more variety in the output data, then add more to sample_dctionary and _templates.
