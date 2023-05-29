@@ -42,7 +42,7 @@ Class Definition
 
 class WordTokenizer:
     """
-    WordTokenizer class is responsible for tokenizing input text into individual words.
+    WordTokenizer class is responsible for tokenizing input text into individual words using a regular expression.
     """
 
     def __init__(self):
@@ -76,6 +76,7 @@ class KeyValueDataset(Dataset):
 def collate_fn(batch):
     """
     collate_fn is a helper function used by the DataLoader to collate and preprocess the batch data.
+     It pads the input and output sequences to the maximum length in the batch.
     """
     input_seqs, output_seqs = zip(*batch)
     input_lengths = [len(seq) for seq in input_seqs]
@@ -104,9 +105,13 @@ def collate_fn(batch):
 class GPT(nn.Module):
     """
     GPT (Generative Pre-trained Transformer) model class represents the main model architecture.
+    This is the main model class that implements the GPT architecture. 
+    It inherits from the nn.Module class. The GPT model consists of an embedding layer, transformer encoder layers, and a linear layer for prediction. 
+    The embedding layer converts input tokens into continuous vector representations. The transformer encoder layers perform multi-head self-attention and feed-forward operations to capture the contextual relationships between tokens. 
+    The linear layer maps the final hidden state of the transformer encoder to the output size.
+    
     It takes input vocabulary size, output size, number of layers, hidden size, number of attention heads, and dropout as inputs.
     The model consists of an embedding layer, transformer encoder layers, and a linear layer for prediction.
-
     """
 
     def __init__(self, input_vocab_size, output_size, num_layers, hidden_size, num_heads, dropout):
@@ -142,6 +147,9 @@ fake = Faker()
 
 
 class FakeDataGenerator:
+    """
+    This class uses the Faker library to generate fake data for demonstration purposes. Currently, it provides methods for generating various types of data such as company names, years, documents, groups, topics, and dates.
+    """
     def __init__(self):
         self.fake = Faker()
 
@@ -173,6 +181,7 @@ Functional Code Below
 
 """
 
+Defining the hyperparameters for the model training...
 Very generally, below are default hyperparameters for model training: 
 
 --------------------
@@ -265,6 +274,9 @@ num_inferences = 5
 # If you want more variety in the output data, then add more to sample_dctionary and _templates.
 # Feel free to add slang, contractions and other variations to the templates.
 
+"""
+The sample_dictionary contains input-output pairs for model training.
+"""
 # For sample_dictionary, please only use "Table" and "Document" for your values in the K:V pairs
 sample_dictionary = {
     "Whut is the revenu for Company A on 2023-01-02": "Table",
@@ -285,6 +297,9 @@ sample_dictionary = {
     "What is the revenue for Company E in 2023?": "Table",
 }
 
+"""
+The _templates list contains the questions that the model will be trained to answer (generating prompts)
+"""
 # For _templates, please only use the following variables: {company}, {year}, {document}, {group}, {topic}, {date}
 _templates = [
     "What is the revenue for {company} in {year}?",
@@ -405,6 +420,7 @@ _templates = [
 
 
 torch.manual_seed(12345)
+
 # Create a word tokenizer
 tokenizer = WordTokenizer()
 
