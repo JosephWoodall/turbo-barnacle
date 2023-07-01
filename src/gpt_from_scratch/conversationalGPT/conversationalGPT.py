@@ -1,3 +1,6 @@
+import torch
+import torch.nn as nn
+
 # Assuming you have a dataset of conversations stored in a file
 def load_dataset(file_path):
     with open(file_path, 'r') as file:
@@ -13,35 +16,30 @@ def preprocess_data(conversations):
         conv = conv.strip()
         for i in range(len(conv)-1):
             input_texts.append(conv[:i+1])
-            target_texts.append(conv[i+1])
+            target_texts.append(conv[i+1])  # Modify to create a target tensor with shape (batch_size,)
     return input_texts, target_texts
 
 # Load and preprocess the dataset
 conversations = load_dataset(r'src/gpt_from_scratch/raw_data/input.txt')
 input_texts, target_texts = preprocess_data(conversations)
 
-import torch
-import torch.nn as nn
+print(conversations[:5])
+print(input_texts[:5])
+print(target_texts[:5])
 
 class GPT(nn.Module):
-    def __init__(self, vocab_size, embedding_dim, hidden_dim, num_layers):
+    def __init__(self, input_size, hidden_size, output_size):
         super(GPT, self).__init__()
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
-        self.transformer = nn.Transformer(
-            d_model=embedding_dim,
-            nhead=2,
-            num_encoder_layers=num_layers,
-            num_decoder_layers=num_layers,
-            dim_feedforward=hidden_dim,
-            dropout=0.1
-        )
-        self.fc = nn.Linear(embedding_dim, vocab_size)
+        self.embedding = nn.Embedding(input_size, hidden_size)
+        self.transformer_layer = nn.TransformerEncoderLayer(hidden_size, nhead=4)
+        self.transformer = nn.TransformerEncoder(self.transformer_layer, num_layers=4)
+        self.fc = nn.Linear(hidden_size, output_size)
 
-    def forward(self, inputs):
-        embeddings = self.embedding(inputs)
-        outputs = self.transformer(embeddings, embeddings)
-        predictions = self.fc(outputs)
-        return predictions
+    def forward(self, x):
+        embedded = self.embedding(x)
+        output = self.transformer(embedded)
+        output = self.fc(output)
+        return output
 
 # Define hyperparameters
 vocab_size = 10000  # Set based on your vocabulary size
@@ -50,7 +48,7 @@ hidden_dim = 512
 num_layers = 2
 
 # Create an instance of the GPT model
-model = GPT(vocab_size, embedding_dim, hidden_dim, num_layers)
+model = GPT(vocab_size, embedding_dim, hidden_dim)
 
 import torch.optim as optim
 import torch.nn.functional as F
@@ -60,9 +58,20 @@ batch_size = 32
 epochs = 10
 learning_rate = 0.001
 
-# Convert input and target texts to tensors
-input_tensor = torch.tensor(input_texts)
-target_tensor = torch.tensor(target_texts)
+# Convert input and target texts to numerical representations
+input_numerical = [[ord(c) for c in text] for text in input_texts]
+target_numerical = [ord(c) for c in target_texts]  # Remove sublist iteration for target texts
+
+# Get the maximum sequence length
+max_seq_length = max([len(seq) for seq in input_numerical])
+
+# Pad the sequences to have the same length
+input_padded = [seq + [0] * (max_seq_length - len(seq)) for seq in input_numerical]
+target_padded = target_numerical
+
+# Convert padded sequences to tensors
+input_tensor = torch.tensor(input_padded)
+target_tensor = torch.tensor(target_padded)
 
 # Define loss function and optimizer
 criterion = nn.CrossEntropyLoss()
@@ -78,7 +87,9 @@ for epoch in range(epochs):
         optimizer.zero_grad()
 
         outputs = model(inputs)
-        loss = criterion(outputs.view(-1, vocab_size), targets.view(-1))
+        # Reshape the outputs to match the expected shape
+        outputs = outputs.permute(0, 2, 1)  # (batch_size, vocab_size, sequence_length)
+        loss = criterion(outputs, targets)
         loss.backward()
         optimizer.step()
 
@@ -90,18 +101,19 @@ for epoch in range(epochs):
 torch.save(model.state_dict(), 'model.pth')
 
 # Load the trained model
-model = GPT(vocab_size, embedding_dim, hidden_dim, num_layers)
+model = GPT(vocab_size, embedding_dim, hidden_dim)
 model.load_state_dict(torch.load('model.pth'))
 model.eval()
 
 # User input processing and response generation
 def generate_response(input_text):
-    input_tensor = torch.tensor([input_text])
+    input_numerical = [ord(c) for c in input_text]
+    input_padded = input_numerical + [0] * (max_seq_length - len(input_numerical))
+    input_tensor = torch.tensor([input_padded])
     output_tensor = model(input_tensor)
     predicted_token_idx = torch.argmax(output_tensor, dim=2)
-    predicted_token = predicted_token_idx.item()
-    response = chr(predicted_token)  # Assuming your tokens are represented as characters
-    return response
+    predicted_token = chr(predicted_token_idx.item())  # Assuming your tokens are represented as characters
+    return predicted_token
 
 # Example usage
 user_input = "Hello!"
