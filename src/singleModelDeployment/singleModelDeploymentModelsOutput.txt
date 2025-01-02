@@ -1,0 +1,93 @@
+----------------------------------------------------------------------------------------------------
+Models to be tested
+----------------------------------------------------------------------------------------------------
+
+
+-------------------------
+Random Forest Classifier
+-------------------------
+Random Forest Classifier: Mean Score = 0.5153 (+/- 0.0031)
+Important Features
+          features    scores
+4  customer_number  0.371311
+3   test_feature_4  0.276827
+1   test_feature_2  0.271230
+0   test_feature_1  0.043016
+2   test_feature_3  0.037616
+----------------------------------------------------------------------------------------------------
+
+
+-------------------------
+Ada Boost Classifier
+-------------------------
+Ada Boost Classifier: Mean Score = 0.3775 (+/- 0.0261)
+Important Features
+          features    scores
+4  customer_number  0.603419
+1   test_feature_2  0.272036
+3   test_feature_4  0.124545
+0   test_feature_1  0.000000
+2   test_feature_3  0.000000
+----------------------------------------------------------------------------------------------------
+
+
+-------------------------
+Extra Trees Classifier
+-------------------------
+Extra Trees Classifier: Mean Score = 0.5068 (+/- 0.0026)
+Important Features
+          features    scores
+4  customer_number  0.347091
+1   test_feature_2  0.303820
+3   test_feature_4  0.300995
+0   test_feature_1  0.028354
+2   test_feature_3  0.019740
+----------------------------------------------------------------------------------------------------
+
+
+-------------------------
+Gradient Boosting Classifier
+-------------------------
+Gradient Boosting Classifier: Mean Score = 0.5073 (+/- 0.0080)
+Important Features
+          features    scores
+4  customer_number  0.464593
+1   test_feature_2  0.247652
+3   test_feature_4  0.191939
+0   test_feature_1  0.051274
+2   test_feature_3  0.044541
+----------------------------------------------------------------------------------------------------
+
+
+-------------------------
+Best Model Proposed to be Used for Inference:
+-------------------------
+Model Class: RandomForestClassifier(max_features='log2')
+Largest Mean Score: 0.5153123889729869
+Best Score Key: Random Forest Classifier
+Best Score Hyperparameters: {'bootstrap': True, 'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'gini', 'max_depth': None, 'max_features': 'log2', 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 2, 'min_weight_fraction_leaf': 0.0, 'monotonic_cst': None, 'n_estimators': 100, 'n_jobs': None, 'oob_score': False, 'random_state': None, 'verbose': 0, 'warm_start': False}
+-------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Executing Model Comparison...
+If no model is saved via Pickle to singleModelDeployment/singleModelDeploymentModelsOutput.txt, then Best Model for Inference is saved to Pickle and used for inference.
+If existing model is saved via Pickle to singleModelDeployment/singleModelDeploymentModelsOutput.txt, then will compare Largest Mean Score of existing model to largest mean score of Best Model for Inference.
+----------------------------------------------------------------------------------------------------
+No saved model found...
+Saving Best Model for Inference via Pickle...
+...Saved Best Model for Inference to Pickle.
+----------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------------------------------------------------------
+Inference Model Information
+----------------------------------------------------------------------------------------------------
+Inference Model Type: RandomForestClassifier(max_features='log2')
+Largest Mean Score: 0.5153123889729869
+Train Data Size Used: 10000
+Date Created: 2025-01-02T10:33:45.949275
+----------------------------------------------------------------------------------------------------
+
+
+Total time to complete evaluation: 12.03 seconds
